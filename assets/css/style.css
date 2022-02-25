@@ -88,11 +88,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .item .item-wrap img {
   transition: 0.3s transform ease;
   transform: scale(1);
+  height: 17em;
+  width: 100%
 }
 .item .item-wrap > .work-info {
   position: absolute;
   top: 50%;
-  height: 4em;
   width: 100%;
   text-align: center;
   z-index: 3;
@@ -103,6 +104,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   margin-top: 20px;
   transition: 0.3s all ease;
 }
+
 .item .item-wrap > .work-info h3 {
   font-size: 20px;
   margin-bottom: 0;
