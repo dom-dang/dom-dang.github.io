@@ -237,8 +237,21 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
-details > summary:hover{
-  color: #78b7c2;
+.underlined {
+  color: black;
+  flex: 1;
+  text-decoration: none;
+  background-image: linear-gradient(to right, #78b7c2 0, #78b7c2 100%);
+  background-position: 0 1.2em;
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  transition: background 0.5s;
+}
+.underlined:hover {
+  background-size: 100% 100%;
+}
+.underlined--thick {
+  background-position: 0 -0.1em;
 }
 
 
