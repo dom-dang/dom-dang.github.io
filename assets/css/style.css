@@ -248,7 +248,7 @@ details > summary::-webkit-details-marker {
   transition: background 0.5s;
 }
 .underlined:hover {
-  background-size: 100% 100%;
+  background-size: 90% 100%;
 }
 .underlined--thick {
   background-position: 0 -0.1em;
