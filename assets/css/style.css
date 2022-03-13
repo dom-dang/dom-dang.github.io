@@ -10,7 +10,6 @@
 --------------------------------------------------------------*/
 body {
   font-family: "Inconsolata", monospace;
-  color: #0d1e2d;
 }
 
 a {
@@ -227,8 +226,14 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .services i {
   font-size: 40px;
 }
+
+.services h2 {
+  padding-bottom: 3em;
+}
+
 .services h4 {
   padding-top: 10px;
+  font-size: 1.5em;
 }
 details > summary {
   list-style: none;
@@ -237,11 +242,28 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
+ a{
+  color: #14746F;
+}
+ a:hover {
+  color:#88D4AB;
+}
+
+.services li {
+  padding-top: 0em;
+  padding-bottom: 0em;
+}
+
+.services ul {
+  padding-top: 0.2em;
+}
+
+
 .underlined {
   color: black;
   flex: 1;
   text-decoration: none;
-  background-image: linear-gradient(to right, #78b7c2 0, #78b7c2 100%);
+  background-image: linear-gradient(to right, #248277 0, #248277 100%);
   background-position: 0 1.2em;
   background-size: 0 100%;
   background-repeat: no-repeat;
@@ -253,6 +275,7 @@ details > summary::-webkit-details-marker {
 .underlined--thick {
   background-position: 0 -0.1em;
 }
+
 
 
 
