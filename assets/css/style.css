@@ -129,24 +129,6 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   visibility: visible;
 }
 
-.testimonial-wrap {
-  padding: 50px 50px 80px 50px;
-  background: #eceff2;
-}
-.testimonial-wrap .testimonial {
-  text-align: center;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.testimonial-wrap .testimonial img {
-  border-radius: 50%;
-  width: 120px;
-  margin: 0 auto 30px auto;
-}
-.testimonial-wrap .testimonial blockquote p {
-  font-size: 20px;
-}
-
 .h3 {
   font-size: 20px;
 }
@@ -270,13 +252,11 @@ details > summary::-webkit-details-marker {
   transition: background 0.5s;
 }
 .underlined:hover {
-  background-size: 90% 100%;
+  background-size: 100% 100%;
 }
 .underlined--thick {
   background-position: 0 -0.1em;
 }
-
-
 
 
 /*--------------------------------------------------------------
