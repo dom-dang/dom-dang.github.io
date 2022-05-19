@@ -255,6 +255,7 @@ details > summary::-webkit-details-marker {
 }
 .underlined:hover {
   background-size: 100% 100%;
+  font-weight: 900;
 }
 
 
