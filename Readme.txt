@@ -1,6 +1,7 @@
-Thanks for downloading this template!
+# My personal portfolio 
 
-Template Name: MyPortfolio
-Template URL: https://bootstrapmade.com/myportfolio-bootstrap-portfolio-website-template/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+Hi! I am Dominique, a high school student aspiring to become an engineer. Below is the link to my website/portfolio. 
+
+https://dom-dang.github.io/
+
+*March 2022 -*
