@@ -230,7 +230,6 @@ details > summary::-webkit-details-marker {
  a:hover {
   color:#88D4AB;
 }
-
 .services li {
   padding-top: 0em;
   padding-bottom: 0em;
@@ -239,6 +238,7 @@ details > summary::-webkit-details-marker {
 .services ul {
   padding-top: 0.2em;
 }
+
 
 
 .underlined {
@@ -253,6 +253,7 @@ details > summary::-webkit-details-marker {
 }
 .underlined:hover {
   background-size: 100% 100%;
+  font-weight: 900;
 }
 .underlined--thick {
   background-position: 0 -0.1em;
