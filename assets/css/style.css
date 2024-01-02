@@ -253,7 +253,7 @@ details > summary::-webkit-details-marker {
   color: black;
   flex: 1;
   text-decoration: none;
-  background-image: linear-gradient(to right, #248277 0, #248277 100%);
+  background-image: linear-gradient(to right, #88D4AB 0, #88D4AB 100%);
   background-position: 0 1.2em;
   background-size: 0 100%;
   background-repeat: no-repeat;
