@@ -21,6 +21,10 @@ a:hover {
   color: #000;
 }
 
+.list-unstyled.list-line.bullet-point {
+  font-size: 0.75em; 
+}
+
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: "Inconsolata", monospace
 }
