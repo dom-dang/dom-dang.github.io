@@ -17,6 +17,10 @@ a {
   text-decoration: none;
 }
 
+.credits {
+  color: white;
+}
+
 a:hover {
   color: #000;
 }
