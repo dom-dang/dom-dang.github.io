@@ -78,23 +78,6 @@
 
   });
 
-  /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
 
   /**
    * Animation on scroll
@@ -111,20 +94,74 @@
 })()
 
 
-var slideIndex = 1;
-showDivs(slideIndex);
 
-function plusDivs(n) {
-  showDivs(slideIndex += n);
+
+let slideIndex = 1;
+const slidesWrapper = document.querySelector(".slides-wrapper");
+const slides = document.getElementsByClassName("mySlides");
+const totalSlides = slides.length;
+
+// Initialize the slideshow
+document.addEventListener("DOMContentLoaded", () => {
+    setInitialPosition();
+    updateDots(slideIndex);
+});
+
+function setInitialPosition() {
+    // Offset to show the first "real" slide
+    slidesWrapper.style.transform = `translateX(-100%)`;
 }
 
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length} ;
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  x[slideIndex-1].style.display = "block";
+function plusSlides(n) {
+    slideIndex += n;
+    showSlides();
 }
+
+function currentSlide(n) {
+    slideIndex = n;
+    showSlides();
+}
+
+function showSlides() {
+    const dots = document.getElementsByClassName("dot");
+
+    // Smooth transition
+    slidesWrapper.style.transition = "transform 0.8s ease-in-out";
+
+    // Adjust the transform to slide to the current index
+    slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+    // Reset the position if at cloned slides
+    slidesWrapper.addEventListener("transitionend", () => {
+        if (slideIndex === 0) {
+            // Reset to last "real" slide
+            slidesWrapper.style.transition = "none";
+            slideIndex = totalSlides - 2;
+            slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+        } else if (slideIndex === totalSlides - 1) {
+            // Reset to first "real" slide
+            slidesWrapper.style.transition = "none";
+            slideIndex = 1;
+            slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+    });
+
+    // Update active dots
+    updateDots(slideIndex);
+}
+
+function updateDots(index) {
+    const dots = document.getElementsByClassName("dot");
+
+    // Adjust for cloned slides
+    let activeIndex = index - 1;
+    if (index === 0) activeIndex = totalSlides - 3; // Last real slide
+    if (index === totalSlides - 1) activeIndex = 0; // First real slide
+
+    // Update dot styles
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    dots[activeIndex].className += " active";
+}
+

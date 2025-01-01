@@ -438,3 +438,82 @@ details > summary::-webkit-details-marker {
 .social a:hover {
   color: #000;
 }
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  margin: auto;
+  overflow: hidden;
+}
+
+/* Wrapper for slides */
+.slides-wrapper {
+  display: flex;
+  transition: transform 0.8s ease-in-out; /* Smooth sliding effect */
+}
+
+/* Individual slides */
+.mySlides {
+  min-width: 100%; /* Each slide takes up full width */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.mySlides img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Navigation buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 10px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 5px;
+  user-select: none;
+  z-index: 1000;
+  transition: 0.3s;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Position navigation buttons */
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* Dots */
+.dots-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.dot.active, .dot:hover {
+  background-color: #717171;
+}

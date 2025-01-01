@@ -65,7 +65,7 @@
 
     <nav class="navbar navbar-light custom-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">My Portfolio</a>
+            <a class="navbar-brand" href="index.html">Dominique Dang</a>
             <a href="#" class="burger" data-bs-toggle="collapse" data-bs-target="#main-navbar">
                 <span></span>
             </a>
@@ -78,8 +78,8 @@
             <div class="container">
                 <div class="row mb-4 align-items-center">
                     <div class="col-md-6" data-aos="fade-up">
-                        <h2>HackMIT 2023</h2>
-                        <p>A Unity game designed, drawn, and coded by 4 first years at MIT - won Top Hack on the
+                        <h2>HackMIT 2023 (Top Beginner Prize)</h2>
+                        <p>A Unity game designed, drawn, and coded by 4 first-year students at MIT - won Top Hack on the
                             Beginner Track at HackMIT 2023.</p>
                     </div>
                 </div>
@@ -88,20 +88,49 @@
             <div class="site-section pb-0">
                 <div class="container">
                     <div class="row align-items-stretch">
-                        <div class="col-md-8" data-aos="fade-up">
-                            <img src="assets/img/loading-pic.jpg" alt="Image" class="img-fluid mySlides">
-                            <img src="assets/img/game-screen1.jpg" alt="Image" class="img-fluid mySlides">
-                            <img src="assets/img/game-screen2.jpg" alt="Image" class="img-fluid mySlides">
-                            <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                            <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+                        <div class="col-md-8 slideshow-container" data-aos="fade-up">
+                            <div class="slides-wrapper">
+                                <!-- Clone of the last slide for smooth cyclic effect -->
+                                <div class="mySlides">
+                                    <img src="assets/img/game-screen2.jpg" alt="Game Screen 2" class="img-fluid">
+                                </div>
+                        
+                                <!-- Original slides -->
+                                <div class="mySlides">
+                                    <img src="assets/img/loading-pic.jpg" alt="Loading" class="img-fluid">
+                                </div>
+                                <div class="mySlides">
+                                    <img src="assets/img/game-screen1.jpg" alt="Game Screen 1" class="img-fluid">
+                                </div>
+                                <div class="mySlides">
+                                    <img src="assets/img/game-screen2.jpg" alt="Game Screen 2" class="img-fluid">
+                                </div>
+                        
+                                <!-- Clone of the first slide for smooth cyclic effect -->
+                                <div class="mySlides">
+                                    <img src="assets/img/loading-pic.jpg" alt="Loading" class="img-fluid">
+                                </div>
+                            </div>
+                        
+                            <!-- Navigation buttons -->
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        
+                            <!-- Dots for slide indicators -->
+                            <div class="dots-container">
+                                <span class="dot" onclick="currentSlide(1)"></span>
+                                <span class="dot" onclick="currentSlide(2)"></span>
+                                <span class="dot" onclick="currentSlide(3)"></span>
+                            </div>
                         </div>
+                        
                         <div class="col-md-3 ml-auto" data-aos="fade-up" data-aos-delay="100">
                             <div class="sticky-content">
                                 <h3 class="h3">Catmosphere</h3>
                                 <p class="mb-4"><span class="text-muted">Programming: Sept. 2023</span></p>
 
                                 <div class="mb-5">
-                                    <p> UsUe the WASD keys to navigate our cat around the enemies. Enter the
+                                    <p> Use the WASD keys to navigate the cat around enemies. Enter the
                                         five levels of the atmosphere and enjoy the art and music while you're at it!
                                     </p>
 
