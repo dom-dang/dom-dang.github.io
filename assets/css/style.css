@@ -517,3 +517,21 @@ details > summary::-webkit-details-marker {
 .dot.active, .dot:hover {
   background-color: #717171;
 }
+
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+.card-img-top {
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  object-fit: cover;
+}
