@@ -188,6 +188,20 @@ a:hover {
 }
 
 /* Details Styling */
+
+summary {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+summary:hover {
+  color: black;
+}
+
+details[open] summary {
+  font-weight: 600;
+}
+
 details > summary {
   list-style: none;
 }
@@ -223,6 +237,11 @@ details > summary::-webkit-details-marker {
   font-size: 1.3em;
   width: 3em;
   border: 4em #0d1e2d;
+}
+
+p {
+  line-height: 1.7;
+  font-size: 1rem;
 }
 
 /*--------------------------------------------------------------
@@ -470,6 +489,20 @@ details > summary::-webkit-details-marker {
 .dot.active, .dot:hover {
   background-color: #717171;
 }
+
+.footer-icon i {
+  color: black;
+  filter: grayscale(100%);
+  transition: all 0.3s ease;
+}
+
+.footer-icon:hover i {
+  transform: scale(1.15);
+  filter: grayscale(0%);
+  color: black;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
 
 /*--------------------------------------------------------------
 # Cards
