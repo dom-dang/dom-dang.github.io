@@ -59,6 +59,16 @@
             <div class="row">
 
               <div class="col-md-4 mb-4 d-flex" data-aos="fade-up" data-aos-delay="50">
+                <div class="card h-100" data-bs-toggle="modal" data-bs-target="#novartismodal">
+                  <img src="assets/img/novartis_presentation.png" class="card-img-top" alt="Hansen Lab">
+                  <div class="card-body">
+                    <h5 class="card-title">Novartis Internship</h5>
+                    <p class="card-text">Oncology Data Science | May 2025 – August 2025</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-4 d-flex" data-aos="fade-up" data-aos-delay="50">
                 <div class="card h-100" data-bs-toggle="modal" data-bs-target="#modal1">
                   <img src="assets/img/lab photo.jpg" class="card-img-top" alt="Hansen Lab">
                   <div class="card-body">
@@ -110,7 +120,7 @@
 
               <div class="col-md-4 mb-4 d-flex" data-aos="fade-up" data-aos-delay="50">
                 <div class="card h-100" data-bs-toggle="modal" data-bs-target="#dukeModal">
-                  <img src="assets/img/portfolio/duke-presentation.jpg" class="card-img-top" alt="DukeREP">
+                  <img src="assets/img/duke-presentation.jpg" class="card-img-top" alt="DukeREP">
                   <div class="card-body">
                     <h5 class="card-title">Warren Grill Lab </h5>
                     <p class="card-text">Duke University | June – August 2021</p>
@@ -127,12 +137,11 @@
     </section>
   </main>
 
-
-  <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modalLabel1" aria-hidden="true">
+  <div class="modal fade" id="novartismodal" tabindex="-1" aria-labelledby="novartismodal" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel1">Anders Hansen Lab</h5>
+          <h5 class="modal-title" id="novartismodal">Novartis Internship</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body container-fluid">
@@ -141,13 +150,13 @@
               <div id="hansenCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="assets/img/lab photo.jpg" class="d-block w-100" alt="Team photo">
+                    <img src="assets/img/novartis_presentation.png" class="d-block w-100" alt="Team photo">
                   </div>
                   <div class="carousel-item">
-                    <img src="assets/img/hansen1.png" class="d-block w-100" alt="Materials">
+                    <img src="assets/img/novartis_team.JPG" class="d-block w-100" alt="Materials">
                   </div>
                   <div class="carousel-item">
-                    <img src="assets/img/hansen2.png" class="d-block w-100" alt="Materials">
+                    <img src="assets/img/novartis_prize.JPG" class="d-block w-100" alt="Materials">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#hansenCarousel"
@@ -163,7 +172,72 @@
 
 
             <div class="col-lg-6">
-              <h4>Bidirectional Promoters</h4>
+              <h4>Predicting Tumorigenic Potential of Human Cancer Cell Lines in Mice</h4>
+              <p><strong>Science | May 2025 – August 2025</strong></p>
+              <p>
+                Cancer cell lines are foundational tools in preclinical research, yet many fail to form tumors in
+                xenograft models, limiting their translational utility. To address this gap, bulk RNA sequencing
+                data was integrated with experimentally validated tumorigenicity outcomes to identify
+                transcriptomic features associated with successful xenograft formation. Using
+                these features, a machine learning model was trained, introducing a new dimension for prioritizing cell
+                lines based on their likelihood of forming tumors in vivo.
+              </p>
+              <h5 class="mt-4">What I Learned:</h5>
+              <ul>
+                <li> Differential Gene Expression, Geneset Enrichment Analysis </li>
+                <li>Machine Learning (Random Forest, Naive Bayes, Logistics Regression, Linear Regression)</li>
+                <li>Scanpy Library with scRNA-seq data</li>
+              </ul>
+              <h5 class="mt-4">Prizes Received:</h5>
+              <ul>
+                <li> 1st Place: Innovation in Research - Data Science </li>
+                <li> 2nd Place: Innovation in Research - Overall</li>
+                <li> 2nd Place: Innovation in Research - Scientific Content & Merit</li>
+                <li> 3rd Place: Poster Display & Presentation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal1">Anders Hansen Lab</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div id="momentumCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="assets/img/lab photo.jpg" class="d-block w-100" alt="lab photo">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="assets/img/hansen1.png" class="d-block w-100" alt="presentation">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="assets/img/hansen2.png" class="d-block w-100" alt="facs">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#momentumCarousel"
+                  data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#momentumCarousel"
+                  data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h3>Bidirectional Promoters</h3>
               <p><strong>Science | Jan 2024 – Jan 2025</strong></p>
               <p>
                 Characterizing bidirectional promoters (BDPs) as a tool for gene co-expression.
@@ -171,7 +245,7 @@
                 dynamics overtime
                 and apply BDPs in existing co-expression applications.
               </p>
-              <h5 class="mt-4">What I Learned:</h5>
+              <h5 class="mt-4">What I learned:</h5>
               <ul>
                 <li>Plasmid construction: gel electrophoresis, PCR, Gibson assembly</li>
                 <li>Cell culture, FACS, fluorescence microscopy</li>
@@ -185,6 +259,8 @@
       </div>
     </div>
   </div>
+
+
 
   <div class="modal fade" id="momentumModal" tabindex="-1" aria-labelledby="momentumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -366,7 +442,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-6">
-              <img src="assets/img/portfolio/duke-presentation.jpg" alt="DukeREP Presentation" class="img-fluid mb-3">
+              <img src="assets/img/duke-presentation.jpg" alt="DukeREP Presentation" class="img-fluid mb-3">
             </div>
 
             <div class="col-md-6">
