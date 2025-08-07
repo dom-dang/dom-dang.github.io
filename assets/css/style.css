@@ -529,7 +529,7 @@ p {
 
 .card-img-top {
   width: 100%;
-  height: 250px; /* Fixed height */
+  height: 230px; /* Fixed height */
   object-fit: contain;
   background-color: white; 
 }
