@@ -464,10 +464,12 @@ p {
 
 .prev {
   left: 10px;
+  color: black !important;
 }
 
 .next {
   right: 10px;
+  color: black !important;
 }
 
 .dots-container {
@@ -507,6 +509,12 @@ p {
 /*--------------------------------------------------------------
 # Cards
 --------------------------------------------------------------*/
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Equal width columns */
+  gap: 20px;
+}
+
 .card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 10px;
@@ -520,7 +528,21 @@ p {
 }
 
 .card-img-top {
-  aspect-ratio: 16 / 10;
   width: 100%;
-  object-fit: cover;
+  height: 250px; /* Fixed height */
+  object-fit: contain;
+  background-color: white; 
 }
+
+.carousel-item img {
+  height: 400px;  
+  width: 100%;
+  object-fit: contain; 
+}
+
+@media (max-width: 768px) {
+  .carousel-item img {
+    height: 250px; 
+  }
+}
+
