@@ -1,7 +1,8 @@
-## My Personal Portfolio
+<h3 align="center">
+Hi, I'm <a href="https://dom-dang.github.io/" target="_blank" rel="noreferrer">Dom!</a> 👋
+</h3>
 
-Hi! I am Dominique, a high school student aspiring to become an engineer. Below is the link to my website/portfolio. 
-
-https://dom-dang.github.io/
-
-*Started March 2022 - Work in Progress*
+- 🌱 undergrad @mit, studying cs & bio
+- 🖥️ currently interning at Novartis in the oncology data science group
+- 🧪 analyzing nanpore sequencing data of trna in Eliezer Calo's Lab during the school year
+- ✉️ questions, chat, discussions? ddang {at} mit {dot} edu
