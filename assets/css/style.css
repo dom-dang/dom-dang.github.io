@@ -546,3 +546,53 @@ p {
   }
 }
 
+
+
+details {
+  margin-bottom: 0.75rem;
+}
+
+details summary {
+  font-weight: 600;
+  font-size: 1rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0.1rem 0;  
+}
+
+details summary::-webkit-details-marker {
+  display: none; 
+}
+
+details summary::after {
+  content: "›";
+  font-size: 1rem;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease-in-out;
+  margin-left: 0.4rem;
+  color: #666;
+}
+
+details[open] summary::after {
+  transform: rotate(90deg);
+  color: #000;
+}
+
+details ul {
+  margin: 0.4rem 0 0.2rem 1.2rem; 
+  padding-left: 0;               
+}
+
+details li {
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
+}
+
+.section h4 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3em;
+  margin-bottom: 1em;
+}
