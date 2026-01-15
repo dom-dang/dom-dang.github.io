@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wales Photos</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #e8dcc4;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.header { text-align: center; margin-bottom: 40px; }
+
+h1 {
+    color: #3a3a3a;
+    font-size: 1.8em;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.instructions {
+    text-align: center;
+    color: #6a5a4a;
+    font-size: 13px;
+}
+
+.controls {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.group-btn {
+    padding: 8px 16px;
+    border: 1px solid #8b7355;
+    background: transparent;
+    font-size: 13px;
+    cursor: pointer;
+    color: #5a4a3a;
+}
+
+.group-btn:hover,
+.group-btn.active {
+    background: #5a4a3a;
+    color: #e8dcc4;
+}
+
+#table {
+    position: relative;
+    min-height: 700px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #d4c4a8;
+    border: 2px solid #8b7355;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    contain: layout paint;
+}
+
+.photo {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    cursor: grab;
+    user-select: none;
+    will-change: transform;
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.photo:hover {
+    transform: scale(1.08) translateY(-8px) rotate(0deg) !important;
+    z-index: 1000;
+}
+
+.photo.dragging {
+    opacity: 0.9;
+    z-index: 2000;
+}
+
+.photo-frame {
+    width: 100%;
+    height: 100%;
+    background: #faf8f3;
+    padding: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #c9b99a;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.15) contrast(0.95);
+}
+
+.photo-label {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #5a4a3a;
+}
+
+/* Lightbox */
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(232,220,196,0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 5000;
+}
+
+#lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#lightbox img {
+    max-width: 85vw;
+    max-height: 85vh;
+    border: 10px solid #faf8f3;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>wales photos</h1>
+    <div class="instructions">drag to arrange • click to filter • click photo to enlarge</div>
+</div>
+
+<div class="controls" id="controls"></div>
+<div id="table"></div>
+
+<div id="lightbox">
+    <img id="lightbox-img">
+</div>
+
+<script>
+let draggedElement = null;
+let offsetX = 0, offsetY = 0;
+let dragRAF = null;
+let didDrag = false;
+
+const photoState = new Map();
+
+const photoStructure = {
+    merthyr: ['IMG_6495.jpeg','IMG_6496.jpeg','IMG_6497.jpeg','IMG_6562.jpeg','IMG_6563.jpeg','IMG_6564.jpeg','IMG_6565.jpeg','IMG_6566.jpeg','IMG_6567.jpeg','IMG_6568.jpeg','IMG_6569.jpeg','IMG_6571.jpeg','IMG_6573.jpeg','IMG_6574.jpeg','IMG_6575.jpeg','IMG_6581.JPG','IMG_6590.jpeg','IMG_6591.JPG','IMG_6592.JPG','IMG_6593.JPG','IMG_6594.JPG'],
+    mit: ['IMG_1398.jpeg','IMG_2639.jpeg','IMG_2648.jpeg'],
+    nature: ['IMG_6382.jpeg','IMG_6384.jpeg','IMG_6385.jpeg','IMG_6394.jpeg','IMG_6395.jpeg','IMG_6403.jpeg','IMG_6404.jpeg','IMG_6405.jpeg','IMG_6407.jpeg','IMG_6410.jpeg','IMG_6417.jpeg','IMG_6419.jpeg','IMG_6420.jpeg','IMG_6424.jpeg','IMG_6430.jpeg','IMG_6432.jpeg','IMG_6433.jpeg','IMG_6442.jpeg','IMG_6443.jpeg','IMG_6444.jpeg','IMG_6445.jpeg','IMG_6451.jpeg','IMG_6458.jpeg','IMG_6460.jpeg','IMG_6462.jpeg','IMG_6466.jpeg','IMG_6469.jpeg','IMG_6473.jpeg','IMG_6492.jpeg','IMG_6494.jpeg','IMG_6529.jpeg','IMG_6530.jpeg','IMG_6534.jpeg','IMG_6538.jpeg','IMG_6539.jpeg','IMG_6540.jpeg','IMG_6541.jpeg','IMG_6559.jpeg','IMG_6560.jpeg'],
+    teaching: ['IMG_6595.jpeg','IMG_6597.jpeg','IMG_6599.jpeg','IMG_6601.jpeg','IMG_6603.JPG','IMG_6604.JPG','IMG_6605.JPG','IMG_6606.JPG']
+};
+
+function randomScatter(rect) {
+    return {
+        x: 40 + Math.random() * (rect.width - 220),
+        y: 40 + Math.random() * (rect.height - 220),
+        rot: (Math.random() - 0.5) * 12
+    };
+}
+
+function createControls() {
+    const controls = document.getElementById('controls');
+    ['all', ...Object.keys(photoStructure)].forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'group-btn' + (cat === 'all' ? ' active' : '');
+        btn.textContent = cat;
+        btn.onclick = () => groupPhotos(cat);
+        controls.appendChild(btn);
+    });
+}
+
+function initTable() {
+    const table = document.getElementById('table');
+    const rect = table.getBoundingClientRect();
+
+    for (const [category, files] of Object.entries(photoStructure)) {
+        files.forEach(file => {
+            const photo = document.createElement('div');
+            photo.className = 'photo';
+            photo.dataset.category = category;
+
+            const { x, y, rot } = randomScatter(rect);
+            photo.style.left = x + 'px';
+            photo.style.top = y + 'px';
+            photo.style.transform = `rotate(${rot}deg)`;
+
+            photoState.set(photo, { rot });
+
+            photo.innerHTML = `
+                <div class="photo-frame">
+                    <img src="wales_photos/${category}/${file}">
+                </div>
+                <div class="photo-label">${file.replace(/\..+$/, '')}</div>
+            `;
+
+            photo.addEventListener('mousedown', startDrag);
+            photo.addEventListener('click', () => {
+                if (didDrag) return;
+                lightboxImg.src = `wales_photos/${category}/${file}`;
+                lightbox.classList.add('active');
+            });
+
+            addHoverWiggle(photo);
+            table.appendChild(photo);
+        });
+    }
+}
+
+function startDrag(e) {
+    didDrag = false;
+    draggedElement = e.currentTarget;
+    draggedElement.classList.add('dragging');
+
+    const rect = draggedElement.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', stopDrag);
+}
+
+function drag(e) {
+    if (!draggedElement || dragRAF) return;
+
+    dragRAF = requestAnimationFrame(() => {
+        didDrag = true;
+        const tableRect = document.getElementById('table').getBoundingClientRect();
+        draggedElement.style.left = Math.max(10, Math.min(e.clientX - tableRect.left - offsetX, tableRect.width - 190)) + 'px';
+        draggedElement.style.top = Math.max(10, Math.min(e.clientY - tableRect.top - offsetY, tableRect.height - 190)) + 'px';
+        dragRAF = null;
+    });
+}
+
+function stopDrag() {
+    if (draggedElement) draggedElement.classList.remove('dragging');
+    draggedElement = null;
+    document.removeEventListener('mousemove', drag);
+    document.removeEventListener('mouseup', stopDrag);
+}
+
+function addHoverWiggle(photo) {
+    photo.addEventListener('mouseenter', () => {
+        const dx = (Math.random() - 0.5) * 6;
+        const dy = (Math.random() - 0.5) * 6;
+        const dr = (Math.random() - 0.5) * 2;
+        photo.style.transform += ` translate(${dx}px, ${dy}px) rotate(${dr}deg)`;
+    });
+
+    photo.addEventListener('mouseleave', () => {
+        const { rot } = photoState.get(photo);
+        photo.style.transform = `rotate(${rot}deg)`;
+    });
+}
+
+function groupPhotos(category) {
+    document.querySelectorAll('.group-btn').forEach(btn =>
+        btn.classList.toggle('active', btn.textContent === category)
+    );
+
+    const rect = document.getElementById('table').getBoundingClientRect();
+
+    document.querySelectorAll('.photo').forEach(photo => {
+        if (category === 'all' || photo.dataset.category === category) {
+            photo.style.display = 'block';
+            const { x, y, rot } = randomScatter(rect);
+            photo.style.left = x + 'px';
+            photo.style.top = y + 'px';
+            photo.style.transform = `rotate(${rot}deg)`;
+            photoState.set(photo, { rot });
+        } else {
+            photo.style.display = 'none';
+        }
+    });
+}
+
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+
+createControls();
+initTable();
+</script>
+
+</body>
+</html>
