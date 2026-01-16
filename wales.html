@@ -147,7 +147,6 @@
 </head>
 
 <body>
-
     <div class="header">
         <h1>gtl wales 2025</h1>
         <div class="instructions">drag to arrange • filter by topic • click to see more <3 </div>
@@ -169,11 +168,79 @@
             const photoState = new Map();
 
             const photoStructure = {
-                merthyr: ['IMG_6495.jpeg', 'IMG_6496.jpeg', 'IMG_6497.jpeg', 'IMG_6562.jpeg', 'IMG_6563.jpeg', 'IMG_6564.jpeg', 'IMG_6565.jpeg', 'IMG_6566.jpeg', 'IMG_6567.jpeg', 'IMG_6568.jpeg', 'IMG_6569.jpeg', 'IMG_6571.jpeg', 'IMG_6573.jpeg', 'IMG_6574.jpeg', 'IMG_6575.jpeg', 'IMG_6581.JPG', 'IMG_6590.jpeg', 'IMG_6591.JPG', 'IMG_6592.JPG', 'IMG_6593.JPG', 'IMG_6594.JPG'],
-                mit: ['IMG_1398.jpeg', 'IMG_2639.jpeg', 'IMG_2648.jpeg'],
-                nature: ['IMG_6382.jpeg', 'IMG_6384.jpeg', 'IMG_6385.jpeg', 'IMG_6394.jpeg', 'IMG_6395.jpeg', 'IMG_6403.jpeg', 'IMG_6404.jpeg', 'IMG_6405.jpeg', 'IMG_6407.jpeg', 'IMG_6410.jpeg', 'IMG_6417.jpeg', 'IMG_6419.jpeg', 'IMG_6420.jpeg', 'IMG_6424.jpeg', 'IMG_6430.jpeg', 'IMG_6432.jpeg', 'IMG_6433.jpeg', 'IMG_6442.jpeg', 'IMG_6443.jpeg', 'IMG_6444.jpeg', 'IMG_6445.jpeg', 'IMG_6451.jpeg', 'IMG_6458.jpeg', 'IMG_6460.jpeg', 'IMG_6462.jpeg', 'IMG_6466.jpeg', 'IMG_6469.jpeg', 'IMG_6473.jpeg', 'IMG_6492.jpeg', 'IMG_6494.jpeg', 'IMG_6529.jpeg', 'IMG_6530.jpeg', 'IMG_6534.jpeg', 'IMG_6538.jpeg', 'IMG_6539.jpeg', 'IMG_6540.jpeg', 'IMG_6541.jpeg', 'IMG_6559.jpeg', 'IMG_6560.jpeg'],
-                teaching: ['IMG_6595.jpeg', 'IMG_6597.jpeg', 'IMG_6599.jpeg', 'IMG_6601.jpeg', 'IMG_6603.JPG', 'IMG_6604.JPG', 'IMG_6605.JPG', 'IMG_6606.JPG']
+                'teaching': [
+                    'IMG_6495.jpeg',
+                    'IMG_6496.jpeg',
+                    'IMG_6497.jpeg',
+                    'IMG_6563.jpeg',
+                    'IMG_6574.jpeg',
+                    'IMG_6575.jpeg',
+                    'IMG_6581.JPG',
+                    'IMG_6590.jpeg',
+                    'IMG_6591.JPG',
+                    'IMG_6592.JPG',
+                    'IMG_6593.JPG',
+                    'IMG_6594.JPG',
+                    'IMG_6595.jpeg',
+                    'IMG_6597.jpeg',
+                    'IMG_6599.jpeg',
+                    'IMG_6601.jpeg',
+                    'IMG_6603.JPG',
+                    'IMG_6604.JPG',
+                    'IMG_6605.JPG',
+                    'IMG_6606.JPG',
+                ],
+                'mit': [
+                    'IMG_1398.jpeg',
+                    'IMG_2639.jpeg',
+                    'IMG_2648.jpeg',
+                ],
+                'nature': [
+                    'IMG_6382.jpeg',
+                    'IMG_6384.jpeg',
+                    'IMG_6385.jpeg',
+                    'IMG_6394.jpeg',
+                    'IMG_6395.jpeg',
+                    'IMG_6403.jpeg',
+                    'IMG_6404.jpeg',
+                    'IMG_6405.jpeg',
+                    'IMG_6407.jpeg',
+                    'IMG_6410.jpeg',
+                    'IMG_6417.jpeg',
+                    'IMG_6419.jpeg',
+                    'IMG_6420.jpeg',
+                    'IMG_6424.jpeg',
+                    'IMG_6430.jpeg',
+                    'IMG_6432.jpeg',
+                    'IMG_6433.jpeg',
+                    'IMG_6442.jpeg',
+                    'IMG_6443.jpeg',
+                    'IMG_6444.jpeg',
+                    'IMG_6445.jpeg',
+                    'IMG_6451.jpeg',
+                    'IMG_6458.jpeg',
+                    'IMG_6460.jpeg',
+                    'IMG_6462.jpeg',
+                    'IMG_6466.jpeg',
+                    'IMG_6469.jpeg',
+                    'IMG_6473.jpeg',
+                    'IMG_6492.jpeg',
+                    'IMG_6494.jpeg',
+                    'IMG_6529.jpeg',
+                    'IMG_6530.jpeg',
+                    'IMG_6534.jpeg',
+                    'IMG_6538.jpeg',
+                    'IMG_6539.jpeg',
+                    'IMG_6540.jpeg',
+                    'IMG_6541.jpeg',
+                    'IMG_6559.jpeg',
+                    'IMG_6560.jpeg',
+                ],
+
             };
+
+            // Total photos found: 62
+            // Categories: mit, nature, teaching
 
             function randomScatter(rect) {
                 return {
