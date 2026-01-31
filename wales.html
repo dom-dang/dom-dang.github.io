@@ -17,17 +17,17 @@
             font-family: 'Courier New', monospace;
             background: #e8dcc4;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px 10px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         h1 {
             color: #3a3a3a;
-            font-size: 1.8em;
+            font-size: clamp(1.2em, 4vw, 1.8em);
             letter-spacing: 2px;
             margin-bottom: 10px;
         }
@@ -35,34 +35,44 @@
         .instructions {
             text-align: center;
             color: #6a5a4a;
-            font-size: 13px;
+            font-size: clamp(11px, 2.5vw, 13px);
+            padding: 0 10px;
         }
 
         .controls {
             display: flex;
-            gap: 20px;
+            gap: 10px;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             align-items: center;
+            padding: 0 10px;
         }
 
         .group-btn {
-            padding: 8px 16px;
+            padding: 8px 12px;
             border: 1px solid #8b7355;
             background: transparent;
-            font-size: 13px;
+            font-size: clamp(11px, 2.5vw, 13px);
             cursor: pointer;
             color: #5a4a3a;
             transition: all 0.2s ease;
             font-family: 'Courier New', monospace;
+            white-space: nowrap;
         }
 
         .group-btn:hover,
         .group-btn.active {
             background: #5a4a3a;
             color: #e8dcc4;
-            transform: translateY(-1px);
+        }
+
+        /* Touch improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .group-btn:active {
+                background: #5a4a3a;
+                color: #e8dcc4;
+            }
         }
 
         /* Custom Dropdown */
@@ -72,15 +82,16 @@
         }
 
         .nature-btn {
-            padding: 8px 32px 8px 16px;
+            padding: 8px 24px 8px 12px;
             border: 1px solid #8b7355;
             background: transparent;
-            font-size: 13px;
+            font-size: clamp(11px, 2.5vw, 13px);
             cursor: pointer;
             color: #5a4a3a;
             font-family: 'Courier New', monospace;
             transition: all 0.2s ease;
             position: relative;
+            white-space: nowrap;
         }
 
         .nature-btn:hover,
@@ -92,7 +103,7 @@
         .nature-btn::after {
             content: '▼';
             position: absolute;
-            right: 12px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 10px;
@@ -113,6 +124,7 @@
             display: none;
             z-index: 1000;
             margin-top: -1px;
+            min-width: 120px;
         }
 
         .nature-menu.show {
@@ -120,10 +132,10 @@
         }
 
         .nature-option {
-            padding: 8px 16px;
+            padding: 8px 12px;
             cursor: pointer;
             color: #5a4a3a;
-            font-size: 13px;
+            font-size: clamp(11px, 2.5vw, 13px);
             font-family: 'Courier New', monospace;
             transition: background 0.2s ease;
         }
@@ -135,13 +147,28 @@
 
         #table {
             position: relative;
-            width: min(90vw, 1000px);
-            height: min(70vh, 550px);
+            width: min(95vw, 1000px);
+            height: min(65vh, 550px);
             margin: 0 auto;
             background: #d4c4a8;
             border: 2px solid #8b7355;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+        }
+
+        /* Responsive table sizing */
+        @media (max-width: 768px) {
+            #table {
+                height: 60vh;
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #table {
+                height: 55vh;
+                min-height: 350px;
+            }
         }
 
         .photo {
@@ -151,6 +178,7 @@
             cursor: grab;
             user-select: none;
             will-change: transform;
+            touch-action: none;
 
             --x: 0px;
             --y: 0px;
@@ -164,6 +192,21 @@
                     0) rotate(var(--rot));
 
             transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Responsive photo sizes */
+        @media (max-width: 768px) {
+            .photo {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo {
+                width: 120px;
+                height: 120px;
+            }
         }
 
         .photo:hover {
@@ -188,6 +231,12 @@
             position: relative;
         }
 
+        @media (max-width: 480px) {
+            .photo-frame {
+                padding: 8px;
+            }
+        }
+
         .photo img {
             width: 100%;
             height: 100%;
@@ -201,10 +250,16 @@
             bottom: -28px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 11px;
+            font-size: clamp(9px, 2vw, 11px);
             color: #5a4a3a;
             pointer-events: none;
             white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .photo-label {
+                bottom: -22px;
+            }
         }
 
         /* Washi tape decorations */
@@ -231,6 +286,13 @@
             height: 15px;
             border: 1px solid #8b7355;
             pointer-events: none;
+        }
+
+        @media (max-width: 480px) {
+            .corner-deco {
+                width: 10px;
+                height: 10px;
+            }
         }
 
         .corner-deco.tl {
@@ -274,6 +336,7 @@
             pointer-events: none;
             transition: opacity 0.3s ease;
             z-index: 5000;
+            padding: 20px;
         }
 
         #lightbox.active {
@@ -294,6 +357,12 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
         }
 
+        @media (max-width: 480px) {
+            #lightbox img {
+                border: 5px solid #faf8f3;
+            }
+        }
+
         #lightbox-close {
             position: absolute;
             top: -40px;
@@ -304,8 +373,15 @@
             padding: 8px 16px;
             cursor: pointer;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: clamp(11px, 2.5vw, 13px);
             transition: all 0.2s ease;
+        }
+
+        @media (max-width: 480px) {
+            #lightbox-close {
+                top: -35px;
+                padding: 6px 12px;
+            }
         }
 
         #lightbox-close:hover {
@@ -316,8 +392,8 @@
         /* Add note feature */
         .add-note-btn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -332,6 +408,16 @@
             align-items: center;
             justify-content: center;
             z-index: 100;
+        }
+
+        @media (max-width: 480px) {
+            .add-note-btn {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 20px;
+            }
         }
 
         .add-note-btn:hover {
@@ -351,6 +437,16 @@
             line-height: 1.6;
             color: #3a3a3a;
             border: 1px solid #f0e68c;
+            touch-action: none;
+        }
+
+        @media (max-width: 480px) {
+            .sticky-note {
+                width: 130px;
+                min-height: 130px;
+                padding: 12px;
+                font-size: 11px;
+            }
         }
 
         .sticky-note.dragging {
@@ -369,6 +465,13 @@
             outline: none;
             color: #3a3a3a;
             cursor: text;
+        }
+
+        @media (max-width: 480px) {
+            .sticky-note textarea {
+                height: 80px;
+                font-size: 11px;
+            }
         }
 
         .sticky-note .delete-note {
@@ -391,14 +494,15 @@
 
         /* Action buttons */
         .action-btn {
-            padding: 8px 16px;
+            padding: 8px 12px;
             border: 1px solid #8b7355;
             background: transparent;
-            font-size: 13px;
+            font-size: clamp(11px, 2.5vw, 13px);
             cursor: pointer;
             color: #5a4a3a;
             transition: all 0.2s ease;
             font-family: 'Courier New', monospace;
+            white-space: nowrap;
         }
 
         .action-btn:hover {
@@ -419,6 +523,14 @@
             background: transparent;
             color: #5a4a3a;
             transform: none;
+        }
+
+        /* Reduce animations on mobile for performance */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
@@ -456,11 +568,16 @@
         <script>
             const photoStructure = {
                 bath: [
+                    'IMG_6783.jpeg',
                     'IMG_6785.jpeg',
                     'IMG_6786.jpeg',
                     'IMG_6788.jpeg',
                     'IMG_6792.jpeg',
+                    'IMG_6801.jpeg',
+                    'IMG_6804.jpeg',
+                    'IMG_6805.jpeg',
                     'IMG_6808.jpeg',
+                    'IMG_6812.jpeg',
                     'IMG_6819.jpeg',
                     'IMG_6821.jpeg',
                     'IMG_6828.jpeg',
@@ -470,6 +587,8 @@
                     'IMG_6848.jpeg',
                     'IMG_6853.jpeg',
                     'IMG_6860.jpeg',
+                    'IMG_6863.jpeg',
+                    'IMG_6864.jpeg',
                 ],
                 cardiff: [
                     'IMG_6382.jpeg',
@@ -480,6 +599,9 @@
                     'IMG_6419.jpeg',
                     'IMG_6420.jpeg',
                     'IMG_6424.jpeg',
+                    'IMG_6430.jpeg',
+                    'IMG_6432.jpeg',
+                    'IMG_6433.jpeg',
                     'IMG_6442.jpeg',
                     'IMG_6443.jpeg',
                     'IMG_6444.jpeg',
@@ -507,9 +629,6 @@
                         'IMG_6473.jpeg',
                         'IMG_6530.jpeg',
                         'IMG_6534.jpeg',
-                        'IMG_6538.jpeg',
-                        'IMG_6541.jpeg',
-                        'IMG_6642.jpeg',
                         'IMG_6661.jpeg',
                         'IMG_6685.jpeg',
                         'IMG_6693.jpeg',
@@ -527,20 +646,20 @@
                         'IMG_6743.jpeg',
                         'IMG_6749.jpeg',
                         'IMG_6768.jpeg',
-                        'IMG_6869.jpeg',
                         'IMG_6873.jpeg',
                         'IMG_6874.jpeg',
                     ],
                     sky: [
-                        'IMG_6430.jpeg',
-                        'IMG_6432.jpeg',
-                        'IMG_6433.jpeg',
                         'IMG_6492.jpeg',
                         'IMG_6494.jpeg',
+                        'IMG_6538.jpeg',
                         'IMG_6539.jpeg',
                         'IMG_6540.jpeg',
+                        'IMG_6541.jpeg',
                         'IMG_6559.jpeg',
                         'IMG_6560.jpeg',
+                        'IMG_6642.jpeg',
+                        'IMG_6869.jpeg',
                     ],
                 },
                 teaching: [
@@ -569,7 +688,6 @@
                     'IMG_6606.JPG',
                 ],
             };
-
             const table = document.getElementById('table');
             const controls = document.getElementById('controls');
             const lightbox = document.getElementById('lightbox');
@@ -585,11 +703,15 @@
             let allPhotos = [];
             let displayedPhotos = [];
             const INITIAL_PHOTO_LIMIT = 40;
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
             function randomScatter(photo) {
                 const rect = table.getBoundingClientRect();
-                const x = 40 + Math.random() * (rect.width - 220);
-                const y = 40 + Math.random() * (rect.height - 220);
+                const photoSize = window.innerWidth <= 480 ? 120 : (window.innerWidth <= 768 ? 150 : 180);
+                const margin = 20;
+
+                const x = margin + Math.random() * (rect.width - photoSize - margin * 2);
+                const y = margin + Math.random() * (rect.height - photoSize - margin * 2);
                 const rot = (Math.random() - 0.5) * 12;
 
                 photo.style.setProperty('--x', `${x}px`);
@@ -646,7 +768,6 @@
                 };
                 controls.appendChild(bathBtn);
 
-
                 // Add custom nature dropdown
                 const dropdown = document.createElement('div');
                 dropdown.className = 'nature-dropdown';
@@ -660,7 +781,6 @@
                 </div>
             `;
                 controls.appendChild(dropdown);
-
 
                 const natureBtn = dropdown.querySelector('#nature-btn');
                 const natureMenu = dropdown.querySelector('#nature-menu');
@@ -761,20 +881,16 @@
                 photo.className = 'photo';
                 photo.dataset.category = mainCategory;
                 photo.dataset.subcategory = subcategory;
-                photo.style.display = 'none'; // Hidden by default
+                photo.style.display = 'none';
 
                 const tapeStyle = Math.random() > 0.5 ? '<div class="tape top"></div>' : '';
 
-                // Build the correct image path
                 let imagePath;
                 if (mainCategory === 'nature' && subcategory !== 'other') {
-                    // Nature photos in subfolders (bath, castles, sun)
                     imagePath = `wales_photos/${mainCategory}/${subcategory}/${file}`;
                 } else if (mainCategory === 'nature' && subcategory === 'other') {
-                    // Nature photos directly in the nature folder
                     imagePath = `wales_photos/${mainCategory}/${file}`;
                 } else {
-                    // Teaching photos
                     imagePath = `wales_photos/${mainCategory}/${file}`;
                 }
 
@@ -787,8 +903,27 @@
             `;
 
                 addHoverWiggle(photo);
+                addDragHandlers(photo, imagePath);
 
+                table.appendChild(photo);
+            }
+
+            function addDragHandlers(photo, imagePath) {
+                // Mouse events
                 photo.addEventListener('mousedown', startDrag);
+
+                // Touch events
+                photo.addEventListener('touchstart', (e) => {
+                    const touch = e.touches[0];
+                    startDrag({
+                        preventDefault: () => e.preventDefault(),
+                        currentTarget: photo,
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                }, { passive: false });
+
+                // Click/tap to open lightbox
                 photo.addEventListener('click', e => {
                     if (didDrag) {
                         e.preventDefault();
@@ -797,8 +932,6 @@
                     lightboxImg.src = imagePath;
                     lightbox.classList.add('active');
                 });
-
-                table.appendChild(photo);
             }
 
             function startDrag(e) {
@@ -812,6 +945,8 @@
 
                 document.addEventListener('mousemove', onDrag);
                 document.addEventListener('mouseup', endDrag);
+                document.addEventListener('touchmove', onTouchDrag, { passive: false });
+                document.addEventListener('touchend', endDrag);
             }
 
             function onDrag(e) {
@@ -819,6 +954,22 @@
 
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
+
+                if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+                    didDrag = true;
+                }
+
+                active.style.setProperty('--dx', `${dx}px`);
+                active.style.setProperty('--dy', `${dy}px`);
+            }
+
+            function onTouchDrag(e) {
+                if (!active) return;
+                e.preventDefault();
+
+                const touch = e.touches[0];
+                const dx = touch.clientX - startX;
+                const dy = touch.clientY - startY;
 
                 if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
                     didDrag = true;
@@ -844,6 +995,8 @@
 
                 document.removeEventListener('mousemove', onDrag);
                 document.removeEventListener('mouseup', endDrag);
+                document.removeEventListener('touchmove', onTouchDrag);
+                document.removeEventListener('touchend', endDrag);
 
                 setTimeout(() => {
                     didDrag = false;
@@ -853,6 +1006,8 @@
             }
 
             function addHoverWiggle(photo) {
+                if (isTouchDevice) return; // Skip hover effects on touch devices
+
                 photo.addEventListener('mouseenter', () => {
                     if (photo.classList.contains('dragging')) return;
                     photo.style.setProperty('--dx', `${(Math.random() - 0.5) * 6}px`);
@@ -882,12 +1037,9 @@
                     matchingPhotos = photos.filter(p => p.dataset.category === category);
                 }
 
-                // Hide all photos first
                 photos.forEach(p => p.style.display = 'none');
 
-                // For "all" category, show random 40 photos
                 if (category === 'all') {
-                    // Shuffle and pick 40 random photos
                     const shuffled = [...matchingPhotos].sort(() => Math.random() - 0.5);
                     displayedPhotos = shuffled.slice(0, INITIAL_PHOTO_LIMIT);
 
@@ -896,14 +1048,12 @@
                         randomScatter(p);
                     });
 
-                    // Show/hide new photos button
                     if (matchingPhotos.length > INITIAL_PHOTO_LIMIT) {
                         newPhotosBtn.style.display = 'inline-block';
                     } else {
                         newPhotosBtn.style.display = 'none';
                     }
                 } else {
-                    // Show all photos for specific categories
                     matchingPhotos.forEach(p => {
                         p.style.display = 'block';
                         randomScatter(p);
@@ -915,13 +1065,9 @@
 
             function showNewPhotos() {
                 const photos = Array.from(document.querySelectorAll('.photo'));
-                const allPhotos = photos; // All photos for "all" category
-
-                // Hide current photos
                 photos.forEach(p => p.style.display = 'none');
 
-                // Shuffle and pick a new random set of 40
-                const shuffled = [...allPhotos].sort(() => Math.random() - 0.5);
+                const shuffled = [...photos].sort(() => Math.random() - 0.5);
                 displayedPhotos = shuffled.slice(0, INITIAL_PHOTO_LIMIT);
 
                 displayedPhotos.forEach(p => {
@@ -943,8 +1089,11 @@
                 note.className = 'sticky-note';
 
                 const rect = table.getBoundingClientRect();
-                const x = 100 + Math.random() * (rect.width - 250);
-                const y = 100 + Math.random() * (rect.height - 250);
+                const noteSize = window.innerWidth <= 480 ? 130 : 150;
+                const margin = 50;
+
+                const x = margin + Math.random() * (rect.width - noteSize - margin * 2);
+                const y = margin + Math.random() * (rect.height - noteSize - margin * 2);
                 const rot = (Math.random() - 0.5) * 8;
 
                 note.style.setProperty('--x', `${x}px`);
@@ -957,6 +1106,7 @@
                 <textarea placeholder="write a note..."></textarea>
             `;
 
+                // Mouse drag
                 note.addEventListener('mousedown', (e) => {
                     if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') {
                         return;
@@ -964,8 +1114,25 @@
                     startDrag(e);
                 });
 
+                // Touch drag
+                note.addEventListener('touchstart', (e) => {
+                    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') {
+                        return;
+                    }
+                    const touch = e.touches[0];
+                    startDrag({
+                        preventDefault: () => e.preventDefault(),
+                        currentTarget: note,
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                }, { passive: false });
+
                 const textarea = note.querySelector('textarea');
                 textarea.addEventListener('mousedown', (e) => {
+                    e.stopPropagation();
+                });
+                textarea.addEventListener('touchstart', (e) => {
                     e.stopPropagation();
                 });
 
@@ -983,6 +1150,13 @@
                 }
             });
 
+            // Touch support for lightbox
+            lightbox.addEventListener('touchend', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+
             window.addEventListener('blur', forceEndDrag);
             document.addEventListener('mouseleave', forceEndDrag);
 
@@ -995,9 +1169,25 @@
 
                 document.removeEventListener('mousemove', onDrag);
                 document.removeEventListener('mouseup', endDrag);
+                document.removeEventListener('touchmove', onTouchDrag);
+                document.removeEventListener('touchend', endDrag);
 
                 active = null;
             }
+
+            // Recalculate positions on resize
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Reposition all visible items to fit new screen size
+                    document.querySelectorAll('.photo, .sticky-note').forEach(item => {
+                        if (item.style.display !== 'none') {
+                            randomScatter(item);
+                        }
+                    });
+                }, 250);
+            });
 
             createControls();
             initTable();
