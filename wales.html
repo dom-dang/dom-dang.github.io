@@ -32,13 +32,6 @@
             margin-bottom: 10px;
         }
 
-        .date {
-            color: #8b7355;
-            font-size: 12px;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
         .instructions {
             text-align: center;
             color: #6a5a4a;
@@ -51,6 +44,7 @@
             justify-content: center;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .group-btn {
@@ -71,10 +65,78 @@
             transform: translateY(-1px);
         }
 
+        /* Custom Dropdown */
+        .nature-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nature-btn {
+            padding: 8px 32px 8px 16px;
+            border: 1px solid #8b7355;
+            background: transparent;
+            font-size: 13px;
+            cursor: pointer;
+            color: #5a4a3a;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nature-btn:hover,
+        .nature-btn.active {
+            background: #5a4a3a;
+            color: #e8dcc4;
+        }
+
+        .nature-btn::after {
+            content: '▼';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+        }
+
+        .nature-btn.open::after {
+            content: '▲';
+        }
+
+        .nature-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #e8dcc4;
+            border: 1px solid #8b7355;
+            border-top: none;
+            display: none;
+            z-index: 1000;
+            margin-top: -1px;
+        }
+
+        .nature-menu.show {
+            display: block;
+        }
+
+        .nature-option {
+            padding: 8px 16px;
+            cursor: pointer;
+            color: #5a4a3a;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            transition: background 0.2s ease;
+        }
+
+        .nature-option:hover {
+            background: #5a4a3a;
+            color: #e8dcc4;
+        }
+
         #table {
             position: relative;
-            min-height: 700px;
-            max-width: 1200px;
+            width: min(90vw, 1000px);
+            height: min(70vh, 550px);
             margin: 0 auto;
             background: #d4c4a8;
             border: 2px solid #8b7355;
@@ -327,8 +389,8 @@
             opacity: 1;
         }
 
-        /* Shuffle button */
-        .shuffle-btn {
+        /* Action buttons */
+        .action-btn {
             padding: 8px 16px;
             border: 1px solid #8b7355;
             background: transparent;
@@ -337,13 +399,26 @@
             color: #5a4a3a;
             transition: all 0.2s ease;
             font-family: 'Courier New', monospace;
-            margin-left: 10px;
         }
 
-        .shuffle-btn:hover {
+        .action-btn:hover {
             background: #5a4a3a;
             color: #e8dcc4;
+        }
+
+        .action-btn.shuffle:hover {
             transform: rotate(5deg);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .action-btn:disabled:hover {
+            background: transparent;
+            color: #5a4a3a;
+            transform: none;
         }
     </style>
 </head>
@@ -356,7 +431,10 @@
 
         <div class="controls">
             <div id="controls"></div>
-            <button class="shuffle-btn" onclick="shuffleAll()">✨ shuffle</button>
+            <button class="action-btn shuffle" onclick="shuffleAll()">shuffle</button>
+            <button class="action-btn" id="new-photos-btn" onclick="showNewPhotos()" style="display: none;">
+                new photos
+            </button>
         </div>
 
         <div id="table">
@@ -377,28 +455,119 @@
 
         <script>
             const photoStructure = {
+                bath: [
+                    'IMG_6785.jpeg',
+                    'IMG_6786.jpeg',
+                    'IMG_6788.jpeg',
+                    'IMG_6792.jpeg',
+                    'IMG_6808.jpeg',
+                    'IMG_6819.jpeg',
+                    'IMG_6821.jpeg',
+                    'IMG_6828.jpeg',
+                    'IMG_6839.jpeg',
+                    'IMG_6841.jpeg',
+                    'IMG_6842.jpeg',
+                    'IMG_6848.jpeg',
+                    'IMG_6853.jpeg',
+                    'IMG_6860.jpeg',
+                ],
+                cardiff: [
+                    'IMG_6382.jpeg',
+                    'IMG_6384.jpeg',
+                    'IMG_6385.jpeg',
+                    'IMG_6410.jpeg',
+                    'IMG_6417.jpeg',
+                    'IMG_6419.jpeg',
+                    'IMG_6420.jpeg',
+                    'IMG_6424.jpeg',
+                    'IMG_6442.jpeg',
+                    'IMG_6443.jpeg',
+                    'IMG_6444.jpeg',
+                    'IMG_6445.jpeg',
+                ],
+                nature: {
+                    castles: [
+                        'IMG_6394.jpeg',
+                        'IMG_6395.jpeg',
+                        'IMG_6403.jpeg',
+                        'IMG_6404.jpeg',
+                        'IMG_6405.jpeg',
+                        'IMG_6407.jpeg',
+                        'IMG_6458.jpeg',
+                        'IMG_6462.jpeg',
+                        'IMG_6466.jpeg',
+                        'IMG_6469.jpeg',
+                        'IMG_6675.jpeg',
+                        'IMG_6690.jpeg',
+                        'IMG_6691.jpeg',
+                    ],
+                    other: [
+                        'IMG_6451.jpeg',
+                        'IMG_6460.jpeg',
+                        'IMG_6473.jpeg',
+                        'IMG_6530.jpeg',
+                        'IMG_6534.jpeg',
+                        'IMG_6538.jpeg',
+                        'IMG_6541.jpeg',
+                        'IMG_6642.jpeg',
+                        'IMG_6661.jpeg',
+                        'IMG_6685.jpeg',
+                        'IMG_6693.jpeg',
+                        'IMG_6697.jpeg',
+                        'IMG_6701.jpeg',
+                        'IMG_6705.jpeg',
+                        'IMG_6706.jpeg',
+                        'IMG_6711.jpeg',
+                        'IMG_6718.jpeg',
+                        'IMG_6719.jpeg',
+                        'IMG_6720.jpeg',
+                        'IMG_6726.jpeg',
+                        'IMG_6729.jpeg',
+                        'IMG_6739.jpeg',
+                        'IMG_6743.jpeg',
+                        'IMG_6749.jpeg',
+                        'IMG_6768.jpeg',
+                        'IMG_6869.jpeg',
+                        'IMG_6873.jpeg',
+                        'IMG_6874.jpeg',
+                    ],
+                    sky: [
+                        'IMG_6430.jpeg',
+                        'IMG_6432.jpeg',
+                        'IMG_6433.jpeg',
+                        'IMG_6492.jpeg',
+                        'IMG_6494.jpeg',
+                        'IMG_6539.jpeg',
+                        'IMG_6540.jpeg',
+                        'IMG_6559.jpeg',
+                        'IMG_6560.jpeg',
+                    ],
+                },
                 teaching: [
-                    'IMG_6495.jpeg', 'IMG_6496.jpeg', 'IMG_6497.jpeg', 'IMG_6563.jpeg',
-                    'IMG_6574.jpeg', 'IMG_6575.jpeg', 'IMG_6581.JPG', 'IMG_6590.jpeg',
-                    'IMG_6591.JPG', 'IMG_6592.JPG', 'IMG_6593.JPG', 'IMG_6594.JPG',
-                    'IMG_6595.jpeg', 'IMG_6597.jpeg', 'IMG_6599.jpeg', 'IMG_6601.jpeg',
-                    'IMG_6603.JPG', 'IMG_6604.JPG', 'IMG_6605.JPG', 'IMG_6606.JPG'
+                    'IMG_1398.jpeg',
+                    'IMG_2639.jpeg',
+                    'IMG_2648.jpeg',
+                    'IMG_6495.jpeg',
+                    'IMG_6496.jpeg',
+                    'IMG_6497.jpeg',
+                    'IMG_6563.jpeg',
+                    'IMG_6574.jpeg',
+                    'IMG_6575.jpeg',
+                    'IMG_6581.JPG',
+                    'IMG_6590.jpeg',
+                    'IMG_6591.JPG',
+                    'IMG_6592.JPG',
+                    'IMG_6593.JPG',
+                    'IMG_6594.JPG',
+                    'IMG_6595.jpeg',
+                    'IMG_6597.jpeg',
+                    'IMG_6599.jpeg',
+                    'IMG_6601.jpeg',
+                    'IMG_6603.JPG',
+                    'IMG_6604.JPG',
+                    'IMG_6605.JPG',
+                    'IMG_6606.JPG',
                 ],
-                mit: [
-                    'IMG_1398.jpeg', 'IMG_2639.jpeg', 'IMG_2648.jpeg'
-                ],
-                nature: [
-                    'IMG_6382.jpeg', 'IMG_6384.jpeg', 'IMG_6385.jpeg', 'IMG_6394.jpeg',
-                    'IMG_6395.jpeg', 'IMG_6403.jpeg', 'IMG_6404.jpeg', 'IMG_6405.jpeg',
-                    'IMG_6407.jpeg', 'IMG_6410.jpeg', 'IMG_6417.jpeg', 'IMG_6419.jpeg',
-                    'IMG_6420.jpeg', 'IMG_6424.jpeg', 'IMG_6430.jpeg', 'IMG_6432.jpeg',
-                    'IMG_6433.jpeg', 'IMG_6442.jpeg', 'IMG_6443.jpeg', 'IMG_6444.jpeg',
-                    'IMG_6445.jpeg', 'IMG_6451.jpeg', 'IMG_6458.jpeg', 'IMG_6460.jpeg',
-                    'IMG_6462.jpeg', 'IMG_6466.jpeg', 'IMG_6469.jpeg', 'IMG_6473.jpeg',
-                    'IMG_6492.jpeg', 'IMG_6494.jpeg', 'IMG_6530.jpeg',
-                    'IMG_6534.jpeg', 'IMG_6538.jpeg', 'IMG_6539.jpeg', 'IMG_6540.jpeg',
-                    'IMG_6541.jpeg', 'IMG_6559.jpeg', 'IMG_6560.jpeg'
-                ]
             };
 
             const table = document.getElementById('table');
@@ -406,11 +575,16 @@
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const lightboxClose = document.getElementById('lightbox-close');
+            const newPhotosBtn = document.getElementById('new-photos-btn');
 
             let active = null;
             let startX = 0;
             let startY = 0;
             let didDrag = false;
+            let currentFilter = 'all';
+            let allPhotos = [];
+            let displayedPhotos = [];
+            const INITIAL_PHOTO_LIMIT = 40;
 
             function randomScatter(photo) {
                 const rect = table.getBoundingClientRect();
@@ -424,48 +598,207 @@
             }
 
             function createControls() {
-                ['all', ...Object.keys(photoStructure)].forEach(cat => {
-                    const btn = document.createElement('button');
-                    btn.className = 'group-btn' + (cat === 'all' ? ' active' : '');
-                    btn.textContent = cat;
-                    btn.onclick = () => groupPhotos(cat);
-                    controls.appendChild(btn);
+                // Add 'all' button
+                const allBtn = document.createElement('button');
+                allBtn.className = 'group-btn active';
+                allBtn.textContent = 'all';
+                allBtn.onclick = () => {
+                    currentFilter = 'all';
+                    groupPhotos('all');
+                    updateActiveButton(allBtn);
+                    closeNatureDropdown();
+                };
+                controls.appendChild(allBtn);
+
+                // Add 'teaching' button
+                const teachingBtn = document.createElement('button');
+                teachingBtn.className = 'group-btn';
+                teachingBtn.textContent = 'teaching';
+                teachingBtn.onclick = () => {
+                    currentFilter = 'teaching';
+                    groupPhotos('teaching');
+                    updateActiveButton(teachingBtn);
+                    closeNatureDropdown();
+                };
+                controls.appendChild(teachingBtn);
+
+                // Add 'cardiff' button
+                const cardiffBtn = document.createElement('button');
+                cardiffBtn.className = 'group-btn';
+                cardiffBtn.textContent = 'cardiff';
+                cardiffBtn.onclick = () => {
+                    currentFilter = 'cardiff';
+                    groupPhotos('cardiff');
+                    updateActiveButton(cardiffBtn);
+                    closeNatureDropdown();
+                };
+                controls.appendChild(cardiffBtn);
+
+                // Add 'bath' button
+                const bathBtn = document.createElement('button');
+                bathBtn.className = 'group-btn';
+                bathBtn.textContent = 'bath';
+                bathBtn.onclick = () => {
+                    currentFilter = 'bath';
+                    groupPhotos('bath');
+                    updateActiveButton(bathBtn);
+                    closeNatureDropdown();
+                };
+                controls.appendChild(bathBtn);
+
+
+                // Add custom nature dropdown
+                const dropdown = document.createElement('div');
+                dropdown.className = 'nature-dropdown';
+                dropdown.innerHTML = `
+                <button class="nature-btn" id="nature-btn">nature (all)</button>
+                <div class="nature-menu" id="nature-menu">
+                    <div class="nature-option" data-value="all-nature">all nature</div>
+                    <div class="nature-option" data-value="castles">castles</div>
+                    <div class="nature-option" data-value="sky">sky</div>
+                    <div class="nature-option" data-value="other">other</div>
+                </div>
+            `;
+                controls.appendChild(dropdown);
+
+
+                const natureBtn = dropdown.querySelector('#nature-btn');
+                const natureMenu = dropdown.querySelector('#nature-menu');
+                const natureOptions = dropdown.querySelectorAll('.nature-option');
+
+                // Toggle dropdown
+                natureBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    natureMenu.classList.toggle('show');
+                    natureBtn.classList.toggle('open');
+                });
+
+                // Handle option selection
+                natureOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const value = option.dataset.value;
+                        const text = option.textContent;
+                        currentFilter = value;
+
+                        if (value === 'all-nature') {
+                            groupPhotos('nature');
+                            natureBtn.textContent = 'nature (all)';
+                        } else {
+                            groupPhotos('nature', value);
+                            natureBtn.textContent = `nature (${text})`;
+                        }
+
+                        updateActiveButton(null);
+                        natureBtn.classList.add('active');
+                        closeNatureDropdown();
+                    });
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!dropdown.contains(e.target)) {
+                        closeNatureDropdown();
+                    }
                 });
             }
 
+            function closeNatureDropdown() {
+                const natureMenu = document.getElementById('nature-menu');
+                const natureBtn = document.getElementById('nature-btn');
+                if (natureMenu) natureMenu.classList.remove('show');
+                if (natureBtn) natureBtn.classList.remove('open');
+            }
+
+            function updateActiveButton(activeBtn) {
+                document.querySelectorAll('.group-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+                const natureBtn = document.getElementById('nature-btn');
+                if (natureBtn && !activeBtn) {
+                    // Keep nature button active if it was clicked
+                } else if (natureBtn) {
+                    natureBtn.classList.remove('active');
+                    natureBtn.textContent = 'nature (all)';
+                }
+            }
+
             function initTable() {
-                for (const [category, files] of Object.entries(photoStructure)) {
+                allPhotos = [];
+
+                // Collect all photos with their metadata
+                photoStructure.teaching.forEach(file => {
+                    allPhotos.push({ category: 'teaching', subcategory: 'teaching', file });
+                });
+
+                photoStructure.cardiff.forEach(file => {
+                    allPhotos.push({ category: 'cardiff', subcategory: 'cardiff', file });
+                });
+
+                photoStructure.bath.forEach(file => {
+                    allPhotos.push({ category: 'bath', subcategory: 'bath', file });
+                });
+
+                for (const [subcategory, files] of Object.entries(photoStructure.nature)) {
                     files.forEach(file => {
-                        const photo = document.createElement('div');
-                        photo.className = 'photo';
-                        photo.dataset.category = category;
-
-                        const tapeStyle = Math.random() > 0.5 ? '<div class="tape top"></div>' : '';
-
-                        photo.innerHTML = `
-                        ${tapeStyle}
-                        <div class="photo-frame">
-                            <img src="wales_photos/${category}/${file}">
-                        </div>
-                        <div class="photo-label">${file.replace(/\..+$/, '')}</div>
-                    `;
-
-                        randomScatter(photo);
-                        addHoverWiggle(photo);
-
-                        photo.addEventListener('mousedown', startDrag);
-                        photo.addEventListener('click', e => {
-                            if (didDrag) {
-                                e.preventDefault();
-                                return;
-                            }
-                            lightboxImg.src = `wales_photos/${category}/${file}`;
-                            lightbox.classList.add('active');
-                        });
-
-                        table.appendChild(photo);
+                        allPhotos.push({ category: 'nature', subcategory, file });
                     });
                 }
+
+                // Create all photos but don't display them yet
+                allPhotos.forEach(photoData => {
+                    createPhoto(photoData.category, photoData.file, photoData.subcategory);
+                });
+
+                // Show initial set
+                groupPhotos('all');
+            }
+
+            function createPhoto(mainCategory, file, subcategory) {
+                const photo = document.createElement('div');
+                photo.className = 'photo';
+                photo.dataset.category = mainCategory;
+                photo.dataset.subcategory = subcategory;
+                photo.style.display = 'none'; // Hidden by default
+
+                const tapeStyle = Math.random() > 0.5 ? '<div class="tape top"></div>' : '';
+
+                // Build the correct image path
+                let imagePath;
+                if (mainCategory === 'nature' && subcategory !== 'other') {
+                    // Nature photos in subfolders (bath, castles, sun)
+                    imagePath = `wales_photos/${mainCategory}/${subcategory}/${file}`;
+                } else if (mainCategory === 'nature' && subcategory === 'other') {
+                    // Nature photos directly in the nature folder
+                    imagePath = `wales_photos/${mainCategory}/${file}`;
+                } else {
+                    // Teaching photos
+                    imagePath = `wales_photos/${mainCategory}/${file}`;
+                }
+
+                photo.innerHTML = `
+                ${tapeStyle}
+                <div class="photo-frame">
+                    <img src="${imagePath}">
+                </div>
+                <div class="photo-label">${file.replace(/\..+$/, '')}</div>
+            `;
+
+                addHoverWiggle(photo);
+
+                photo.addEventListener('mousedown', startDrag);
+                photo.addEventListener('click', e => {
+                    if (didDrag) {
+                        e.preventDefault();
+                        return;
+                    }
+                    lightboxImg.src = imagePath;
+                    lightbox.classList.add('active');
+                });
+
+                table.appendChild(photo);
             }
 
             function startDrag(e) {
@@ -533,24 +866,75 @@
                 });
             }
 
-            function groupPhotos(category) {
-                document.querySelectorAll('.group-btn').forEach(btn =>
-                    btn.classList.toggle('active', btn.textContent === category)
-                );
+            function groupPhotos(category, subcategory = null) {
+                const photos = Array.from(document.querySelectorAll('.photo'));
+                let matchingPhotos = [];
 
-                document.querySelectorAll('.photo').forEach(photo => {
-                    if (category === 'all' || photo.dataset.category === category) {
-                        photo.style.display = 'block';
-                        randomScatter(photo);
+                if (category === 'all') {
+                    matchingPhotos = photos;
+                } else if (category === 'nature' && !subcategory) {
+                    matchingPhotos = photos.filter(p => p.dataset.category === 'nature');
+                } else if (category === 'nature' && subcategory) {
+                    matchingPhotos = photos.filter(p =>
+                        p.dataset.category === 'nature' && p.dataset.subcategory === subcategory
+                    );
+                } else {
+                    matchingPhotos = photos.filter(p => p.dataset.category === category);
+                }
+
+                // Hide all photos first
+                photos.forEach(p => p.style.display = 'none');
+
+                // For "all" category, show random 40 photos
+                if (category === 'all') {
+                    // Shuffle and pick 40 random photos
+                    const shuffled = [...matchingPhotos].sort(() => Math.random() - 0.5);
+                    displayedPhotos = shuffled.slice(0, INITIAL_PHOTO_LIMIT);
+
+                    displayedPhotos.forEach(p => {
+                        p.style.display = 'block';
+                        randomScatter(p);
+                    });
+
+                    // Show/hide new photos button
+                    if (matchingPhotos.length > INITIAL_PHOTO_LIMIT) {
+                        newPhotosBtn.style.display = 'inline-block';
                     } else {
-                        photo.style.display = 'none';
+                        newPhotosBtn.style.display = 'none';
                     }
+                } else {
+                    // Show all photos for specific categories
+                    matchingPhotos.forEach(p => {
+                        p.style.display = 'block';
+                        randomScatter(p);
+                    });
+                    displayedPhotos = matchingPhotos;
+                    newPhotosBtn.style.display = 'none';
+                }
+            }
+
+            function showNewPhotos() {
+                const photos = Array.from(document.querySelectorAll('.photo'));
+                const allPhotos = photos; // All photos for "all" category
+
+                // Hide current photos
+                photos.forEach(p => p.style.display = 'none');
+
+                // Shuffle and pick a new random set of 40
+                const shuffled = [...allPhotos].sort(() => Math.random() - 0.5);
+                displayedPhotos = shuffled.slice(0, INITIAL_PHOTO_LIMIT);
+
+                displayedPhotos.forEach(p => {
+                    p.style.display = 'block';
+                    randomScatter(p);
                 });
             }
 
             function shuffleAll() {
                 document.querySelectorAll('.photo, .sticky-note').forEach(item => {
-                    randomScatter(item);
+                    if (item.style.display !== 'none') {
+                        randomScatter(item);
+                    }
                 });
             }
 
@@ -620,4 +1004,4 @@
         </script>
 </body>
 
-</html>Z
+</html>
