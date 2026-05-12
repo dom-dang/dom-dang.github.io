@@ -645,3 +645,35 @@ details li {
 .project-filters button:focus {
   outline: none;
 }
+
+
+/* profile picture */
+.profile-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 60%;
+  aspect-ratio: 9 / 6;
+}
+
+.profile-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: opacity 0.3s ease;
+}
+
+.profile-wrapper img.hover-img {
+  opacity: 0;
+}
+
+.profile-wrapper:hover img.default-img {
+  opacity: 0;
+}
+
+.profile-wrapper:hover img.hover-img {
+  opacity: 1;
+}
