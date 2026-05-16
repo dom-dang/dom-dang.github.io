@@ -2,1197 +2,463 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wales Photos</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Courier New', monospace;
-            background: #e8dcc4;
-            min-height: 100vh;
-            padding: 20px 10px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            color: #3a3a3a;
-            font-size: clamp(1.2em, 4vw, 1.8em);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .instructions {
-            text-align: center;
-            color: #6a5a4a;
-            font-size: clamp(11px, 2.5vw, 13px);
-            padding: 0 10px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            align-items: center;
-            padding: 0 10px;
-        }
-
-        .group-btn {
-            padding: 8px 12px;
-            border: 1px solid #8b7355;
-            background: transparent;
-            font-size: clamp(11px, 2.5vw, 13px);
-            cursor: pointer;
-            color: #5a4a3a;
-            transition: all 0.2s ease;
-            font-family: 'Courier New', monospace;
-            white-space: nowrap;
-        }
-
-        .group-btn:hover,
-        .group-btn.active {
-            background: #5a4a3a;
-            color: #e8dcc4;
-        }
-
-        /* Touch improvements */
-        @media (hover: none) and (pointer: coarse) {
-            .group-btn:active {
-                background: #5a4a3a;
-                color: #e8dcc4;
-            }
-        }
-
-        /* Custom Dropdown */
-        .nature-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .nature-btn {
-            padding: 8px 24px 8px 12px;
-            border: 1px solid #8b7355;
-            background: transparent;
-            font-size: clamp(11px, 2.5vw, 13px);
-            cursor: pointer;
-            color: #5a4a3a;
-            font-family: 'Courier New', monospace;
-            transition: all 0.2s ease;
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .nature-btn:hover,
-        .nature-btn.active {
-            background: #5a4a3a;
-            color: #e8dcc4;
-        }
-
-        .nature-btn::after {
-            content: '▼';
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 10px;
-        }
-
-        .nature-btn.open::after {
-            content: '▲';
-        }
-
-        .nature-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: #e8dcc4;
-            border: 1px solid #8b7355;
-            border-top: none;
-            display: none;
-            z-index: 1000;
-            margin-top: -1px;
-            min-width: 120px;
-        }
-
-        .nature-menu.show {
-            display: block;
-        }
-
-        .nature-option {
-            padding: 8px 12px;
-            cursor: pointer;
-            color: #5a4a3a;
-            font-size: clamp(11px, 2.5vw, 13px);
-            font-family: 'Courier New', monospace;
-            transition: background 0.2s ease;
-        }
-
-        .nature-option:hover {
-            background: #5a4a3a;
-            color: #e8dcc4;
-        }
-
-        #table {
-            position: relative;
-            width: min(95vw, 1000px);
-            height: min(65vh, 550px);
-            margin: 0 auto;
-            background: #d4c4a8;
-            border: 2px solid #8b7355;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        /* Responsive table sizing */
-        @media (max-width: 768px) {
-            #table {
-                height: 60vh;
-                min-height: 400px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            #table {
-                height: 55vh;
-                min-height: 350px;
-            }
-        }
-
-        .photo {
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            cursor: grab;
-            user-select: none;
-            will-change: transform;
-            touch-action: none;
-
-            --x: 0px;
-            --y: 0px;
-            --dx: 0px;
-            --dy: 0px;
-            --rot: 0deg;
-
-            transform:
-                translate3d(calc(var(--x) + var(--dx)),
-                    calc(var(--y) + var(--dy)),
-                    0) rotate(var(--rot));
-
-            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        /* Responsive photo sizes */
-        @media (max-width: 768px) {
-            .photo {
-                width: 150px;
-                height: 150px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .photo {
-                width: 120px;
-                height: 120px;
-            }
-        }
-
-        .photo:hover {
-            z-index: 1000;
-            filter: brightness(1.05);
-        }
-
-        .photo.dragging {
-            cursor: grabbing;
-            z-index: 2000;
-            transition: none;
-            filter: brightness(1.1);
-        }
-
-        .photo-frame {
-            width: 100%;
-            height: 100%;
-            background: #faf8f3;
-            padding: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            border: 1px solid #c9b99a;
-            position: relative;
-        }
-
-        @media (max-width: 480px) {
-            .photo-frame {
-                padding: 8px;
-            }
-        }
-
-        .photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: sepia(0.15) contrast(0.95);
-            pointer-events: none;
-        }
-
-        .photo-label {
-            position: absolute;
-            bottom: -28px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(9px, 2vw, 11px);
-            color: #5a4a3a;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 480px) {
-            .photo-label {
-                bottom: -22px;
-            }
-        }
-
-        /* Washi tape decorations */
-        .tape {
-            position: absolute;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-top: 1px solid rgba(139, 115, 85, 0.2);
-            border-bottom: 1px solid rgba(139, 115, 85, 0.2);
-            pointer-events: none;
-        }
-
-        .tape.top {
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-2deg);
-            width: 60%;
-        }
-
-        /* Corner decorations */
-        .corner-deco {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border: 1px solid #8b7355;
-            pointer-events: none;
-        }
-
-        @media (max-width: 480px) {
-            .corner-deco {
-                width: 10px;
-                height: 10px;
-            }
-        }
-
-        .corner-deco.tl {
-            top: 5px;
-            left: 5px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .corner-deco.tr {
-            top: 5px;
-            right: 5px;
-            border-left: none;
-            border-bottom: none;
-        }
-
-        .corner-deco.bl {
-            bottom: 5px;
-            left: 5px;
-            border-right: none;
-            border-top: none;
-        }
-
-        .corner-deco.br {
-            bottom: 5px;
-            right: 5px;
-            border-left: none;
-            border-top: none;
-        }
-
-        /* Lightbox */
-        #lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(232, 220, 196, 0.95);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 5000;
-            padding: 20px;
-        }
-
-        #lightbox.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        #lightbox-content {
-            position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
-        }
-
-        #lightbox img {
-            max-width: 85vw;
-            max-height: 85vh;
-            border: 10px solid #faf8f3;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-        }
-
-        @media (max-width: 480px) {
-            #lightbox img {
-                border: 5px solid #faf8f3;
-            }
-        }
-
-        #lightbox-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: transparent;
-            border: 1px solid #8b7355;
-            color: #5a4a3a;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-size: clamp(11px, 2.5vw, 13px);
-            transition: all 0.2s ease;
-        }
-
-        @media (max-width: 480px) {
-            #lightbox-close {
-                top: -35px;
-                padding: 6px 12px;
-            }
-        }
-
-        #lightbox-close:hover {
-            background: #5a4a3a;
-            color: #e8dcc4;
-        }
-
-        /* Add note feature */
-        .add-note-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #5a4a3a;
-            color: #e8dcc4;
-            border: 2px solid #8b7355;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-        }
-
-        @media (max-width: 480px) {
-            .add-note-btn {
-                width: 45px;
-                height: 45px;
-                bottom: 15px;
-                right: 15px;
-                font-size: 20px;
-            }
-        }
-
-        .add-note-btn:hover {
-            transform: scale(1.1);
-            background: #4a3a2a;
-        }
-
-        .sticky-note {
-            position: absolute;
-            width: 150px;
-            min-height: 150px;
-            background: #fff9c4;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-            cursor: grab;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #3a3a3a;
-            border: 1px solid #f0e68c;
-            touch-action: none;
-        }
-
-        @media (max-width: 480px) {
-            .sticky-note {
-                width: 130px;
-                min-height: 130px;
-                padding: 12px;
-                font-size: 11px;
-            }
-        }
-
-        .sticky-note.dragging {
-            cursor: grabbing;
-            z-index: 3000;
-        }
-
-        .sticky-note textarea {
-            width: 100%;
-            height: 100px;
-            border: none;
-            background: transparent;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            resize: none;
-            outline: none;
-            color: #3a3a3a;
-            cursor: text;
-        }
-
-        @media (max-width: 480px) {
-            .sticky-note textarea {
-                height: 80px;
-                font-size: 11px;
-            }
-        }
-
-        .sticky-note .delete-note {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: transparent;
-            border: none;
-            color: #8b7355;
-            cursor: pointer;
-            font-size: 14px;
-            padding: 2px;
-            opacity: 0.5;
-            transition: opacity 0.2s;
-        }
-
-        .sticky-note .delete-note:hover {
-            opacity: 1;
-        }
-
-        /* Action buttons */
-        .action-btn {
-            padding: 8px 12px;
-            border: 1px solid #8b7355;
-            background: transparent;
-            font-size: clamp(11px, 2.5vw, 13px);
-            cursor: pointer;
-            color: #5a4a3a;
-            transition: all 0.2s ease;
-            font-family: 'Courier New', monospace;
-            white-space: nowrap;
-        }
-
-        .action-btn:hover {
-            background: #5a4a3a;
-            color: #e8dcc4;
-        }
-
-        .action-btn.shuffle:hover {
-            transform: rotate(5deg);
-        }
-
-        .action-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .action-btn:disabled:hover {
-            background: transparent;
-            color: #5a4a3a;
-            transform: none;
-        }
-
-        /* Reduce animations on mobile for performance */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wales Photos | Dominique Dang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sage:       #8aab96;
+      --sage-light: #e8f0eb;
+      --sage-dark:  #4a7058;
+      --rose:       #c9938a;
+      --rose-light: #f5e8e6;
+      --rose-dark:  #8a4a42;
+      --cream:      #faf8f4;
+      --charcoal:   #2c2c2a;
+      --muted:      #888780;
+      --border:     rgba(0,0,0,0.08);
+      --mono:       'IBM Plex Mono', 'Courier New', monospace;
+      --serif:      'Lora', Georgia, serif;
+    }
+
+    body {
+      font-family: var(--mono);
+      background: var(--cream);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--mono); font-size: 0.82rem;
+      letter-spacing: 0.08em; color: var(--charcoal); text-decoration: none;
+    }
+    .nav-back {
+      font-family: var(--mono); font-size: 0.75rem;
+      letter-spacing: 0.06em; color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--charcoal); }
+
+    /* ── Header ── */
+    .page-header {
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 2rem 0;
+    }
+    .hero-glyph {
+      font-family: var(--mono); font-size: 0.8rem;
+      color: var(--sage-dark); letter-spacing: 0.1em; margin-bottom: 0.75rem;
+    }
+    .page-title {
+      font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 400; color: var(--charcoal); margin-bottom: 0.5rem;
+    }
+    .page-title em { font-style: italic; color: var(--rose); }
+    .page-sub {
+      font-size: 0.78rem; color: var(--muted); line-height: 1.8;
+    }
+
+    /* ── Controls ── */
+    .controls-wrap {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1.75rem 2rem 0;
+      display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+    }
+
+    .filter-btn {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.85rem;
+      border: 1px solid var(--border); border-radius: 100px;
+      background: transparent; color: var(--muted); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--sage); color: var(--sage-dark); }
+    .filter-btn.active {
+      background: var(--sage-light); border-color: var(--sage); color: var(--sage-dark);
+    }
+    .filter-btn:focus { outline: none; }
+
+    .action-btn {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.85rem;
+      border: 1px solid var(--border); border-radius: 100px;
+      background: transparent; color: var(--muted); cursor: pointer;
+      transition: all 0.2s; margin-left: auto;
+    }
+    .action-btn:hover { border-color: var(--charcoal); color: var(--charcoal); }
+    .action-btn:focus { outline: none; }
+
+    /* ── Table ── */
+    .table-wrap {
+      max-width: 1100px; margin: 1.5rem auto 0;
+      padding: 0 2rem 3rem;
+    }
+
+    #table {
+      position: relative;
+      width: 100%;
+      height: min(65vh, 560px);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) { #table { height: 60vh; min-height: 400px; } }
+    @media (max-width: 480px) { #table { height: 55vh; min-height: 340px; } }
+
+    /* ── Photos ── */
+    .photo {
+      position: absolute;
+      width: 170px; height: 170px;
+      cursor: grab;
+      user-select: none;
+      will-change: transform;
+      touch-action: none;
+      --x: 0px; --y: 0px; --dx: 0px; --dy: 0px; --rot: 0deg;
+      transform: translate3d(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy)), 0) rotate(var(--rot));
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (max-width: 768px) { .photo { width: 140px; height: 140px; } }
+    @media (max-width: 480px) { .photo { width: 115px; height: 115px; } }
+
+    .photo:hover { z-index: 1000; }
+    .photo.dragging { cursor: grabbing; z-index: 2000; transition: none; }
+
+    .photo-frame {
+      width: 100%; height: 100%;
+      background: var(--cream);
+      padding: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 480px) { .photo-frame { padding: 7px; } }
+
+    .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    /* washi tape */
+    .tape {
+      position: absolute;
+      height: 18px;
+      background: rgba(138, 171, 150, 0.25);
+      border-top: 1px solid rgba(74, 112, 88, 0.15);
+      border-bottom: 1px solid rgba(74, 112, 88, 0.15);
+      pointer-events: none;
+    }
+    .tape.top { top: -7px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 55%; }
+
+    /* ── Lightbox ── */
+    #lightbox {
+      position: fixed; inset: 0;
+      background: rgba(250, 248, 244, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 5000; padding: 20px;
+    }
+    #lightbox.active { opacity: 1; pointer-events: auto; }
+
+    #lightbox-content { position: relative; }
+
+    #lightbox img {
+      max-width: 85vw; max-height: 85vh;
+      border: 8px solid white;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+    @media (max-width: 480px) { #lightbox img { border: 4px solid white; } }
+
+    #lightbox-close {
+      position: absolute; top: -40px; right: 0;
+      background: transparent;
+      border: 1px solid var(--border); border-radius: 100px;
+      color: var(--muted); padding: 0.3rem 0.85rem;
+      cursor: pointer; font-family: var(--mono);
+      font-size: 0.72rem; letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    #lightbox-close:hover { border-color: var(--charcoal); color: var(--charcoal); }
+
+    /* ── Footer ── */
+    .site-footer {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-name { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+  </style>
 </head>
 
 <body>
-    <div class="header">
-        <h1>gtl wales 2025</h1>
-        <div class="instructions">drag to arrange • filter by topic • click to see more <3 </div>
-        </div>
 
-        <div class="controls">
-            <div id="controls"></div>
-            <button class="action-btn shuffle" onclick="shuffleAll()">shuffle</button>
-            <button class="action-btn" id="new-photos-btn" onclick="showNewPhotos()" style="display: none;">
-                new photos
-            </button>
-            <button class="action-btn" onclick="window.location.href='index.html'">back to portfolio!</button>
-        </div>
-
-        <div id="table">
-            <div class="corner-deco tl"></div>
-            <div class="corner-deco tr"></div>
-            <div class="corner-deco bl"></div>
-            <div class="corner-deco br"></div>
-        </div>
-        
-        
-
-        <div id="lightbox">
-            <div id="lightbox-content">
-                <button id="lightbox-close">close</button>
-                <img id="lightbox-img" />
-            </div>
-        </div>
-
-        <script>
-            const photoStructure = {
-                bath: [
-                    'IMG_6783.jpeg',
-                    'IMG_6785.jpeg',
-                    'IMG_6786.jpeg',
-                    'IMG_6788.jpeg',
-                    'IMG_6792.jpeg',
-                    'IMG_6801.jpeg',
-                    'IMG_6804.jpeg',
-                    'IMG_6805.jpeg',
-                    'IMG_6808.jpeg',
-                    'IMG_6812.jpeg',
-                    'IMG_6819.jpeg',
-                    'IMG_6821.jpeg',
-                    'IMG_6828.jpeg',
-                    'IMG_6839.jpeg',
-                    'IMG_6841.jpeg',
-                    'IMG_6842.jpeg',
-                    'IMG_6848.jpeg',
-                    'IMG_6853.jpeg',
-                    'IMG_6860.jpeg',
-                    'IMG_6863.jpeg',
-                    'IMG_6864.jpeg',
-                ],
-                cardiff: [
-                    'IMG_6382.jpeg',
-                    'IMG_6384.jpeg',
-                    'IMG_6385.jpeg',
-                    'IMG_6410.jpeg',
-                    'IMG_6417.jpeg',
-                    'IMG_6419.jpeg',
-                    'IMG_6420.jpeg',
-                    'IMG_6424.jpeg',
-                    'IMG_6430.jpeg',
-                    'IMG_6432.jpeg',
-                    'IMG_6433.jpeg',
-                    'IMG_6442.jpeg',
-                    'IMG_6443.jpeg',
-                    'IMG_6444.jpeg',
-                    'IMG_6445.jpeg',
-                ],
-                nature: {
-                    castles: [
-                        'IMG_6394.jpeg',
-                        'IMG_6395.jpeg',
-                        'IMG_6403.jpeg',
-                        'IMG_6404.jpeg',
-                        'IMG_6405.jpeg',
-                        'IMG_6407.jpeg',
-                        'IMG_6458.jpeg',
-                        'IMG_6462.jpeg',
-                        'IMG_6466.jpeg',
-                        'IMG_6469.jpeg',
-                        'IMG_6675.jpeg',
-                        'IMG_6690.jpeg',
-                        'IMG_6691.jpeg',
-                    ],
-                    other: [
-                        'IMG_6451.jpeg',
-                        'IMG_6460.jpeg',
-                        'IMG_6473.jpeg',
-                        'IMG_6530.jpeg',
-                        'IMG_6534.jpeg',
-                        'IMG_6661.jpeg',
-                        'IMG_6685.jpeg',
-                        'IMG_6693.jpeg',
-                        'IMG_6697.jpeg',
-                        'IMG_6701.jpeg',
-                        'IMG_6705.jpeg',
-                        'IMG_6706.jpeg',
-                        'IMG_6711.jpeg',
-                        'IMG_6718.jpeg',
-                        'IMG_6719.jpeg',
-                        'IMG_6720.jpeg',
-                        'IMG_6726.jpeg',
-                        'IMG_6729.jpeg',
-                        'IMG_6739.jpeg',
-                        'IMG_6743.jpeg',
-                        'IMG_6749.jpeg',
-                        'IMG_6768.jpeg',
-                        'IMG_6873.jpeg',
-                        'IMG_6874.jpeg',
-                    ],
-                    sky: [
-                        'IMG_6492.jpeg',
-                        'IMG_6494.jpeg',
-                        'IMG_6538.jpeg',
-                        'IMG_6539.jpeg',
-                        'IMG_6540.jpeg',
-                        'IMG_6541.jpeg',
-                        'IMG_6559.jpeg',
-                        'IMG_6560.jpeg',
-                        'IMG_6642.jpeg',
-                        'IMG_6869.jpeg',
-                    ],
-                },
-                teaching: [
-                    'IMG_1398.jpeg',
-                    'IMG_2639.jpeg',
-                    'IMG_2648.jpeg',
-                    'IMG_6495.jpeg',
-                    'IMG_6496.jpeg',
-                    'IMG_6497.jpeg',
-                    'IMG_6563.jpeg',
-                    'IMG_6574.jpeg',
-                    'IMG_6575.jpeg',
-                    'IMG_6581.JPG',
-                    'IMG_6590.jpeg',
-                    'IMG_6591.JPG',
-                    'IMG_6592.JPG',
-                    'IMG_6593.JPG',
-                    'IMG_6594.JPG',
-                    'IMG_6595.jpeg',
-                    'IMG_6597.jpeg',
-                    'IMG_6599.jpeg',
-                    'IMG_6601.jpeg',
-                    'IMG_6603.JPG',
-                    'IMG_6604.JPG',
-                    'IMG_6605.JPG',
-                    'IMG_6606.JPG',
-                ],
-            };
-            const table = document.getElementById('table');
-            const controls = document.getElementById('controls');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.getElementById('lightbox-close');
-            const newPhotosBtn = document.getElementById('new-photos-btn');
-
-            let active = null;
-            let startX = 0;
-            let startY = 0;
-            let didDrag = false;
-            let currentFilter = 'all';
-            let allPhotos = [];
-            let displayedPhotos = [];
-            const INITIAL_PHOTO_LIMIT = 40;
-            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-            function randomScatter(photo) {
-                const rect = table.getBoundingClientRect();
-                const photoSize = window.innerWidth <= 480 ? 120 : (window.innerWidth <= 768 ? 150 : 180);
-                const margin = 20;
-
-                const x = margin + Math.random() * (rect.width - photoSize - margin * 2);
-                const y = margin + Math.random() * (rect.height - photoSize - margin * 2);
-                const rot = (Math.random() - 0.5) * 12;
-
-                photo.style.setProperty('--x', `${x}px`);
-                photo.style.setProperty('--y', `${y}px`);
-                photo.style.setProperty('--rot', `${rot}deg`);
-            }
-
-            function createControls() {
-                // Add 'all' button
-                const allBtn = document.createElement('button');
-                allBtn.className = 'group-btn active';
-                allBtn.textContent = 'all';
-                allBtn.onclick = () => {
-                    currentFilter = 'all';
-                    groupPhotos('all');
-                    updateActiveButton(allBtn);
-                    closeNatureDropdown();
-                };
-                controls.appendChild(allBtn);
-
-                // Add 'teaching' button
-                const teachingBtn = document.createElement('button');
-                teachingBtn.className = 'group-btn';
-                teachingBtn.textContent = 'teaching';
-                teachingBtn.onclick = () => {
-                    currentFilter = 'teaching';
-                    groupPhotos('teaching');
-                    updateActiveButton(teachingBtn);
-                    closeNatureDropdown();
-                };
-                controls.appendChild(teachingBtn);
-
-                // Add 'cardiff' button
-                const cardiffBtn = document.createElement('button');
-                cardiffBtn.className = 'group-btn';
-                cardiffBtn.textContent = 'cardiff';
-                cardiffBtn.onclick = () => {
-                    currentFilter = 'cardiff';
-                    groupPhotos('cardiff');
-                    updateActiveButton(cardiffBtn);
-                    closeNatureDropdown();
-                };
-                controls.appendChild(cardiffBtn);
-
-                // Add 'bath' button
-                const bathBtn = document.createElement('button');
-                bathBtn.className = 'group-btn';
-                bathBtn.textContent = 'bath';
-                bathBtn.onclick = () => {
-                    currentFilter = 'bath';
-                    groupPhotos('bath');
-                    updateActiveButton(bathBtn);
-                    closeNatureDropdown();
-                };
-                controls.appendChild(bathBtn);
-
-                // Add custom nature dropdown
-                const dropdown = document.createElement('div');
-                dropdown.className = 'nature-dropdown';
-                dropdown.innerHTML = `
-                <button class="nature-btn" id="nature-btn">nature (all)</button>
-                <div class="nature-menu" id="nature-menu">
-                    <div class="nature-option" data-value="all-nature">all nature</div>
-                    <div class="nature-option" data-value="castles">castles</div>
-                    <div class="nature-option" data-value="sky">sky</div>
-                    <div class="nature-option" data-value="other">other</div>
-                </div>
-            `;
-                controls.appendChild(dropdown);
-
-                const natureBtn = dropdown.querySelector('#nature-btn');
-                const natureMenu = dropdown.querySelector('#nature-menu');
-                const natureOptions = dropdown.querySelectorAll('.nature-option');
-
-                // Toggle dropdown
-                natureBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    natureMenu.classList.toggle('show');
-                    natureBtn.classList.toggle('open');
-                });
-
-                // Handle option selection
-                natureOptions.forEach(option => {
-                    option.addEventListener('click', () => {
-                        const value = option.dataset.value;
-                        const text = option.textContent;
-                        currentFilter = value;
-
-                        if (value === 'all-nature') {
-                            groupPhotos('nature');
-                            natureBtn.textContent = 'nature (all)';
-                        } else {
-                            groupPhotos('nature', value);
-                            natureBtn.textContent = `nature (${text})`;
-                        }
-
-                        updateActiveButton(null);
-                        natureBtn.classList.add('active');
-                        closeNatureDropdown();
-                    });
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!dropdown.contains(e.target)) {
-                        closeNatureDropdown();
-                    }
-                });
-            }
-
-            function closeNatureDropdown() {
-                const natureMenu = document.getElementById('nature-menu');
-                const natureBtn = document.getElementById('nature-btn');
-                if (natureMenu) natureMenu.classList.remove('show');
-                if (natureBtn) natureBtn.classList.remove('open');
-            }
-
-            function updateActiveButton(activeBtn) {
-                document.querySelectorAll('.group-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                if (activeBtn) {
-                    activeBtn.classList.add('active');
-                }
-                const natureBtn = document.getElementById('nature-btn');
-                if (natureBtn && !activeBtn) {
-                    // Keep nature button active if it was clicked
-                } else if (natureBtn) {
-                    natureBtn.classList.remove('active');
-                    natureBtn.textContent = 'nature (all)';
-                }
-            }
-
-            function initTable() {
-                allPhotos = [];
-
-                // Collect all photos with their metadata
-                photoStructure.teaching.forEach(file => {
-                    allPhotos.push({ category: 'teaching', subcategory: 'teaching', file });
-                });
-
-                photoStructure.cardiff.forEach(file => {
-                    allPhotos.push({ category: 'cardiff', subcategory: 'cardiff', file });
-                });
-
-                photoStructure.bath.forEach(file => {
-                    allPhotos.push({ category: 'bath', subcategory: 'bath', file });
-                });
-
-                for (const [subcategory, files] of Object.entries(photoStructure.nature)) {
-                    files.forEach(file => {
-                        allPhotos.push({ category: 'nature', subcategory, file });
-                    });
-                }
-
-                // Create all photos but don't display them yet
-                allPhotos.forEach(photoData => {
-                    createPhoto(photoData.category, photoData.file, photoData.subcategory);
-                });
-
-                // Show initial set
-                groupPhotos('all');
-            }
-
-            function createPhoto(mainCategory, file, subcategory) {
-                const photo = document.createElement('div');
-                photo.className = 'photo';
-                photo.dataset.category = mainCategory;
-                photo.dataset.subcategory = subcategory;
-                photo.style.display = 'none';
-
-                const tapeStyle = Math.random() > 0.5 ? '<div class="tape top"></div>' : '';
-
-                let imagePath;
-                if (mainCategory === 'nature' && subcategory !== 'other') {
-                    imagePath = `wales_photos/${mainCategory}/${subcategory}/${file}`;
-                } else if (mainCategory === 'nature' && subcategory === 'other') {
-                    imagePath = `wales_photos/${mainCategory}/${file}`;
-                } else {
-                    imagePath = `wales_photos/${mainCategory}/${file}`;
-                }
-
-                photo.innerHTML = `
-                ${tapeStyle}
-                <div class="photo-frame">
-                    <img src="${imagePath}">
-                </div>
-                <div class="photo-label">${file.replace(/\..+$/, '')}</div>
-            `;
-
-                addHoverWiggle(photo);
-                addDragHandlers(photo, imagePath);
-
-                table.appendChild(photo);
-            }
-
-            function addDragHandlers(photo, imagePath) {
-                // Mouse events
-                photo.addEventListener('mousedown', startDrag);
-
-                // Touch events
-                photo.addEventListener('touchstart', (e) => {
-                    const touch = e.touches[0];
-                    startDrag({
-                        preventDefault: () => e.preventDefault(),
-                        currentTarget: photo,
-                        clientX: touch.clientX,
-                        clientY: touch.clientY
-                    });
-                }, { passive: false });
-
-                // Click/tap to open lightbox
-                photo.addEventListener('click', e => {
-                    if (didDrag) {
-                        e.preventDefault();
-                        return;
-                    }
-                    lightboxImg.src = imagePath;
-                    lightbox.classList.add('active');
-                });
-            }
-
-            function startDrag(e) {
-                e.preventDefault();
-                active = e.currentTarget;
-                active.classList.add('dragging');
-
-                startX = e.clientX;
-                startY = e.clientY;
-                didDrag = false;
-
-                document.addEventListener('mousemove', onDrag);
-                document.addEventListener('mouseup', endDrag);
-                document.addEventListener('touchmove', onTouchDrag, { passive: false });
-                document.addEventListener('touchend', endDrag);
-            }
-
-            function onDrag(e) {
-                if (!active) return;
-
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-
-                if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
-                    didDrag = true;
-                }
-
-                active.style.setProperty('--dx', `${dx}px`);
-                active.style.setProperty('--dy', `${dy}px`);
-            }
-
-            function onTouchDrag(e) {
-                if (!active) return;
-                e.preventDefault();
-
-                const touch = e.touches[0];
-                const dx = touch.clientX - startX;
-                const dy = touch.clientY - startY;
-
-                if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
-                    didDrag = true;
-                }
-
-                active.style.setProperty('--dx', `${dx}px`);
-                active.style.setProperty('--dy', `${dy}px`);
-            }
-
-            function endDrag() {
-                if (!active) return;
-
-                const x = parseFloat(active.style.getPropertyValue('--x')) || 0;
-                const y = parseFloat(active.style.getPropertyValue('--y')) || 0;
-                const dx = parseFloat(active.style.getPropertyValue('--dx')) || 0;
-                const dy = parseFloat(active.style.getPropertyValue('--dy')) || 0;
-
-                active.style.setProperty('--x', `${x + dx}px`);
-                active.style.setProperty('--y', `${y + dy}px`);
-                active.style.setProperty('--dx', `0px`);
-                active.style.setProperty('--dy', `0px`);
-                active.classList.remove('dragging');
-
-                document.removeEventListener('mousemove', onDrag);
-                document.removeEventListener('mouseup', endDrag);
-                document.removeEventListener('touchmove', onTouchDrag);
-                document.removeEventListener('touchend', endDrag);
-
-                setTimeout(() => {
-                    didDrag = false;
-                }, 10);
-
-                active = null;
-            }
-
-            function addHoverWiggle(photo) {
-                if (isTouchDevice) return; // Skip hover effects on touch devices
-
-                photo.addEventListener('mouseenter', () => {
-                    if (photo.classList.contains('dragging')) return;
-                    photo.style.setProperty('--dx', `${(Math.random() - 0.5) * 6}px`);
-                    photo.style.setProperty('--dy', `${(Math.random() - 0.5) * 6}px`);
-                });
-
-                photo.addEventListener('mouseleave', () => {
-                    if (photo.classList.contains('dragging')) return;
-                    photo.style.setProperty('--dx', `0px`);
-                    photo.style.setProperty('--dy', `0px`);
-                });
-            }
-
-            function groupPhotos(category, subcategory = null) {
-                const photos = Array.from(document.querySelectorAll('.photo'));
-                let matchingPhotos = [];
-
-                if (category === 'all') {
-                    matchingPhotos = photos;
-                } else if (category === 'nature' && !subcategory) {
-                    matchingPhotos = photos.filter(p => p.dataset.category === 'nature');
-                } else if (category === 'nature' && subcategory) {
-                    matchingPhotos = photos.filter(p =>
-                        p.dataset.category === 'nature' && p.dataset.subcategory === subcategory
-                    );
-                } else {
-                    matchingPhotos = photos.filter(p => p.dataset.category === category);
-                }
-
-                photos.forEach(p => p.style.display = 'none');
-
-                if (category === 'all') {
-                    const shuffled = [...matchingPhotos].sort(() => Math.random() - 0.5);
-                    displayedPhotos = shuffled.slice(0, INITIAL_PHOTO_LIMIT);
-
-                    displayedPhotos.forEach(p => {
-                        p.style.display = 'block';
-                        randomScatter(p);
-                    });
-
-                    if (matchingPhotos.length > INITIAL_PHOTO_LIMIT) {
-                        newPhotosBtn.style.display = 'inline-block';
-                    } else {
-                        newPhotosBtn.style.display = 'none';
-                    }
-                } else {
-                    matchingPhotos.forEach(p => {
-                        p.style.display = 'block';
-                        randomScatter(p);
-                    });
-                    displayedPhotos = matchingPhotos;
-                    newPhotosBtn.style.display = 'none';
-                }
-            }
-
-            function showNewPhotos() {
-                const photos = Array.from(document.querySelectorAll('.photo'));
-                photos.forEach(p => p.style.display = 'none');
-
-                const shuffled = [...photos].sort(() => Math.random() - 0.5);
-                displayedPhotos = shuffled.slice(0, INITIAL_PHOTO_LIMIT);
-
-                displayedPhotos.forEach(p => {
-                    p.style.display = 'block';
-                    randomScatter(p);
-                });
-            }
-
-            function shuffleAll() {
-                document.querySelectorAll('.photo, .sticky-note').forEach(item => {
-                    if (item.style.display !== 'none') {
-                        randomScatter(item);
-                    }
-                });
-            }
-
-            function addNote() {
-                const note = document.createElement('div');
-                note.className = 'sticky-note';
-
-                const rect = table.getBoundingClientRect();
-                const noteSize = window.innerWidth <= 480 ? 130 : 150;
-                const margin = 50;
-
-                const x = margin + Math.random() * (rect.width - noteSize - margin * 2);
-                const y = margin + Math.random() * (rect.height - noteSize - margin * 2);
-                const rot = (Math.random() - 0.5) * 8;
-
-                note.style.setProperty('--x', `${x}px`);
-                note.style.setProperty('--y', `${y}px`);
-                note.style.setProperty('--rot', `${rot}deg`);
-                note.style.transform = `translate3d(var(--x), var(--y), 0) rotate(var(--rot))`;
-
-                note.innerHTML = `
-                <button class="delete-note" onclick="this.parentElement.remove()">×</button>
-                <textarea placeholder="write a note..."></textarea>
-            `;
-
-                // Mouse drag
-                note.addEventListener('mousedown', (e) => {
-                    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') {
-                        return;
-                    }
-                    startDrag(e);
-                });
-
-                // Touch drag
-                note.addEventListener('touchstart', (e) => {
-                    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') {
-                        return;
-                    }
-                    const touch = e.touches[0];
-                    startDrag({
-                        preventDefault: () => e.preventDefault(),
-                        currentTarget: note,
-                        clientX: touch.clientX,
-                        clientY: touch.clientY
-                    });
-                }, { passive: false });
-
-                const textarea = note.querySelector('textarea');
-                textarea.addEventListener('mousedown', (e) => {
-                    e.stopPropagation();
-                });
-                textarea.addEventListener('touchstart', (e) => {
-                    e.stopPropagation();
-                });
-
-                table.appendChild(note);
-            }
-
-            lightboxClose.addEventListener('click', (e) => {
-                e.stopPropagation();
-                lightbox.classList.remove('active');
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
-                }
-            });
-
-            // Touch support for lightbox
-            lightbox.addEventListener('touchend', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
-                }
-            });
-
-            window.addEventListener('blur', forceEndDrag);
-            document.addEventListener('mouseleave', forceEndDrag);
-
-            function forceEndDrag() {
-                if (!active) return;
-
-                active.style.setProperty('--dx', `0px`);
-                active.style.setProperty('--dy', `0px`);
-                active.classList.remove('dragging');
-
-                document.removeEventListener('mousemove', onDrag);
-                document.removeEventListener('mouseup', endDrag);
-                document.removeEventListener('touchmove', onTouchDrag);
-                document.removeEventListener('touchend', endDrag);
-
-                active = null;
-            }
-
-            // Recalculate positions on resize
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    // Reposition all visible items to fit new screen size
-                    document.querySelectorAll('.photo, .sticky-note').forEach(item => {
-                        if (item.style.display !== 'none') {
-                            randomScatter(item);
-                        }
-                    });
-                }, 250);
-            });
-
-            createControls();
-            initTable();
-        </script>
+  <!-- Nav -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">dominique dang</a>
+      <a class="nav-back" href="index.html">← back to portfolio</a>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="page-header">
+    <p class="hero-glyph">𓆝 𓆟 𓆞</p>
+    <h1 class="page-title">GTL <em>Wales</em> 2026</h1>
+    <p class="page-sub">drag to arrange · filter by category · click to enlarge</p>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-wrap" id="controls-wrap">
+    <button class="filter-btn active" data-filter="all">all</button>
+    <button class="filter-btn" data-filter="teaching">teaching</button>
+    <button class="filter-btn" data-filter="cardiff">cardiff</button>
+    <button class="filter-btn" data-filter="bath">bath</button>
+    <button class="filter-btn" data-filter="castles">castles</button>
+    <button class="filter-btn" data-filter="sky">sky</button>
+    <button class="filter-btn" data-filter="nature-other">nature</button>
+    <button class="action-btn" onclick="shuffleAll()">shuffle ↺</button>
+  </div>
+
+  <!-- Board -->
+  <div class="table-wrap">
+    <div id="table"></div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <div id="lightbox-content">
+      <button id="lightbox-close">close</button>
+      <img id="lightbox-img" />
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <span class="footer-name">𓆝 dominique dang 𓆞</span>
+  </footer>
+
+  <script>
+    const photoStructure = {
+      bath: [
+        'IMG_6783.jpeg','IMG_6785.jpeg','IMG_6786.jpeg','IMG_6788.jpeg','IMG_6792.jpeg',
+        'IMG_6801.jpeg','IMG_6804.jpeg','IMG_6805.jpeg','IMG_6808.jpeg','IMG_6812.jpeg',
+        'IMG_6819.jpeg','IMG_6821.jpeg','IMG_6828.jpeg','IMG_6839.jpeg','IMG_6841.jpeg',
+        'IMG_6842.jpeg','IMG_6848.jpeg','IMG_6853.jpeg','IMG_6860.jpeg','IMG_6863.jpeg','IMG_6864.jpeg',
+      ],
+      cardiff: [
+        'IMG_6382.jpeg','IMG_6384.jpeg','IMG_6385.jpeg','IMG_6410.jpeg','IMG_6417.jpeg',
+        'IMG_6419.jpeg','IMG_6420.jpeg','IMG_6424.jpeg','IMG_6430.jpeg','IMG_6432.jpeg',
+        'IMG_6433.jpeg','IMG_6442.jpeg','IMG_6443.jpeg','IMG_6444.jpeg','IMG_6445.jpeg',
+      ],
+      nature: {
+        castles: [
+          'IMG_6394.jpeg','IMG_6395.jpeg','IMG_6403.jpeg','IMG_6404.jpeg','IMG_6405.jpeg',
+          'IMG_6407.jpeg','IMG_6458.jpeg','IMG_6462.jpeg','IMG_6466.jpeg','IMG_6469.jpeg',
+          'IMG_6675.jpeg','IMG_6691.jpeg',
+        ],
+        other: [
+          'IMG_6451.jpeg','IMG_6460.jpeg','IMG_6473.jpeg','IMG_6530.jpeg','IMG_6534.jpeg',
+          'IMG_6661.jpeg','IMG_6685.jpeg','IMG_6693.jpeg','IMG_6697.jpeg','IMG_6701.jpeg',
+          'IMG_6705.jpeg','IMG_6706.jpeg','IMG_6711.jpeg','IMG_6718.jpeg','IMG_6719.jpeg',
+          'IMG_6720.jpeg','IMG_6726.jpeg','IMG_6729.jpeg','IMG_6739.jpeg','IMG_6743.jpeg',
+          'IMG_6749.jpeg','IMG_6768.jpeg','IMG_6873.jpeg','IMG_6874.jpeg',
+        ],
+        sky: [
+          'IMG_6492.jpeg','IMG_6494.jpeg','IMG_6538.jpeg','IMG_6539.jpeg','IMG_6540.jpeg',
+          'IMG_6541.jpeg','IMG_6559.jpeg','IMG_6560.jpeg','IMG_6642.jpeg','IMG_6869.jpeg',
+        ],
+      },
+      teaching: [
+        'IMG_1398.jpeg','IMG_2639.jpeg','IMG_2648.jpeg','IMG_6495.jpeg','IMG_6496.jpeg',
+        'IMG_6497.jpeg','IMG_6563.jpeg','IMG_6574.jpeg','IMG_6575.jpeg','IMG_6581.JPG',
+        'IMG_6590.jpeg','IMG_6591.JPG','IMG_6592.JPG','IMG_6593.JPG','IMG_6594.JPG',
+        'IMG_6595.jpeg','IMG_6597.jpeg','IMG_6599.jpeg','IMG_6601.jpeg','IMG_6603.JPG',
+        'IMG_6604.JPG','IMG_6605.JPG','IMG_6606.JPG',
+      ],
+    };
+
+    const table        = document.getElementById('table');
+    const lightbox     = document.getElementById('lightbox');
+    const lightboxImg  = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    const LIMIT = 40;
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    let active = null, startX = 0, startY = 0, didDrag = false;
+
+    // ── Build all photo elements ──────────────────────────────
+    function initTable() {
+      const add = (filter, file, path) => {
+        const el = document.createElement('div');
+        el.className = 'photo';
+        el.dataset.filter = filter;
+        el.style.display = 'none';
+        const tape = Math.random() > 0.5 ? '<div class="tape top"></div>' : '';
+        el.innerHTML = `${tape}<div class="photo-frame"><img src="${path}" loading="lazy"></div>`;
+        addDrag(el, path);
+        table.appendChild(el);
+      };
+
+      photoStructure.teaching.forEach(f => add('teaching', f, `wales_photos/teaching/${f}`));
+      photoStructure.cardiff.forEach(f  => add('cardiff',  f, `wales_photos/cardiff/${f}`));
+      photoStructure.bath.forEach(f     => add('bath',     f, `wales_photos/bath/${f}`));
+      photoStructure.nature.castles.forEach(f => add('castles',      f, `wales_photos/nature/castles/${f}`));
+      photoStructure.nature.sky.forEach(f     => add('sky',          f, `wales_photos/nature/sky/${f}`));
+      photoStructure.nature.other.forEach(f   => add('nature-other', f, `wales_photos/nature/${f}`));
+
+      showFilter('all');
+    }
+
+    // ── Filter ────────────────────────────────────────────────
+    function showFilter(filter) {
+      const all = Array.from(document.querySelectorAll('.photo'));
+      all.forEach(p => p.style.display = 'none');
+
+      const pool = filter === 'all' ? all : all.filter(p => p.dataset.filter === filter);
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
+      const shown = filter === 'all' ? shuffled.slice(0, LIMIT) : shuffled;
+
+      shown.forEach(p => { p.style.display = 'block'; scatter(p); });
+    }
+
+    // Filter button clicks
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showFilter(btn.dataset.filter);
+      });
+    });
+
+    // ── Scatter ───────────────────────────────────────────────
+    function scatter(el) {
+      const rect  = table.getBoundingClientRect();
+      const size  = window.innerWidth <= 480 ? 115 : window.innerWidth <= 768 ? 140 : 170;
+      const m     = 20;
+      el.style.setProperty('--x',   `${m + Math.random() * (rect.width  - size - m * 2)}px`);
+      el.style.setProperty('--y',   `${m + Math.random() * (rect.height - size - m * 2)}px`);
+      el.style.setProperty('--rot', `${(Math.random() - 0.5) * 12}deg`);
+      el.style.setProperty('--dx',  '0px');
+      el.style.setProperty('--dy',  '0px');
+    }
+
+    function shuffleAll() {
+      document.querySelectorAll('.photo').forEach(p => {
+        if (p.style.display !== 'none') scatter(p);
+      });
+    }
+
+    // ── Drag ─────────────────────────────────────────────────
+    function addDrag(el, imgPath) {
+      const down = (cx, cy) => {
+        active = el;
+        el.classList.add('dragging');
+        startX = cx; startY = cy; didDrag = false;
+      };
+
+      el.addEventListener('mousedown', e => { e.preventDefault(); down(e.clientX, e.clientY); });
+      el.addEventListener('touchstart', e => {
+        const t = e.touches[0];
+        down(t.clientX, t.clientY);
+      }, { passive: true });
+
+      el.addEventListener('click', e => {
+        if (didDrag) return;
+        lightboxImg.src = imgPath;
+        lightbox.classList.add('active');
+      });
+
+      if (!isTouchDevice) {
+        el.addEventListener('mouseenter', () => {
+          if (!el.classList.contains('dragging')) {
+            el.style.setProperty('--dx', `${(Math.random() - 0.5) * 5}px`);
+            el.style.setProperty('--dy', `${(Math.random() - 0.5) * 5}px`);
+          }
+        });
+        el.addEventListener('mouseleave', () => {
+          if (!el.classList.contains('dragging')) {
+            el.style.setProperty('--dx', '0px');
+            el.style.setProperty('--dy', '0px');
+          }
+        });
+      }
+    }
+
+    document.addEventListener('mousemove', e => {
+      if (!active) return;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag = true;
+      active.style.setProperty('--dx', `${dx}px`);
+      active.style.setProperty('--dy', `${dy}px`);
+    });
+
+    document.addEventListener('touchmove', e => {
+      if (!active) return;
+      const t = e.touches[0];
+      const dx = t.clientX - startX, dy = t.clientY - startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag = true;
+      active.style.setProperty('--dx', `${dx}px`);
+      active.style.setProperty('--dy', `${dy}px`);
+    }, { passive: true });
+
+    const endDrag = () => {
+      if (!active) return;
+      const x  = parseFloat(active.style.getPropertyValue('--x'))  || 0;
+      const y  = parseFloat(active.style.getPropertyValue('--y'))  || 0;
+      const dx = parseFloat(active.style.getPropertyValue('--dx')) || 0;
+      const dy = parseFloat(active.style.getPropertyValue('--dy')) || 0;
+      active.style.setProperty('--x',  `${x + dx}px`);
+      active.style.setProperty('--y',  `${y + dy}px`);
+      active.style.setProperty('--dx', '0px');
+      active.style.setProperty('--dy', '0px');
+      active.classList.remove('dragging');
+      setTimeout(() => { didDrag = false; }, 10);
+      active = null;
+    };
+
+    document.addEventListener('mouseup',   endDrag);
+    document.addEventListener('touchend',  endDrag);
+    window.addEventListener('blur',        endDrag);
+
+    // ── Lightbox ─────────────────────────────────────────────
+    lightboxClose.addEventListener('click', e => { e.stopPropagation(); lightbox.classList.remove('active'); });
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+
+    // ── Resize ───────────────────────────────────────────────
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        document.querySelectorAll('.photo').forEach(p => {
+          if (p.style.display !== 'none') scatter(p);
+        });
+      }, 250);
+    });
+
+    initTable();
+  </script>
 </body>
-
 </html>

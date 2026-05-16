@@ -2,82 +2,71 @@
   "use strict";
 
   /* =========================
-     Helper functions
-  ========================= */
-  const select = (el, all = false) => {
-    el = el.trim();
-    return all ? [...document.querySelectorAll(el)] : document.querySelector(el);
-  };
-
-  const on = (type, el, listener, all = false) => {
-    const elements = select(el, all);
-    if (!elements) return;
-    if (all) elements.forEach(e => e.addEventListener(type, listener));
-    else elements.addEventListener(type, listener);
-  };
-
-  /* =========================
-     Burger menu
-  ========================= */
-  on('click', '.burger', () => {
-    select('.burger')?.classList.toggle('active');
-  });
-
-  /* =========================
-     Portfolio (Isotope)
-  ========================= */
-  window.addEventListener('load', () => {
-    const portfolioContainer = select('#portfolio-grid');
-    if (!portfolioContainer || typeof Isotope === "undefined") return;
-
-    const iso = new Isotope(portfolioContainer, {
-      itemSelector: '.item',
-    });
-
-    const filters = select('#filters a', true);
-    on('click', '#filters a', function (e) {
-      e.preventDefault();
-      filters.forEach(f => f.classList.remove('active'));
-      this.classList.add('active');
-
-      iso.arrange({ filter: this.dataset.filter });
-    }, true);
-  });
-
-  /* =========================
-     AOS
-  ========================= */
-  window.addEventListener('load', () => {
-    if (typeof AOS !== "undefined") {
-      AOS.init({
-        duration: 1000,
-        once: true,
-      });
-    }
-  });
-
-  /* =========================
-     SLIDESHOW
+     Mobile nav toggle
   ========================= */
   document.addEventListener("DOMContentLoaded", () => {
-    const slidesWrapper = select(".slides-wrapper");
-    const slides = select(".mySlides", true);
-    const dots = select(".dot", true);
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    if (!toggle || !links) return;
+
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+      toggle.classList.toggle('open');
+    });
+
+    // Close nav when a link is clicked (mobile)
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+      });
+    });
+  });
+
+  /* =========================
+     Project filter (index.html)
+  ========================= */
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards   = document.querySelectorAll('.proj-card');
+    if (!buttons.length || !cards.length) return;
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          card.style.display = match ? '' : 'none';
+        });
+      });
+    });
+  });
+
+  /* =========================
+     Slideshow (if present)
+  ========================= */
+  document.addEventListener("DOMContentLoaded", () => {
+    const slidesWrapper = document.querySelector(".slides-wrapper");
+    const slides = document.querySelectorAll(".mySlides");
+    const dots   = document.querySelectorAll(".dot");
 
     if (!slidesWrapper || slides.length === 0) return;
 
     let slideIndex = 1;
-    const totalSlides = slides.length;
+    const total = slides.length;
 
-    slidesWrapper.style.transform = "translateX(-100%)";
+    slidesWrapper.style.transform = `translateX(-100%)`;
 
     slidesWrapper.addEventListener("transitionend", () => {
       if (slideIndex === 0) {
         slidesWrapper.style.transition = "none";
-        slideIndex = totalSlides - 2;
+        slideIndex = total - 2;
         slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
       }
-      if (slideIndex === totalSlides - 1) {
+      if (slideIndex === total - 1) {
         slidesWrapper.style.transition = "none";
         slideIndex = 1;
         slidesWrapper.style.transform = `translateX(-${slideIndex * 100}%)`;
@@ -101,49 +90,12 @@
     }
 
     function updateDots() {
-      let activeIndex = slideIndex - 1;
-      if (slideIndex === 0) activeIndex = dots.length - 1;
-      if (slideIndex === totalSlides - 1) activeIndex = 0;
-
+      let active = slideIndex - 1;
+      if (slideIndex === 0) active = dots.length - 1;
+      if (slideIndex === total - 1) active = 0;
       dots.forEach(d => d.classList.remove("active"));
-      dots[activeIndex]?.classList.add("active");
+      if (dots[active]) dots[active].classList.add("active");
     }
-  });
-
-  /* =========================
-     PROJECT FILTER (cards)
-  ========================= */
-  document.addEventListener("DOMContentLoaded", () => {
-    const buttons = document.querySelectorAll('.project-filters button');
-    const items = document.querySelectorAll('.project-item');
-
-    console.log('Buttons found:', buttons.length); // Debug
-    console.log('Items found:', items.length); // Debug
-
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        console.log('Button clicked:', button.dataset.filter); // Debug
-
-        // Remove active class from all buttons
-        buttons.forEach(b => b.classList.remove('active'));
-        // Add active class to clicked button
-        button.classList.add('active');
-
-        const filter = button.dataset.filter;
-
-        // Show/hide items based on filter
-        items.forEach(item => {
-          const category = item.dataset.category;
-          console.log('Item category:', category, 'Filter:', filter); // Debug
-
-          if (filter === 'all' || category === filter) {
-            item.classList.remove('d-none');
-          } else {
-            item.classList.add('d-none');
-          }
-        });
-      });
-    });
   });
 
 })();
