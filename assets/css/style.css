@@ -509,7 +509,7 @@ a.art-card {
 /* Bio + photo hero */
 .resume-hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 320px;
   gap: 3rem;
   align-items: start;
 }
@@ -544,7 +544,7 @@ a.art-card {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 50%;
+  height: 100%;
   object-fit: cover;
   object-position: center top;
   transition: opacity 0.35s ease;
