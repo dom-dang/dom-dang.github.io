@@ -149,57 +149,65 @@
 
 
     <!-- MAKING THINGS -->
-
-
     <section id="making" class="content-section">
       <div class="section-label">making things</div>
-      <div class="arts-grid">
 
+      <div class="making-carousel-scene">
+        <div class="making-carousel-track" id="makingTrack">
 
-        <div class="art-card" onclick="window.open('assets/img/Dominique_Dang_Comic.pdf', '_blank')">
-          <div class="art-banner art-banner-comics"></div>
-          <div class="art-body">
-            <div class="art-title">comics</div>
-            <div class="art-desc">A nonfiction comic about the creator of Wonder Woman for my close reading class.
+          <div class="making-item">
+            <div class="making-item-inner" data-tag="comics"
+              data-desc="a nonfiction comic about the creator of wonder woman.">
+              <img src="assets/img/comic_photo.png" alt="Comics">
             </div>
+            <button class="making-click-target" aria-label="Open Comics"
+              onclick="window.open('assets/img/Dominique_Dang_Comic.pdf', '_blank')"></button>
           </div>
-        </div>
 
-        <div class="art-card"
-          onclick="window.open('https://dddang.notion.site/pottery-006e74b482fd8302a98e0162a89746cb', '_blank')">
-          <div class="art-banner art-banner-pottery"></div>
-          <div class="art-body">
-            <div class="art-title">pottery</div>
-            <div class="art-desc">Learning to center clay (and making taller vases).
+          <div class="making-item">
+            <div class="making-item-inner" data-tag="pottery"
+              data-desc="learning to center clay (and making taller vases).">
+              <img src="assets/img/pottery_photo.png" alt="Pottery">
             </div>
+            <button class="making-click-target" aria-label="Open Pottery"
+              onclick="window.open('https://dddang.notion.site/pottery-006e74b482fd8302a98e0162a89746cb', '_blank')"></button>
           </div>
-        </div>
 
-        <div class="art-card" onclick="window.open('wales.html', '_blank')">
-          <div class="art-banner art-banner-photo"></div>
-          <div class="art-body">
-            <div class="art-title">travel</div>
-            <div class="art-desc">Photos from Wales, where there are more sheep than people.
+          <div class="making-item">
+            <div class="making-item-inner" data-tag="travel"
+              data-desc="photos from wales, where there are more sheep than people!">
+              <img src="assets/img/wales_photo.png" alt="Wales">
             </div>
+            <button class="making-click-target" aria-label="Open Wales"
+              onclick="window.open('wales.html', '_blank')"></button>
           </div>
-        </div>
 
-        <div class="art-card" data-bs-toggle="modal" data-bs-target="#edgertonModal">
-          <div class="art-banner art-banner-sewing"></div>
-          <div class="art-body">
-            <div class="art-title">sewing & making</div>
-            <div class="art-desc">Spending more time in the makerspaces: currently learning how to sew, work with glass
-              and fire, and lasercut. </div>
+          <div class="making-item">
+            <div class="making-item-inner" data-tag="sewing & making"
+              data-desc="currently learning how to sew, work with glass and flames, and lasercut.">
+              <img src="assets/img/dress_photo.png" alt="Sewing & Making">
+            </div>
+            <button class="making-click-target" aria-label="Open Sewing"
+              onclick="(new bootstrap.Modal(document.getElementById('edgertonModal'))).show()"></button>
           </div>
+
         </div>
+      </div>
 
-
+      <div class="making-controls">
+        <button class="making-btn" id="makingPrev">← prev</button>
+        <div class="making-dots" id="makingDots"></div>
+        <button class="making-btn" id="makingNext">next →</button>
       </div>
     </section>
 
-
-
   </main>
+
+  <!-- Shared mouse-following tooltip -->
+  <div class="making-tooltip" id="makingTooltip">
+    <span class="tag tag-rose" id="makingTooltipTag"></span>
+    <span class="making-tooltip-desc" id="makingTooltipDesc"></span>
+  </div>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -617,6 +625,73 @@
     navToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
       navToggle.classList.toggle('open');
+    });
+
+    // Making things carousel
+    (function () {
+      const items = document.querySelectorAll('.making-item');
+      const dotsContainer = document.getElementById('makingDots');
+      const track = document.getElementById('makingTrack');
+      const total = items.length;
+      const angleStep = 360 / total;
+      const radius = 300;
+      let current = 0;
+      let totalRotation = 0;
+
+      items.forEach((item, i) => {
+        const angle = angleStep * i;
+        item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+        const dot = document.createElement('button');
+        dot.className = 'making-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
+        dot.addEventListener('click', () => {
+          const diff = i - current;
+          totalRotation -= diff * angleStep;
+          current = i;
+          render();
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      function render() {
+        track.style.transform = `rotateY(${totalRotation}deg)`;
+        document.querySelectorAll('.making-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      document.getElementById('makingPrev').addEventListener('click', () => {
+        current = (current - 1 + total) % total;
+        totalRotation += angleStep;
+        render();
+      });
+
+      document.getElementById('makingNext').addEventListener('click', () => {
+        current = (current + 1) % total;
+        totalRotation -= angleStep;
+        render();
+      });
+    })();
+
+    // Mouse-following tooltip for making things
+    const tooltip = document.getElementById('makingTooltip');
+    const tooltipTag = document.getElementById('makingTooltipTag');
+    const tooltipDesc = document.getElementById('makingTooltipDesc');
+    document.body.appendChild(tooltip);
+
+    document.querySelectorAll('.making-item').forEach(item => {
+      const inner = item.querySelector('.making-item-inner');
+      item.addEventListener('mouseenter', () => {
+        tooltipTag.textContent = inner.dataset.tag;
+        tooltipDesc.textContent = inner.dataset.desc;
+        tooltip.classList.add('visible');
+      });
+      item.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('visible');
+      });
+      item.addEventListener('mousemove', (e) => {
+        tooltip.style.left = (e.pageX + 14) + 'px';
+        tooltip.style.top = (e.pageY - 20) + 'px';
+      });
     });
   </script>
 </body>

@@ -354,73 +354,180 @@ main {
   color: var(--muted);
 }
 
-/* ── Arts / Making Things ────────────────────────────────── */
-.arts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.1rem;
-}
-
-a.art-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.art-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: #fff;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.art-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
-}
-
-.art-banner {
-  height: 110px;
+/* ── Making Things Carousel ──────────────────────────────── */
+.making-carousel-scene {
+  width: 100%;
+  height: 280px;
+  perspective: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.4rem;
+  overflow: visible;
 }
 
-.art-banner-comics {
-  background: #f0edf8;
+.making-carousel-track {
+  width: 220px;
+  height: 220px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.art-banner-pottery {
-  background: #f5ece3;
+.making-item {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 0;
+  overflow: visible;
+  cursor: pointer;
 }
 
-.art-banner-photo {
-  background: #e6f0eb;
+.making-item-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-.art-banner-sewing {
-  background: #f5e8e6;
+.making-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-.art-body {
-  padding: 0.85rem 1rem 1rem;
+.making-item:hover img {
+  transform: scale(1.04);
 }
 
-.art-title {
-  font-family: var(--font-serif);
-  font-size: 0.92rem;
-  margin-bottom: 0.3rem;
-  color: var(--charcoal);
+/* Mouse-following tooltip — position: absolute, moved to body via JS */
+.making-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(44, 44, 42, 0.85);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.65rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 9999;
+  max-width: 180px;
 }
 
-.art-desc {
+.making-tooltip.visible {
+  opacity: 1;
+}
+
+.making-tooltip .tag {
+  margin-bottom: 0.2rem;
+  font-size: 0.58rem;
+}
+
+.making-tooltip-desc {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.5;
+  display: block;
+}
+
+.making-click-target {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 0;
+}
+
+/* Making controls */
+.making-controls {
+  display: flex;
+  margin-top: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Buttons — use button selector for Bootstrap specificity */
+button.making-btn {
   font-family: var(--font-mono);
   font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: transparent;
   color: var(--muted);
-  line-height: 1.7;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-block;
+  line-height: 1.5;
+  text-align: center;
+  box-shadow: none;
+  outline: none;
+}
+
+button.making-btn:hover {
+  border-color: var(--sage);
+  color: var(--sage-dark);
+  background: transparent;
+}
+
+button.making-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Dots */
+.making-dots {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+button.making-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  outline: none;
+  flex-shrink: 0;
+}
+
+button.making-dot.active {
+  background-color: var(--sage);
+}
+
+@media (max-width: 720px) {
+  .making-carousel-scene {
+    height: 240px;
+    perspective: 700px;
+  }
+
+  .making-carousel-track {
+    width: 180px;
+    height: 180px;
+  }
+
+  .making-item {
+    width: 180px;
+    height: 180px;
+  }
 }
 
 /* ── Footer ──────────────────────────────────────────────── */
@@ -717,7 +824,6 @@ a.art-card {
   font-size: 0.95rem;
   color: var(--charcoal);
   position: relative;
-  /* underline grow on hover */
   background-image: linear-gradient(to right, var(--sage) 0, var(--sage) 100%);
   background-position: 0 1.15em;
   background-size: 0 1px;
