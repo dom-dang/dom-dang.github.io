@@ -152,7 +152,8 @@
     <section id="making" class="content-section">
       <div class="section-label">making things</div>
 
-      <div class="making-carousel-scene">
+      <div class="making-carousel-scene" role="region" aria-roledescription="carousel"
+        aria-label="Making things">
         <div class="making-carousel-track" id="makingTrack">
 
           <div class="making-item">
@@ -195,9 +196,9 @@
       </div>
 
       <div class="making-controls">
-        <button class="making-btn" id="makingPrev">← prev</button>
-        <div class="making-dots" id="makingDots"></div>
-        <button class="making-btn" id="makingNext">next →</button>
+        <button class="making-btn" id="makingPrev" type="button">← prev</button>
+        <div class="making-dots" id="makingDots" role="group" aria-label="Choose a carousel item"></div>
+        <button class="making-btn" id="makingNext" type="button">next →</button>
       </div>
     </section>
 
@@ -630,46 +631,97 @@
     // Making things carousel
     (function () {
       const items = document.querySelectorAll('.making-item');
+      const carousel = document.getElementById('making');
       const dotsContainer = document.getElementById('makingDots');
       const track = document.getElementById('makingTrack');
+      const prevButton = document.getElementById('makingPrev');
+      const nextButton = document.getElementById('makingNext');
       const total = items.length;
+      if (!carousel || !dotsContainer || !track || !prevButton || !nextButton || total === 0) return;
+
       const angleStep = 360 / total;
       const radius = 300;
+      const autoplayDelay = 2000;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       let current = 0;
       let totalRotation = 0;
+      let autoplayTimer = null;
 
       items.forEach((item, i) => {
         const angle = angleStep * i;
         item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
 
         const dot = document.createElement('button');
+        dot.type = 'button';
         dot.className = 'making-dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
         dot.addEventListener('click', () => {
-          const diff = i - current;
+          let diff = i - current;
+          if (Math.abs(diff) > total / 2) diff -= Math.sign(diff) * total;
           totalRotation -= diff * angleStep;
           current = i;
           render();
+          scheduleAutoplay();
         });
         dotsContainer.appendChild(dot);
       });
 
       function render() {
         track.style.transform = `rotateY(${totalRotation}deg)`;
-        document.querySelectorAll('.making-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        dotsContainer.querySelectorAll('.making-dot').forEach((dot, i) => {
+          const isActive = i === current;
+          dot.classList.toggle('active', isActive);
+          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
       }
 
-      document.getElementById('makingPrev').addEventListener('click', () => {
-        current = (current - 1 + total) % total;
-        totalRotation += angleStep;
+      function moveBy(direction) {
+        current = (current + direction + total) % total;
+        totalRotation -= direction * angleStep;
         render();
+      }
+
+      function stopAutoplay() {
+        window.clearTimeout(autoplayTimer);
+        autoplayTimer = null;
+      }
+
+      function scheduleAutoplay() {
+        stopAutoplay();
+        if (total < 2 || reducedMotion.matches || document.hidden || carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
+
+        autoplayTimer = window.setTimeout(() => {
+          moveBy(1);
+          scheduleAutoplay();
+        }, autoplayDelay);
+      }
+
+      prevButton.addEventListener('click', () => {
+        moveBy(-1);
+        scheduleAutoplay();
       });
 
-      document.getElementById('makingNext').addEventListener('click', () => {
-        current = (current + 1) % total;
-        totalRotation -= angleStep;
-        render();
+      nextButton.addEventListener('click', () => {
+        moveBy(1);
+        scheduleAutoplay();
       });
+
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', scheduleAutoplay);
+      carousel.addEventListener('focusin', stopAutoplay);
+      carousel.addEventListener('focusout', () => {
+        window.requestAnimationFrame(scheduleAutoplay);
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopAutoplay();
+        else scheduleAutoplay();
+      });
+
+      reducedMotion.addEventListener('change', scheduleAutoplay);
+
+      render();
+      scheduleAutoplay();
     })();
 
     // Mouse-following tooltip for making things
