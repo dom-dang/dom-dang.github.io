@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="assets/js/theme.js"></script>
   <title>Dominique Dang | Portfolio</title>
   <link href="assets/img/favicon-16x16.png" rel="icon">
   <link
@@ -19,16 +20,21 @@
   <!-- NAV -->
   <nav class="site-nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="index.html">dominique dang</a>
+      <a class="nav-brand" href="index.html">Dominique Dang</a>
       <ul class="nav-links">
         <li><a href="#" class="active">home</a></li>
         <li><a href="resume.html">about</a></li>
         <li><a href="#portfolio">research</a></li>
         <li><a href="#making">making things</a></li>
       </ul>
-      <button class="nav-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="nav-tools">
+        <button class="theme-toggle" type="button" aria-label="Switch color theme">
+          <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+        </button>
+        <button class="nav-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -569,7 +575,6 @@
                       alt="YSP Cover"></div>
                   <div class="carousel-item"><img src="assets/img/Amini Lab - Tricuspid Valve Poster.pptx.png"
                       class="d-block w-100" alt="Poster"></div>
-                  <div class="carousel-item"><img src="assets/img/ysp.jpg" class="d-block w-100" alt="Lab Work"></div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#yspCarousel"
                   data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>

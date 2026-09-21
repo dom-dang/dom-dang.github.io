@@ -2,614 +2,73 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="assets/js/theme.js"></script>
   <title>Wales Photos | Dominique Dang</title>
+  <link href="assets/img/favicon-16x16.png" rel="icon">
   <link
     href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap"
     rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --sage: #8aab96;
-      --sage-light: #e8f0eb;
-      --sage-dark: #4a7058;
-      --rose-light: #f5e8e6;
-      --rose-dark: #8a4a42;
-      --charcoal: #2c2c2a;
-      --muted: #888780;
-      --border: rgba(0, 0, 0, 0.08);
-      --mono: 'IBM Plex Mono', 'Courier New', monospace;
-      --serif: 'Lora', Georgia, serif;
-    }
-
-    body {
-      font-family: var(--mono);
-      min-height: 100vh;
-      padding: 0;
-    }
-
-    /* ── Nav ── */
-    .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-brand {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
-      color: var(--charcoal);
-      text-decoration: none;
-    }
-
-    .nav-back {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-back:hover {
-      color: var(--charcoal);
-    }
-
-    /* ── Header ── */
-    .page-header {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 2rem 0;
-    }
-
-    .hero-glyph {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--sage-dark);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.75rem;
-    }
-
-    .page-title {
-      font-family: var(--serif);
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      font-weight: 400;
-      color: var(--charcoal);
-      margin-bottom: 0.5rem;
-    }
-
-    .page-title em {
-      font-style: italic;
-    }
-
-    .page-sub {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    /* ── Controls ── */
-    .controls-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1.75rem 2rem 0;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .filter-btn {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      padding: 0.3rem 0.85rem;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover {
-      border-color: var(--sage);
-      color: var(--sage-dark);
-    }
-
-    .filter-btn.active {
-      background: var(--sage-light);
-      border-color: var(--sage);
-      color: var(--sage-dark);
-    }
-
-    .filter-btn:focus {
-      outline: none;
-    }
-
-    .action-btn {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      padding: 0.3rem 0.85rem;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-left: auto;
-    }
-
-    .action-btn:hover {
-      border-color: var(--charcoal);
-      color: var(--charcoal);
-    }
-
-    .action-btn:focus {
-      outline: none;
-    }
-
-    /* ── Table ── */
-    .table-wrap {
-      max-width: 1100px;
-      margin: 1.5rem auto 0;
-      padding: 0 2rem 3rem;
-    }
-
-    #table {
-      position: relative;
-      width: 100%;
-      height: min(65vh, 560px);
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
-    }
-
-    @media (max-width: 768px) {
-      #table {
-        height: 60vh;
-        min-height: 400px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      #table {
-        height: 55vh;
-        min-height: 340px;
-      }
-    }
-
-    /* ── Photos ── */
-    .photo {
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      cursor: grab;
-      user-select: none;
-      touch-action: none;
-      --x: 0px;
-      --y: 0px;
-      --dx: 0px;
-      --dy: 0px;
-      --rot: 0deg;
-      transform: translate3d(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy)), 0) rotate(var(--rot));
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    @media (max-width: 768px) {
-      .photo {
-        width: 140px;
-        height: 140px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .photo {
-        width: 115px;
-        height: 115px;
-      }
-    }
-
-    .photo:hover {
-      z-index: 1000;
-    }
-
-    .photo.dragging {
-      cursor: grabbing;
-      z-index: 2000;
-      will-change: transform;
-      transition: none;
-    }
-
-    .photo-frame {
-      width: 100%;
-      height: 100%;
-      padding: 10px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      border: 1px solid var(--border);
-    }
-
-    @media (max-width: 480px) {
-      .photo-frame {
-        padding: 7px;
-      }
-    }
-
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
-
-    /* washi tape */
-    .tape {
-      position: absolute;
-      height: 18px;
-      background: rgba(138, 171, 150, 0.25);
-      border-top: 1px solid rgba(74, 112, 88, 0.15);
-      border-bottom: 1px solid rgba(74, 112, 88, 0.15);
-      pointer-events: none;
-    }
-
-    .tape.top {
-      top: -7px;
-      left: 50%;
-      transform: translateX(-50%) rotate(-2deg);
-      width: 55%;
-    }
-
-    /* ── Lightbox ── */
-    #lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(250, 248, 244, 0.95);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 5000;
-      padding: 20px;
-    }
-
-    #lightbox.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    #lightbox-content {
-      position: relative;
-    }
-
-    #lightbox img {
-      max-width: 85vw;
-      max-height: 85vh;
-      border: 8px solid white;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
-    }
-
-    @media (max-width: 480px) {
-      #lightbox img {
-        border: 4px solid white;
-      }
-    }
-
-    #lightbox-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      color: var(--muted);
-      padding: 0.3rem 0.85rem;
-      cursor: pointer;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
-    }
-
-    #lightbox-close:hover {
-      border-color: var(--charcoal);
-      color: var(--charcoal);
-    }
-
-    /* ── Footer ── */
-    .site-footer {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem 3rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-name {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-  </style>
+  <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="wales-page">
 
-  <!-- Nav -->
+  <!-- NAV -->
   <nav class="site-nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="index.html">dominique dang</a>
-      <a class="nav-back" href="index.html">← back to portfolio</a>
+      <a class="nav-brand" href="index.html">Dominique Dang</a>
+      <div class="nav-actions">
+        <a class="nav-back" href="index.html" aria-label="Back to portfolio">← portfolio</a>
+        <button class="theme-toggle" type="button" aria-label="Switch color theme">
+          <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+        </button>
+      </div>
     </div>
   </nav>
 
-  <!-- Header -->
-  <div class="page-header">
-    <p class="hero-glyph">𓆝 𓆟 𓆞</p>
-    <h1 class="page-title">GTL <em>Wales</em> 2026</h1>
-    <p  class="page-sub">Participated in the Global Teaching Labs program, where I designed and taught lessons about machine
-      learning, biology, HIV, immunology, CRISPR, and the drug development process to over 600 students across 12
-      secondary schools and colleges. Drag to arrange, filter by category, and click to enlarge.
-    </p>
-  </div>
+  <main class="wales-main">
+    <!-- HEADER -->
+    <section class="page-header">
+      <p class="hero-glyph">𓆝 𓆟 𓆞</p>
+      <h1 class="page-title">GTL <em>Wales</em> 2026</h1>
+      <p class="page-sub">Participated in the Global Teaching Labs program, where I designed and taught lessons about
+        machine learning, biology, HIV, immunology, CRISPR, and the drug development process to over 600 students
+        across 12 secondary schools and colleges. Drag to arrange, filter by category, and click to enlarge.</p>
+    </section>
 
-  <!-- Controls -->
-  <div class="controls-wrap" id="controls-wrap">
-    <button class="filter-btn active" data-filter="all">all</button>
-    <button class="filter-btn" data-filter="teaching">teaching</button>
-    <button class="filter-btn" data-filter="cardiff">cardiff</button>
-    <button class="filter-btn" data-filter="bath">bath</button>
-    <button class="filter-btn" data-filter="castles">castles</button>
-    <button class="filter-btn" data-filter="nature">nature</button>
-    <button class="action-btn" onclick="shuffleAll()">shuffle ↺</button>
-  </div>
+    <!-- CONTROLS -->
+    <div class="controls-wrap">
+      <button class="filter-btn active" type="button" data-filter="all">all</button>
+      <button class="filter-btn" type="button" data-filter="teaching">teaching</button>
+      <button class="filter-btn" type="button" data-filter="cardiff">cardiff</button>
+      <button class="filter-btn" type="button" data-filter="bath">bath</button>
+      <button class="filter-btn" type="button" data-filter="castles">castles</button>
+      <button class="filter-btn" type="button" data-filter="nature">nature</button>
+      <button class="action-btn" id="shuffle-photos" type="button">shuffle ↺</button>
+    </div>
 
-  <!-- Board -->
-  <div class="table-wrap">
-    <div id="table"></div>
-  </div>
+    <!-- PHOTO BOARD -->
+    <div class="table-wrap">
+      <div id="table"></div>
+    </div>
+  </main>
 
-  <!-- Lightbox -->
-  <div id="lightbox">
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded Wales photo">
     <div id="lightbox-content">
-      <button id="lightbox-close">close</button>
-      <img id="lightbox-img" />
+      <button id="lightbox-close" type="button">close</button>
+      <img id="lightbox-img" alt="Expanded Wales gallery photo">
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <span class="footer-name">𓆝 dominique dang 𓆞</span>
   </footer>
 
-  <script>
-    const photoStructure = {
-      bath: [
-        'IMG_6785.jpeg', 'IMG_6786.jpeg', 'IMG_6792.jpeg',
-        'IMG_6801.jpeg', 'IMG_6804.jpeg', 'IMG_6805.jpeg',
-        'IMG_6819.jpeg', 'IMG_6821.jpeg', 'IMG_6828.jpeg', 'IMG_6839.jpeg', 'IMG_6841.jpeg',
-        'IMG_6842.jpeg', 'IMG_6848.jpeg',
-      ],
-      cardiff: [
-        'IMG_6382.jpeg', 'IMG_6384.jpeg', 'IMG_6385.jpeg', 'IMG_6417.jpeg', 'IMG_6420.jpeg',
-        'IMG_6430.jpeg', 'IMG_6432.jpeg', 'IMG_6433.jpeg', 'IMG_6442.jpeg', 'IMG_6444.jpeg',
-        'IMG_6445.jpeg',
-      ],
-      nature: {
-        castles: [
-          'IMG_6394.jpeg', 'IMG_6395.jpeg', 'IMG_6403.jpeg', 'IMG_6404.jpeg', 'IMG_6405.jpeg',
-          'IMG_6407.jpeg', 'IMG_6458.jpeg', 'IMG_6466.jpeg', 'IMG_6675.jpeg', 'IMG_6691.jpeg',
-        ],
-        other: [
-          'IMG_6451.jpeg', 'IMG_6473.jpeg', 'IMG_6492.jpeg', 'IMG_6494.jpeg', 'IMG_6530.jpeg',
-          'IMG_6534.jpeg', 'IMG_6538.jpeg', 'IMG_6541.jpeg', 'IMG_6559.jpeg', 'IMG_6642.jpeg',
-          'IMG_6701.jpeg', 'IMG_6705.jpeg', 'IMG_6726.jpeg', 'IMG_6739.jpeg', 'IMG_6743.jpeg',
-          'IMG_6749.jpeg', 'IMG_6768.jpeg', 'IMG_6873.jpeg', 'IMG_6874.jpeg',
-        ],
-      },
-      teaching: [
-        'IMG_1398.jpeg', 'IMG_2639.jpeg', 'IMG_2648.jpeg', 'IMG_6495.jpeg', 'IMG_6496.jpeg',
-        'IMG_6497.jpeg', 'IMG_6563.jpeg', 'IMG_6574.jpeg', 'IMG_6575.jpeg', 'IMG_6581.JPG',
-        'IMG_6590.jpeg', 'IMG_6591.JPG', 'IMG_6592.JPG', 'IMG_6595.jpeg', 'IMG_6603.JPG',
-        'IMG_6604.JPG', 'IMG_6605.JPG', 'IMG_6606.JPG',
-      ],
-    };
-
-    const table = document.getElementById('table');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = document.getElementById('lightbox-close');
-
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-    let active = null, startX = 0, startY = 0, didDrag = false;
-
-    // ── Build all photo elements ──────────────────────────────
-    function initTable() {
-      const fragment = document.createDocumentFragment();
-
-      const add = (filter, file, path) => {
-        const el = document.createElement('div');
-        el.className = 'photo';
-        el.dataset.filter = filter;
-        el.style.display = 'none';
-        const tape = Math.random() > 0.5 ? '<div class="tape top"></div>' : '';
-        const thumbnailPath = path.replace('wales_photos/', 'assets/img/wales_thumbnails/');
-        el.innerHTML = `${tape}<div class="photo-frame"><img data-src="${thumbnailPath}" loading="lazy" decoding="async" alt=""></div>`;
-        addDrag(el, path);
-        fragment.appendChild(el);
-      };
-
-      photoStructure.teaching.forEach(f => add('teaching', f, `wales_photos/teaching/${f}`));
-      photoStructure.cardiff.forEach(f => add('cardiff', f, `wales_photos/cardiff/${f}`));
-      photoStructure.bath.forEach(f => add('bath', f, `wales_photos/bath/${f}`));
-      photoStructure.nature.castles.forEach(f => add('castles', f, `wales_photos/nature/castles/${f}`));
-      photoStructure.nature.other.forEach(f => add('nature', f, `wales_photos/nature/${f}`));
-
-      table.appendChild(fragment);
-      showFilter('all');
-    }
-
-    // ── Filter ────────────────────────────────────────────────
-    function showFilter(filter) {
-      const all = Array.from(document.querySelectorAll('.photo'));
-      all.forEach(p => p.style.display = 'none');
-
-      const pool = filter === 'all' ? all : all.filter(p => p.dataset.filter === filter);
-      const shown = [...pool].sort(() => Math.random() - 0.5);
-
-      shown.forEach(p => {
-        const img = p.querySelector('img');
-        if (!img.hasAttribute('src')) img.src = img.dataset.src;
-        p.style.display = 'block';
-        scatter(p);
-      });
-    }
-
-    // Filter button clicks
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        showFilter(btn.dataset.filter);
-      });
-    });
-
-    // ── Scatter ───────────────────────────────────────────────
-    function scatter(el) {
-      const rect = table.getBoundingClientRect();
-      const size = window.innerWidth <= 480 ? 115 : window.innerWidth <= 768 ? 140 : 170;
-      const m = 20;
-      el.style.setProperty('--x', `${m + Math.random() * (rect.width - size - m * 2)}px`);
-      el.style.setProperty('--y', `${m + Math.random() * (rect.height - size - m * 2)}px`);
-      el.style.setProperty('--rot', `${(Math.random() - 0.5) * 12}deg`);
-      el.style.setProperty('--dx', '0px');
-      el.style.setProperty('--dy', '0px');
-    }
-
-    function shuffleAll() {
-      document.querySelectorAll('.photo').forEach(p => {
-        if (p.style.display !== 'none') scatter(p);
-      });
-    }
-
-    // ── Drag ─────────────────────────────────────────────────
-    function addDrag(el, imgPath) {
-      const down = (cx, cy) => {
-        active = el;
-        el.classList.add('dragging');
-        startX = cx; startY = cy; didDrag = false;
-      };
-
-      el.addEventListener('mousedown', e => { e.preventDefault(); down(e.clientX, e.clientY); });
-      el.addEventListener('touchstart', e => {
-        const t = e.touches[0];
-        down(t.clientX, t.clientY);
-      }, { passive: true });
-
-      el.addEventListener('click', e => {
-        if (didDrag) return;
-        lightboxImg.src = imgPath;
-        lightbox.classList.add('active');
-      });
-
-      if (!isTouchDevice) {
-        el.addEventListener('mouseenter', () => {
-          if (!el.classList.contains('dragging')) {
-            el.style.setProperty('--dx', `${(Math.random() - 0.5) * 5}px`);
-            el.style.setProperty('--dy', `${(Math.random() - 0.5) * 5}px`);
-          }
-        });
-        el.addEventListener('mouseleave', () => {
-          if (!el.classList.contains('dragging')) {
-            el.style.setProperty('--dx', '0px');
-            el.style.setProperty('--dy', '0px');
-          }
-        });
-      }
-    }
-
-    document.addEventListener('mousemove', e => {
-      if (!active) return;
-      const dx = e.clientX - startX, dy = e.clientY - startY;
-      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag = true;
-      active.style.setProperty('--dx', `${dx}px`);
-      active.style.setProperty('--dy', `${dy}px`);
-    });
-
-    document.addEventListener('touchmove', e => {
-      if (!active) return;
-      const t = e.touches[0];
-      const dx = t.clientX - startX, dy = t.clientY - startY;
-      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag = true;
-      active.style.setProperty('--dx', `${dx}px`);
-      active.style.setProperty('--dy', `${dy}px`);
-    }, { passive: true });
-
-    const endDrag = () => {
-      if (!active) return;
-      const x = parseFloat(active.style.getPropertyValue('--x')) || 0;
-      const y = parseFloat(active.style.getPropertyValue('--y')) || 0;
-      const dx = parseFloat(active.style.getPropertyValue('--dx')) || 0;
-      const dy = parseFloat(active.style.getPropertyValue('--dy')) || 0;
-      active.style.setProperty('--x', `${x + dx}px`);
-      active.style.setProperty('--y', `${y + dy}px`);
-      active.style.setProperty('--dx', '0px');
-      active.style.setProperty('--dy', '0px');
-      active.classList.remove('dragging');
-      setTimeout(() => { didDrag = false; }, 10);
-      active = null;
-    };
-
-    document.addEventListener('mouseup', endDrag);
-    document.addEventListener('touchend', endDrag);
-    window.addEventListener('blur', endDrag);
-
-    // ── Lightbox ─────────────────────────────────────────────
-    lightboxClose.addEventListener('click', e => { e.stopPropagation(); lightbox.classList.remove('active'); });
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
-
-    // ── Resize ───────────────────────────────────────────────
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        document.querySelectorAll('.photo').forEach(p => {
-          if (p.style.display !== 'none') scatter(p);
-        });
-      }, 250);
-    });
-
-    initTable();
-  </script>
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>

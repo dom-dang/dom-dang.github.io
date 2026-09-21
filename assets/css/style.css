@@ -1,20 +1,49 @@
 /* ── Tokens ─────────────────────────────────────────────── */
 :root {
-  --sage: #8aab96;
-  --sage-light: #e8f0eb;
-  --sage-dark: #4a7058;
-  --rose: #c9938a;
-  --rose-light: #f5e8e6;
-  --rose-dark: #8a4a42;
-  --cream: white;
-  --charcoal: #2c2c2a;
-  --muted: #888780;
-  --border: rgba(0, 0, 0, 0.08);
+  --sage: #81b29a;
+  --sage-light: rgba(129, 178, 154, 0.2);
+  --sage-dark: #3d6f5c;
+  --rose: #e07a5f;
+  --rose-light: #f4f1de;
+  --rose-dark: #91402d;
+  --cream: #fff;
+  --surface: #fff;
+  --surface-elevated: #f4f1de;
+  --charcoal: #111;
+  --muted: #666;
+  --border: rgba(17, 17, 17, 0.12);
+  --shadow: rgba(17, 17, 17, 0.1);
+  --dot: rgba(17, 17, 17, 0.2);
+  --tooltip-bg: rgba(61, 64, 91, 0.94);
+  --tooltip-text: #fff;
+  --lightbox-bg: rgba(244, 241, 222, 0.96);
+  --close-filter: none;
   --font-serif: 'Lora', Georgia, serif;
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+}
+
+:root[data-theme="dark"] {
+  --sage: #81b29a;
+  --sage-light: rgba(129, 178, 154, 0.22);
+  --sage-dark: #b9ddcb;
+  --rose: #e9a6b5;
+  --rose-light: rgba(244, 241, 222, 0.17);
+  --rose-dark: #ffc3b2;
+  --cream: #1c2f4a;
+  --surface: #243b59;
+  --surface-elevated: #294260;
+  --charcoal: #fff;
+  --muted: #c7c8d2;
+  --border: rgba(255, 255, 255, 0.15);
+  --shadow: rgba(4, 12, 24, 0.5);
+  --dot: rgba(242, 204, 143, 0.38);
+  --tooltip-bg: rgba(15, 31, 51, 0.96);
+  --tooltip-text: #fff;
+  --lightbox-bg: rgba(28, 47, 74, 0.96);
+  --close-filter: invert(1) grayscale(100%) brightness(180%);
 }
 
 /* ── Reset & Base ────────────────────────────────────────── */
@@ -36,6 +65,7 @@ body {
   color: var(--charcoal);
   line-height: 1.7;
   font-size: 1rem;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -96,7 +126,7 @@ p:last-child {
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1.5rem;
 }
 
@@ -117,7 +147,7 @@ p:last-child {
   display: flex;
   gap: 2rem;
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 auto;
 }
 
 .nav-links a {
@@ -165,6 +195,44 @@ p:last-child {
 
 .nav-toggle.open span:nth-child(3) {
   transform: translateY(-6.5px) rotate(-45deg);
+}
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--sage-light);
+  border-color: var(--sage);
+  transform: rotate(10deg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
+}
+
+.theme-toggle-icon {
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 /* ── Layout ──────────────────────────────────────────────── */
@@ -286,14 +354,14 @@ main {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: #fff;
+  background: var(--surface);
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .proj-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 10px 28px var(--shadow);
 }
 
 .proj-card-img {
@@ -408,7 +476,7 @@ main {
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(44, 44, 42, 0.85);
+  background: var(--tooltip-bg);
   border-radius: var(--radius-sm);
   padding: 0.45rem 0.65rem;
   pointer-events: none;
@@ -430,7 +498,7 @@ main {
 .making-tooltip-desc {
   font-family: var(--font-mono);
   font-size: 0.62rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--tooltip-text);
   line-height: 1.5;
   display: block;
 }
@@ -497,7 +565,7 @@ button.making-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: var(--dot);
   cursor: pointer;
   transition: background-color 0.3s;
   border: none;
@@ -527,6 +595,266 @@ button.making-dot.active {
   .making-item {
     width: 180px;
     height: 180px;
+  }
+}
+
+/* ============================================================
+   WALES PHOTO GALLERY
+   ============================================================ */
+
+.wales-page {
+  min-height: 100vh;
+  font-family: var(--font-mono);
+}
+
+.wales-page .wales-main {
+  max-width: none;
+}
+
+.wales-page .nav-inner {
+  justify-content: space-between;
+}
+
+.wales-page .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wales-page .nav-back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.wales-page .nav-back:hover {
+  color: var(--charcoal);
+}
+
+.wales-page .page-header {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem 0;
+}
+
+.wales-page .page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-bottom: 0.5rem;
+}
+
+.wales-page .page-title em {
+  font-style: italic;
+}
+
+.wales-page .page-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.wales-page .controls-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 0;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.wales-page .action-btn {
+  margin-left: auto;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.wales-page .action-btn:hover {
+  border-color: var(--charcoal);
+  color: var(--charcoal);
+}
+
+.wales-page .action-btn:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
+}
+
+.wales-page .table-wrap {
+  max-width: 1100px;
+  margin: 1.5rem auto 0;
+  padding: 0 2rem 3rem;
+}
+
+.wales-page #table {
+  position: relative;
+  width: 100%;
+  height: min(65vh, 560px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 4px 24px var(--shadow);
+}
+
+.wales-page .photo {
+  --x: 0px;
+  --y: 0px;
+  --dx: 0px;
+  --dy: 0px;
+  --rot: 0deg;
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transform: translate3d(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy)), 0) rotate(var(--rot));
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wales-page .photo:hover {
+  z-index: 1000;
+}
+
+.wales-page .photo.dragging {
+  z-index: 2000;
+  cursor: grabbing;
+  will-change: transform;
+  transition: none;
+}
+
+.wales-page .photo-frame {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 6px 20px var(--shadow);
+}
+
+.wales-page .photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.wales-page .tape {
+  position: absolute;
+  height: 18px;
+  background: rgba(129, 178, 154, 0.28);
+  border-top: 1px solid rgba(28, 47, 74, 0.16);
+  border-bottom: 1px solid rgba(28, 47, 74, 0.16);
+  pointer-events: none;
+}
+
+.wales-page .tape.top {
+  top: -7px;
+  left: 50%;
+  width: 55%;
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+.wales-page #lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--lightbox-bg);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.wales-page #lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wales-page #lightbox-content {
+  position: relative;
+}
+
+.wales-page #lightbox img {
+  max-width: 85vw;
+  max-height: 85vh;
+  border: 8px solid var(--surface);
+  box-shadow: 0 20px 60px var(--shadow);
+}
+
+.wales-page #lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.wales-page #lightbox-close:hover {
+  border-color: var(--charcoal);
+  color: var(--charcoal);
+}
+
+@media (max-width: 768px) {
+  .wales-page #table {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .wales-page .photo {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wales-page .nav-inner {
+    padding: 1rem 1.25rem;
+  }
+
+  .wales-page .nav-actions {
+    gap: 0.65rem;
+  }
+
+  .wales-page #table {
+    height: 55vh;
+    min-height: 340px;
+  }
+
+  .wales-page .photo {
+    width: 115px;
+    height: 115px;
+  }
+
+  .wales-page .photo-frame {
+    padding: 7px;
+  }
+
+  .wales-page #lightbox img {
+    border-width: 4px;
   }
 }
 
@@ -571,6 +899,8 @@ button.making-dot.active {
   border: none;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  background: var(--surface-elevated);
+  color: var(--charcoal);
 }
 
 .modal-header {
@@ -587,7 +917,11 @@ button.making-dot.active {
 
 .modal-body {
   padding: 1.5rem;
-  background: #fff;
+  background: var(--surface-elevated);
+}
+
+.btn-close {
+  filter: var(--close-filter);
 }
 
 .modal-body h4 {
@@ -676,6 +1010,16 @@ button.making-dot.active {
 
   .nav-inner {
     flex-wrap: wrap;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .nav-tools {
+    margin-left: auto;
   }
 
   .nav-toggle {
@@ -824,17 +1168,18 @@ button.making-dot.active {
   font-size: 0.95rem;
   color: var(--charcoal);
   position: relative;
-  background-image: linear-gradient(to right, var(--sage) 0, var(--sage) 100%);
-  background-position: 0 1.15em;
-  background-size: 0 1px;
+  background-image: linear-gradient(to right, var(--sage-light), var(--sage-light));
+  background-position: left center;
+  background-size: 0 100%;
   background-repeat: no-repeat;
   transition: background-size 0.3s ease;
-  padding-bottom: 1px;
+  padding: 0.08em 0.2em;
+  border-radius: 3px;
 }
 
 details[open] .resume-block-title,
 .resume-block details summary:hover .resume-block-title {
-  background-size: 100% 1px;
+  background-size: 100% 100%;
 }
 
 .resume-block-date {
