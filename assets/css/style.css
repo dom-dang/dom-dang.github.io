@@ -8,7 +8,7 @@
   --rose-dark: #91402d;
   --cream: #fff;
   --surface: #fff;
-  --surface-elevated: #f4f1de;
+  --surface-elevated: #fff;
   --charcoal: #111;
   --muted: #666;
   --border: rgba(17, 17, 17, 0.12);
@@ -33,8 +33,8 @@
   --rose-light: rgba(244, 241, 222, 0.17);
   --rose-dark: #ffc3b2;
   --cream: #1c2f4a;
-  --surface: #243b59;
-  --surface-elevated: #294260;
+  --surface: #102A43;
+  --surface-elevated: #102A43;
   --charcoal: #fff;
   --muted: #c7c8d2;
   --border: rgba(255, 255, 255, 0.15);
@@ -282,7 +282,7 @@ main {
 .hero-sub {
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  color: var(--muted);
+  color: var(--charcoal);
   line-height: 1.85;
   margin-bottom: 0;
 }
@@ -652,7 +652,7 @@ button.making-dot.active {
 
 .wales-page .page-sub {
   font-size: 0.78rem;
-  color: var(--muted);
+  color: var(--charcoal);
   line-height: 1.8;
 }
 
@@ -962,6 +962,11 @@ button.making-dot.active {
   background: var(--sage-light);
 }
 
+#hansenCarousel .carousel-control-prev-icon,
+#hansenCarousel .carousel-control-next-icon {
+  filter: invert(1) grayscale(100%);
+}
+
 .modal-links {
   margin-top: 1.5rem;
   display: flex;
@@ -1096,12 +1101,6 @@ button.making-dot.active {
 
 .resume-body a {
   color: var(--sage-dark);
-  border-bottom: 1px solid var(--sage-light);
-}
-
-.resume-body a:hover {
-  color: var(--rose-dark);
-  border-color: var(--rose-light);
 }
 
 /* Profile photo */
@@ -1233,10 +1232,6 @@ details[open] .resume-block-title,
   color: var(--sage-dark);
 }
 
-.resume-list a:hover {
-  color: var(--rose-dark);
-}
-
 /* Awards */
 .awards-list {
   display: flex;
@@ -1283,12 +1278,41 @@ details[open] .resume-block-title,
 
 .award-desc a {
   color: var(--charcoal);
-  border-bottom: 1px solid var(--border);
 }
 
-.award-desc a:hover {
+.resume-body a,
+.resume-list a,
+.award-desc a {
+  padding: 0.04em 0.15em;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, var(--sage-light), var(--sage-light));
+  background-position: left center;
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size 0.25s ease;
+}
+
+.resume-body a:hover,
+.resume-body a:focus-visible,
+.resume-list a:hover,
+.resume-list a:focus-visible,
+.award-desc a:hover,
+.award-desc a:focus-visible {
+  background-size: 100% 100%;
+}
+
+.resume-body a:hover,
+.resume-body a:focus-visible,
+.resume-list a:hover,
+.resume-list a:focus-visible {
   color: var(--sage-dark);
-  border-color: var(--sage);
+}
+
+.award-desc a:hover,
+.award-desc a:focus-visible {
+  color: var(--charcoal);
 }
 
 .award-year {
