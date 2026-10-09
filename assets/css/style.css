@@ -276,7 +276,18 @@ main {
 
 .hero-title em {
   font-style: italic;
-  color: var(--rose);
+  color: var(--sage-dark);
+  background-image: linear-gradient(var(--sage-light), var(--sage-light));
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 0 100%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size 0.25s ease;
+}
+
+.hero-title em:hover {
+  background-size: 100% 100%;
 }
 
 .hero-sub {
@@ -284,7 +295,19 @@ main {
   font-size: 0.82rem;
   color: var(--charcoal);
   line-height: 1.85;
+  max-width: 31rem;
   margin-bottom: 0;
+}
+
+.hero-highlight {
+  background: var(--sage-light);
+  color: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.hero-sub + .hero-sub {
+  margin-top: 1.25rem;
 }
 
 /* ── Section Label ───────────────────────────────────────── */
