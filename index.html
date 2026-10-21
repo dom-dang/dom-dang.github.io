@@ -25,7 +25,6 @@
         <li><a href="#" class="active">home</a></li>
         <li><a href="resume.html">about</a></li>
         <li><a href="#portfolio">research</a></li>
-        <li><a href="#making">making things</a></li>
       </ul>
       <div class="nav-tools">
         <button class="theme-toggle" type="button" aria-label="Switch color theme">
@@ -41,157 +40,216 @@
   <main>
 
     <!-- HERO -->
-    <section class="hero-section">
-      <p class="hero-glyph">𓆝 𓆟 𓆞</p>
-      <h1 class="hero-title">Hi, I'm Dom! <br>I study <em>Computer Science</em><br> &amp; <em>Biology</em> at MIT.</h1>
-      <p class="hero-sub">Previously at Eli
-        Lilly, Novartis, and the Broad Institute. <mark class="hero-highlight">Seeking bioinformatics and
-          computational biology roles starting June 2027!</mark></p>
+    <section class="hero-section home-intro">
+      <div class="home-intro-greeting">
+        <h1>hi, I'm Dom</h1>
+        <button class="home-intro-fish" type="button" aria-label="Make the fish splash into its puddle">
+          <svg class="home-intro-puddle" viewBox="0 0 64 52" aria-hidden="true" focusable="false">
+            <ellipse class="home-intro-water" cx="32" cy="40" rx="18" ry="3.5" />
+            <ellipse class="home-intro-ripple" cx="32" cy="40" rx="18" ry="3.5" />
+            <ellipse class="home-intro-ripple" cx="32" cy="40" rx="18" ry="3.5" />
+            <g class="home-intro-droplets">
+              <path d="M23 33l-2-3 M32 30v-4 M41 33l2-3" />
+            </g>
+          </svg>
+          <span class="home-intro-fish-icon" aria-hidden="true">𓆝</span>
+        </button>
+      </div>
+      <div class="home-intro-copy">
+        <p>I study computer science and biology at MIT.</p>
+        <p>Previously at Eli Lilly, Novartis, and the Broad Institute.</p>
+        <p><mark class="home-intro-highlight">Looking for bioinformatics and computational biology roles starting June 2027.</mark></p>
+      </div>
     </section>
 
 
     <!-- PORTFOLIO -->
     <section id="portfolio" class="content-section">
-      <div class="section-label">research &amp; projects</div>
+      <h2 class="section-label">research &amp; projects</h2>
 
-      <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">all</button>
-        <button class="filter-btn" data-filter="research">in the lab</button>
-        <button class="filter-btn" data-filter="other">misc</button>
+      <div class="filter-bar" role="group" aria-label="Filter projects">
+        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">all</button>
+        <button class="filter-btn" type="button" data-filter="research" aria-pressed="false">in the lab</button>
+        <button class="filter-btn" type="button" data-filter="other" aria-pressed="false">misc</button>
       </div>
 
-      <div class="card-grid" id="projectGrid">
-
-        <div class="proj-card" data-category="research" data-bs-toggle="modal" data-bs-target="#novartismodal">
-          <div class="proj-card-img">
-            <img src="assets/img/novartis_presentation.png" alt="Novartis">
-          </div>
-          <div class="proj-card-body">
-            <span class="tag tag-sage">research</span>
-            <div class="proj-card-title">Oncology Data Science Internship — Novartis</div>
-            <div class="proj-card-date">May – Aug 2025</div>
-          </div>
-        </div>
-
-        <div class="proj-card" data-category="research" data-bs-toggle="modal" data-bs-target="#calomodal">
-          <div class="proj-card-img">
-            <img src="assets/img/calo_lab.png" alt="Calo Lab">
-          </div>
-          <div class="proj-card-body">
-            <span class="tag tag-sage">research</span>
-            <div class="proj-card-title">tRNA Analysis via Nanopore Sequencing — Eliezer Calo Lab</div>
-            <div class="proj-card-date">Jan – Aug 2025</div>
-          </div>
-        </div>
-
-        <div class="proj-card" data-category="research" data-bs-toggle="modal" data-bs-target="#modal1">
-          <div class="proj-card-img">
-            <img src="assets/img/anders lab.png" alt="Hansen Lab">
-          </div>
-          <div class="proj-card-body">
-            <span class="tag tag-sage">research</span>
-            <div class="proj-card-title">Bidirectional Promoters — Anders Sejr Hansen Lab</div>
-            <div class="proj-card-date">Jan 2024 – Jan 2025</div>
-          </div>
-        </div>
-
-        <div class="proj-card" data-category="other" data-bs-toggle="modal" data-bs-target="#momentumModal">
-          <div class="proj-card-img">
-            <img src="assets/img/momentum2.png" alt="Momentum">
-          </div>
-          <div class="proj-card-body">
-            <span class="tag tag-rose">misc</span>
-            <div class="proj-card-title">Momentum Design Competition — Blue Origin</div>
-            <div class="proj-card-date">Jan 2024 · 1st place</div>
-          </div>
-        </div>
-
-        <div class="proj-card" data-category="other" data-bs-toggle="modal" data-bs-target="#hackmitModal">
-          <div class="proj-card-img">
-            <img src="assets/img/loading-pic.jpg" alt="HackMIT">
-          </div>
-          <div class="proj-card-body">
-            <span class="tag tag-rose">misc</span>
-            <div class="proj-card-title">Catmosphere — HackMIT</div>
-            <div class="proj-card-date">Sept 2023 · Top Beginner Hack</div>
-          </div>
-        </div>
-
-        <div class="proj-card" data-category="research" data-bs-toggle="modal" data-bs-target="#yspModal">
-          <div class="proj-card-img">
-            <img src="assets/img/ysp cover.jpg" alt="Amini Lab">
-          </div>
-          <div class="proj-card-body">
-            <span class="tag tag-sage">research</span>
-            <div class="proj-card-title">Tricuspid Valve Mechanics — Rouzbeh Amini Lab</div>
-            <div class="proj-card-date">Jun – Aug 2022 · published in JBE</div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- MAKING THINGS -->
-    <section id="making" class="content-section">
-      <div class="section-label">making things</div>
-
-      <div class="making-carousel-scene" role="region" aria-roledescription="carousel" aria-label="Making things">
-        <div class="making-carousel-track" id="makingTrack">
-
-          <div class="making-item">
-            <div class="making-item-inner" data-tag="comics"
-              data-desc="a nonfiction comic about the creator of wonder woman">
-              <img src="assets/img/comic_photo.png" alt="Comics">
+      <div class="project-list" id="projectList">
+        <article id="project-novartis" class="project-row" data-category="research" aria-labelledby="project-novartis-heading" tabindex="-1">
+          <figure class="project-visual project-poster">
+            <a class="poster-link" href="assets/img/Novartis_poster.png" target="_blank" rel="noopener noreferrer" aria-label="Open Novartis poster at full size">
+              <img src="assets/img/Novartis_poster.png" alt="Poster: Predicting Tumorigenic Potential of Human Cancer Cell Lines in Mice" width="2450" height="1844" loading="lazy">
+            </a>
+          </figure>
+          <div class="project-copy">
+            <h3 id="project-novartis-heading" class="project-name">Novartis Oncology Data Science Internship</h3>
+            <p class="project-meta">research · May – Aug 2025</p>
+            <p class="project-summary">Integrated bulk RNA-seq data with tumorigenicity outcomes to identify transcriptomic features linked to successful tumor formation, and trained a machine learning model to prioritize cell lines by their in vivo tumor-forming potential.</p>
+            <h4 class="project-detail-label">What I learned</h4>
+            <ul class="project-details">
+                <li>Differential gene expression and gene set enrichment analysis</li>
+                <li>Machine learning: random forest, Naive Bayes, logistic regression, and linear regression</li>
+                <li>Scanpy for single-cell RNA-seq data analysis</li>
+            </ul>
+            <h4 class="project-detail-label">Prizes received</h4>
+            <ul class="project-details">
+              <li>1st Place: Innovation in Research – Data Science</li>
+              <li>2nd Place: Innovation in Research – Overall</li>
+              <li>2nd Place: Innovation in Research – Scientific Content &amp; Merit</li>
+              <li>3rd Place: Poster Display &amp; Presentation</li>
+            </ul>
+            <div class="project-links">
+              <a class="project-open" href="assets/img/Dang_et_al.pdf" target="_blank" rel="noopener noreferrer">View paper <span aria-hidden="true">↗</span></a> <a class="project-open" href="assets/img/2025_DANG_D_Summer_InternPoster_FINAL.pdf" target="_blank" rel="noopener noreferrer">View poster <span aria-hidden="true">↗</span></a>
             </div>
-            <button class="making-click-target" aria-label="Open Comics"
-              onclick="window.open('assets/img/Dominique_Dang_Comic.pdf', '_blank')"></button>
           </div>
+        </article>
 
-          <div class="making-item">
-            <div class="making-item-inner" data-tag="pottery"
-              data-desc="learning to center clay (and make taller vases)">
-              <img src="assets/img/pottery_photo.png" alt="Pottery">
+        <div class="project-text-pair" data-project-group>
+          <article id="project-calo" class="project-copy project-text-only" data-category="research" aria-labelledby="project-calo-heading" tabindex="-1">
+            <h3 id="project-calo-heading" class="project-name">Eliezer Calo Lab: tRNA Analysis via Nanopore Sequencing</h3>
+            <p class="project-meta">research · Jan – Aug 2025</p>
+            <p class="project-summary">Evaluated Nanopore tRNA sequencing for quantifying tRNA abundance and detecting fragments, focusing on maturation defects and fragment accumulation following DDX1 perturbation.</p>
+            <h4 class="project-detail-label">What I learned</h4>
+            <ul class="project-details">
+                <li>Bioinformatics analysis of Nanopore sequencing data</li>
+                <li>NanoPlot for read quality control, BWA for alignment, and DESeq2 for differential expression</li>
+            </ul>
+            <div class="project-links">
+              <a class="project-open" href="https://github.com/dom-dang/calolab" target="_blank" rel="noopener noreferrer">View code <span aria-hidden="true">↗</span></a>
+              <a class="project-open" href="https://www.calolab.mit.edu/" target="_blank" rel="noopener noreferrer">Lab website <span aria-hidden="true">↗</span></a>
             </div>
-            <button class="making-click-target" aria-label="Open Pottery"
-              onclick="window.open('https://dddang.notion.site/pottery-006e74b482fd8302a98e0162a89746cb', '_blank')"></button>
-          </div>
-
-          <div class="making-item">
-            <div class="making-item-inner" data-tag="travel"
-              data-desc="photos from wales, where there are more sheep than people!">
-              <img src="assets/img/wales_photo.png" alt="Wales">
+          </article>
+          <article id="project-hansen" class="project-copy project-text-only" data-category="research" aria-labelledby="project-hansen-heading" tabindex="-1">
+            <h3 id="project-hansen-heading" class="project-name">Anders Sejr Hansen Lab: Bidirectional Promoters</h3>
+            <p class="project-meta">research · Jan 2024 – Jan 2025</p>
+            <p class="project-summary">Characterized bidirectional promoters as a tool for gene co-expression.</p>
+            <h4 class="project-detail-label">What I learned</h4>
+            <ul class="project-details">
+                <li>Plasmid construction: gel electrophoresis, PCR, and Gibson assembly</li>
+                <li>Cell culture, FACS, and fluorescence microscopy</li>
+                <li>MATLAB, Spotfire, and FCSalyzer</li>
+            </ul>
+            <div class="project-links">
+              <a class="project-open" href="https://www.ashansenlab.com/" target="_blank" rel="noopener noreferrer">Lab website <span aria-hidden="true">↗</span></a>
             </div>
-            <button class="making-click-target" aria-label="Open Wales"
-              onclick="window.open('wales.html', '_blank')"></button>
-          </div>
-
-          <div class="making-item">
-            <div class="making-item-inner" data-tag="sewing & making"
-              data-desc="currently learning how to sew, work with glass and flames, and use a lasercutter">
-              <img src="assets/img/dress_photo.png" alt="Sewing & Making">
-            </div>
-            <button class="making-click-target" aria-label="Open Sewing"
-              onclick="(new bootstrap.Modal(document.getElementById('edgertonModal'))).show()"></button>
-          </div>
-
+          </article>
         </div>
-      </div>
 
-      <div class="making-controls">
-        <button class="making-btn" id="makingPrev" type="button">← prev</button>
-        <div class="making-dots" id="makingDots" role="group" aria-label="Choose a carousel item"></div>
-        <button class="making-btn" id="makingNext" type="button">next →</button>
+        <article id="project-momentum" class="project-row project-row-reversed" data-category="other" aria-labelledby="project-momentum-heading" tabindex="-1">
+          <div id="momentumCarousel" class="carousel slide project-gallery project-visual" data-bs-interval="false" role="region" aria-roledescription="carousel" aria-label="Blue Origin Momentum images">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="assets/img/momentum2.png" alt="Momentum project overview" loading="lazy">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/img/momentum.jpg" alt="Momentum presentation" loading="lazy">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/img/experiment.png" alt="Microgravity orientation experiment" loading="lazy">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/img/materials.png" alt="Experiment materials" loading="lazy">
+              </div>
+            </div>
+            <div class="project-gallery-controls">
+              <button type="button" data-bs-target="#momentumCarousel" data-bs-slide="prev" aria-label="Previous Blue Origin Momentum image">←</button>
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#momentumCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Momentum project overview"></button>
+                <button type="button" data-bs-target="#momentumCarousel" data-bs-slide-to="1" class="" aria-label="Momentum presentation"></button>
+                <button type="button" data-bs-target="#momentumCarousel" data-bs-slide-to="2" class="" aria-label="Microgravity orientation experiment"></button>
+                <button type="button" data-bs-target="#momentumCarousel" data-bs-slide-to="3" class="" aria-label="Experiment materials"></button>
+              </div>
+              <button type="button" data-bs-target="#momentumCarousel" data-bs-slide="next" aria-label="Next Blue Origin Momentum image">→</button>
+            </div>
+          </div>
+          <div class="project-copy">
+            <h3 id="project-momentum-heading" class="project-name">Blue Origin Momentum Design Competition</h3>
+            <p class="project-meta">misc · Jan 2024 · 1st place</p>
+            <p class="project-summary">Designed an experiment to gain insight into orientation perception in microgravity and presented to a panel of Blue Origin staff, winning first place.</p>
+            <h4 class="project-detail-label">What I learned</h4>
+            <ul class="project-details">
+                <li>HTML, CSS, and JavaScript</li>
+                <li>Risk assessment, safety protocols, and budget preparation</li>
+                <li>Project management, public speaking, and teamwork</li>
+            </ul>
+            <div class="project-links">
+              <a class="project-open" href="https://ome.mit.edu/programs/momentum" target="_blank" rel="noopener noreferrer">Competition website <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-catmosphere" class="project-row" data-category="other" aria-labelledby="project-catmosphere-heading" tabindex="-1">
+          <div id="hackmitCarousel" class="carousel slide project-gallery project-visual" data-bs-interval="false" role="region" aria-roledescription="carousel" aria-label="Catmosphere images">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="assets/img/loading-pic.jpg" alt="Catmosphere loading screen" loading="lazy">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/img/game-screen1.jpg" alt="Catmosphere gameplay, first screen" loading="lazy">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/img/game-screen2.jpg" alt="Catmosphere gameplay, second screen" loading="lazy">
+              </div>
+            </div>
+            <div class="project-gallery-controls">
+              <button type="button" data-bs-target="#hackmitCarousel" data-bs-slide="prev" aria-label="Previous Catmosphere image">←</button>
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#hackmitCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Catmosphere loading screen"></button>
+                <button type="button" data-bs-target="#hackmitCarousel" data-bs-slide-to="1" class="" aria-label="Catmosphere gameplay, first screen"></button>
+                <button type="button" data-bs-target="#hackmitCarousel" data-bs-slide-to="2" class="" aria-label="Catmosphere gameplay, second screen"></button>
+              </div>
+              <button type="button" data-bs-target="#hackmitCarousel" data-bs-slide="next" aria-label="Next Catmosphere image">→</button>
+            </div>
+          </div>
+          <div class="project-copy">
+            <h3 id="project-catmosphere-heading" class="project-name">HackMIT Catmosphere</h3>
+            <p class="project-meta">misc · Sept 2023 · Top Beginner Hack</p>
+            <p class="project-summary">Built in Unity and coded in C#, this game challenges players to guide a cat through the layers of the atmosphere using keyboard navigation. Won the Top Beginner Hack prize.</p>
+            <h4 class="project-detail-label">What I learned</h4>
+            <ul class="project-details">
+                <li>C# and Unity development in one weekend</li>
+                <li>HTML, CSS, and JavaScript for front-end polish</li>
+                <li>Teamwork, game design, and hackathon workflows</li>
+            </ul>
+            <div class="project-links">
+              <a class="project-open" href="https://hackmit.org/" target="_blank" rel="noopener noreferrer">Competition website <span aria-hidden="true">↗</span></a> <a class="project-open" href="https://devpost.com/software/music-health" target="_blank" rel="noopener noreferrer">View on Devpost <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article id="project-amini" class="project-row project-row-reversed" data-category="research" aria-labelledby="project-amini-heading" tabindex="-1">
+          <figure class="project-visual project-poster">
+            <a class="poster-link" href="assets/img/Amini Lab - Tricuspid Valve Poster.pptx.png" target="_blank" rel="noopener noreferrer" aria-label="Open Amini Lab poster at full size">
+              <img src="assets/img/Amini Lab - Tricuspid Valve Poster.pptx.png" alt="Poster: Biomechanical Properties of the Porcine Tricuspid Valve Remained Unchanged Over Time" width="2500" height="1875" loading="lazy">
+            </a>
+          </figure>
+          <div class="project-copy">
+            <h3 id="project-amini-heading" class="project-name">Rouzbeh Amini Lab: Tricuspid Valve Mechanics</h3>
+            <p class="project-meta">research · Jun – Aug 2022 · published in JBE</p>
+            <p class="project-summary">Researched the mechanical properties of the tricuspid valve in porcine hearts through the Young Scholars Program at Northeastern University. Used biaxial mechanical testing and stress-strain plots to characterize changes in stiffness over time. Resulted in a publication in the Journal of Biomechanical Engineering in May 2023.</p>
+            <h4 class="project-detail-label">What I learned</h4>
+            <ul class="project-details">
+                <li>Porcine heart dissection</li>
+                <li>Biaxial mechanical testing, sterile technique, and suturing</li>
+                <li>MATLAB for biomechanics data analysis</li>
+            </ul>
+            <div class="project-links">
+              <a class="project-open" href="https://doi.org/10.1115/1.4062477" target="_blank" rel="noopener noreferrer">View paper <span aria-hidden="true">↗</span></a> <a class="project-open" href="assets/img/Amini Lab - Tricuspid Valve Poster.pptx.png" target="_blank" rel="noopener noreferrer">View poster <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
   </main>
 
-  <!-- Shared mouse-following tooltip -->
-  <div class="making-tooltip" id="makingTooltip">
-    <span class="tag tag-rose" id="makingTooltipTag"></span>
-    <span class="making-tooltip-desc" id="makingTooltipDesc"></span>
-  </div>
+  <nav class="section-nav project-section-nav" data-section-nav="#portfolio" aria-label="Research projects">
+    <a href="#project-novartis" aria-label="Novartis" aria-current="location"><span aria-hidden="true">Novartis</span></a>
+    <a href="#project-calo" aria-label="Eliezer Calo Lab"><span aria-hidden="true">Eliezer Calo Lab</span></a>
+    <a href="#project-hansen" aria-label="Anders Sejr Hansen Lab"><span aria-hidden="true">Anders Sejr Hansen Lab</span></a>
+    <a href="#project-momentum" aria-label="Momentum · Blue Origin"><span aria-hidden="true">Momentum · Blue Origin</span></a>
+    <a href="#project-catmosphere" aria-label="HackMIT"><span aria-hidden="true">HackMIT</span></a>
+    <a href="#project-amini" aria-label="Rouzbeh Amini Lab"><span aria-hidden="true">Rouzbeh Amini Lab</span></a>
+  </nav>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -207,403 +265,12 @@
   </footer>
 
 
-  <!-- ======================== MODALS ======================== -->
-
-  <!-- Novartis -->
-  <div class="modal fade" id="novartismodal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Novartis Internship</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="novartisCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="assets/img/novartis_presentation.png"
-                      class="d-block w-100" alt="Presentation"></div>
-                  <div class="carousel-item"><img src="assets/img/Novartis_poster.png" class="d-block w-100"
-                      alt="Poster"></div>
-                  <div class="carousel-item"><img src="assets/img/novartis_team.JPG" class="d-block w-100" alt="Team">
-                  </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#novartisCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#novartisCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>Predicting Tumorigenic Potential of Human Cancer Cell Lines in Mice</h4>
-              <p><strong>Science | May 2025 – August 2025</strong></p>
-              <p>Integrated bulk RNA-seq data with validated tumorigenicity outcomes to identify transcriptomic features
-                linked to successful tumor formation, and trained a machine learning model to prioritize cell lines by
-                their in vivo tumor-forming potential.</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>Differential Gene Expression, Geneset Enrichment Analysis</li>
-                <li>Machine Learning (Random Forest, Naive Bayes, Logistic Regression, Linear Regression)</li>
-                <li>Scanpy library for scRNA-seq data analysis</li>
-              </ul>
-              <h5 class="mt-4">Prizes Received:</h5>
-              <ul>
-                <li>1st Place: Innovation in Research – Data Science</li>
-                <li>2nd Place: Innovation in Research – Overall</li>
-                <li>2nd Place: Innovation in Research – Scientific Content &amp; Merit</li>
-                <li>3rd Place: Poster Display &amp; Presentation</li>
-              </ul>
-              <div class="modal-links">
-                <a href="assets/img/2025_DANG_D_Summer_InternPoster_FINAL.pdf" target="_blank" rel="noopener noreferrer"
-                  class="readmore">Final Poster</a>
-                <a href="assets/img/Dang_et_al.pdf" target="_blank" rel="noopener noreferrer" class="readmore">Paper</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Wales -->
-  <div class="modal fade" id="walesmodal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">GTL Wales</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="walesCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="wales_photos/teaching/IMG_6606.JPG" class="d-block w-100"
-                      alt="Teaching"></div>
-                  <div class="carousel-item"><img src="wales_photos/teaching/IMG_6605.JPG" class="d-block w-100"
-                      alt="Teaching 2"></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#walesCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#walesCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>Global Teaching Labs Wales</h4>
-              <p><strong>Teaching | January 2026</strong></p>
-              <p>Participated in the Global Teaching Labs program in Wales, where I designed and taught lessons about
-                machine learning, biology, HIV, immunology, CRISPR, and the drug development process to over 600
-                students across 12 secondary schools and colleges.</p>
-              <div class="modal-links">
-                <a href="wales.html" target="_blank" rel="noopener noreferrer" class="readmore">Photo Album</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Calo Lab -->
-  <div class="modal fade" id="calomodal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Calo Lab</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <img src="assets/img/calo_lab.png" class="img-fluid" alt="Calo Lab">
-            </div>
-            <div class="col-lg-6">
-              <h4>tRNA Analysis via Nanopore Sequencing</h4>
-              <p><strong>Science | Jan 2025 – Aug 2025</strong></p>
-              <p>Analyzed Nanopore tRNA sequencing datasets to evaluate the method's ability to quantify tRNA abundance
-                and detect tRNA fragments. Focused on samples with DDX1 perturbation to assess defects in tRNA
-                maturation and fragment accumulation.</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>Bioinformatics analysis of Nanopore sequencing data</li>
-                <li>NanoPlot (read QC), BWA (read alignment), DESeq2 (differential expression)</li>
-              </ul>
-              <div class="modal-links">
-                <a href="https://github.com/dom-dang/calolab" target="_blank" rel="noopener noreferrer"
-                  class="readmore">GitHub Code</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hansen Lab -->
-  <div class="modal fade" id="modal1" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Anders Sejr Hansen Lab</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="hansenCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="assets/img/anders lab.png" class="d-block w-100"
-                      alt="Lab"></div>
-                  <div class="carousel-item"><img src="assets/img/lab photo.jpg" class="d-block w-100"
-                      alt="Presentation"></div>
-                  <div class="carousel-item"><img src="assets/img/hansen1.png" class="d-block w-100" alt="Data"></div>
-                  <div class="carousel-item"><img src="assets/img/hansen2.png" class="d-block w-100" alt="FACS"></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#hansenCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#hansenCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>Bidirectional Promoters</h4>
-              <p><strong>Science | Jan 2024 – Jan 2025</strong></p>
-              <p>Characterized bidirectional promoters (BDPs) as a tool for gene co-expression. Gained a deeper
-                understanding of gene regulation with the potential to measure BDP expression dynamics over time and
-                apply
-                BDPs in existing co-expression applications.</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>Plasmid construction: gel electrophoresis, PCR, Gibson assembly</li>
-                <li>Cell culture, FACS, fluorescence microscopy</li>
-                <li>MATLAB, Spotfire, FCSalyzer</li>
-              </ul>
-              <div class="modal-links">
-                <a href="https://www.ashansenlab.com/" target="_blank" rel="noopener noreferrer" class="readmore">Lab
-                  Website</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Momentum -->
-  <div class="modal fade" id="momentumModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Momentum Design Competition (First Place)</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="momentumCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="assets/img/momentum2.png" class="d-block w-100"
-                      alt="Momentum"></div>
-                  <div class="carousel-item"><img src="assets/img/momentum.jpg" class="d-block w-100"
-                      alt="Presentation"></div>
-                  <div class="carousel-item"><img src="assets/img/experiment.png" class="d-block w-100"
-                      alt="Experiment"></div>
-                  <div class="carousel-item"><img src="assets/img/materials.png" class="d-block w-100" alt="Materials">
-                  </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#momentumCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#momentumCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>What's Up?</h4>
-              <p><strong>Programming | Jan 2024</strong></p>
-              <p>Designed an experiment to gain insight into orientation perception in microgravity and the project to a
-                panel of Blue Origin staff.</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>HTML, CSS, JavaScript</li>
-                <li>Risk assessment, safety protocols, budget preparation</li>
-                <li>Project management, public speaking, teamwork</li>
-              </ul>
-              <div class="modal-links">
-                <a href="https://ome.mit.edu/programs/momentum" target="_blank" rel="noopener noreferrer"
-                  class="readmore">Competition Website</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HackMIT -->
-  <div class="modal fade" id="hackmitModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">HackMIT 2023 (Top Beginner Prize)</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="hackmitCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="assets/img/loading-pic.jpg" class="d-block w-100"
-                      alt="Loading Screen"></div>
-                  <div class="carousel-item"><img src="assets/img/game-screen1.jpg" class="d-block w-100"
-                      alt="Game Screen 1"></div>
-                  <div class="carousel-item"><img src="assets/img/game-screen2.jpg" class="d-block w-100"
-                      alt="Game Screen 2"></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#hackmitCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#hackmitCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>Catmosphere</h4>
-              <p><strong>Programming | Sept. 2023</strong></p>
-              <p>Built in Unity and coded in C#, this game challenges players to guide a cat through the layers of the
-                atmosphere using keyboard navigation. Won the Top Beginner Hack prize.</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>C# and Unity development in one weekend</li>
-                <li>HTML, CSS, JavaScript for front-end polish</li>
-                <li>Teamwork, game design, and hackathon workflows</li>
-              </ul>
-              <div class="modal-links">
-                <a href="https://devpost.com/software/music-health" target="_blank" rel="noopener noreferrer"
-                  class="readmore">Devpost</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Edgerton -->
-  <div class="modal fade" id="edgertonModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Project Cinderella</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="edgertonCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="assets/img/project cinderella.png" class="d-block w-100"
-                      alt="Skirt at MIT"></div>
-                  <div class="carousel-item"><img src="assets/img/dress-mit.jpg" class="d-block w-100"
-                      alt="Skirt at MIT 2"></div>
-                  <div class="carousel-item"><img src="assets/img/dress group.jpg" class="d-block w-100"
-                      alt="Team Photo"></div>
-                  <div class="carousel-item"><img src="assets/img/dresses.jpg" class="d-block w-100"
-                      alt="Design Variants"></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#edgertonCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#edgertonCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>Light-Up Skirts</h4>
-              <p><strong>Engineering &amp; Design | June – August 2023</strong></p>
-              <p>Designed and built a light-up hoop skirt through the Interphase Edge Program in collaboration with the
-                MIT Edgerton Center. Using Arduino boards and NeoPixels, our team programmed colorful lighting
-                animations and
-                sewed the skirt using both hand and machine sewing.</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>C++ and Arduino programming</li>
-                <li>Electrical prototyping with Neopixels</li>
-                <li>Sewing, iterative design, teamwork, and presentation skills</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- YSP / Amini Lab -->
-  <div class="modal fade" id="yspModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Rouzbeh Amini Lab</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body container-fluid">
-          <div class="row g-4">
-            <div class="col-lg-6">
-              <div id="yspCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="assets/img/ysp cover.jpg" class="d-block w-100"
-                      alt="YSP Cover"></div>
-                  <div class="carousel-item"><img src="assets/img/Amini Lab - Tricuspid Valve Poster.pptx.png"
-                      class="d-block w-100" alt="Poster"></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#yspCarousel"
-                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#yspCarousel"
-                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <h4>Tricuspid Valve Mechanics</h4>
-              <p><strong>Science | June – August 2022</strong></p>
-              <p>Researched the mechanical properties of the tricuspid valve in porcine hearts through the Young
-                Scholars Program at Northeastern. Used biaxial mechanical testing and stress-strain plots to
-                characterize changes in stiffness over time. Resulted in a publication in the Journal of Biomechanical
-                Engineering (May 2023).</p>
-              <h5 class="mt-4">What I Learned:</h5>
-              <ul>
-                <li>Porcine heart dissection</li>
-                <li>Biaxial mechanical testing, sterile technique, suturing</li>
-                <li>MATLAB for biomechanics data analysis</li>
-              </ul>
-              <div class="modal-links">
-                <a href="https://doi.org/10.1115/1.4062477" target="_blank" rel="noopener noreferrer"
-                  class="readmore">Paper</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Scripts -->
+  <script src="assets/js/home-intro.js" defer></script>
+  <script src="assets/js/projects.js" defer></script>
+  <script src="assets/js/section-navigation.js" defer></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Filter logic
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.proj-card');
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        cards.forEach(card => {
-          const match = filter === 'all' || card.dataset.category === filter;
-          card.style.display = match ? '' : 'none';
-        });
-      });
-    });
-
     // Mobile nav toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -612,123 +279,6 @@
       navToggle.classList.toggle('open');
     });
 
-    // Making things carousel
-    (function () {
-      const items = document.querySelectorAll('.making-item');
-      const carousel = document.getElementById('making');
-      const dotsContainer = document.getElementById('makingDots');
-      const track = document.getElementById('makingTrack');
-      const prevButton = document.getElementById('makingPrev');
-      const nextButton = document.getElementById('makingNext');
-      const total = items.length;
-      if (!carousel || !dotsContainer || !track || !prevButton || !nextButton || total === 0) return;
-
-      const angleStep = 360 / total;
-      const radius = 300;
-      const autoplayDelay = 2000;
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-      let current = 0;
-      let totalRotation = 0;
-      let autoplayTimer = null;
-
-      items.forEach((item, i) => {
-        const angle = angleStep * i;
-        item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
-
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'making-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
-        dot.addEventListener('click', () => {
-          let diff = i - current;
-          if (Math.abs(diff) > total / 2) diff -= Math.sign(diff) * total;
-          totalRotation -= diff * angleStep;
-          current = i;
-          render();
-          scheduleAutoplay();
-        });
-        dotsContainer.appendChild(dot);
-      });
-
-      function render() {
-        track.style.transform = `rotateY(${totalRotation}deg)`;
-        dotsContainer.querySelectorAll('.making-dot').forEach((dot, i) => {
-          const isActive = i === current;
-          dot.classList.toggle('active', isActive);
-          dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-        });
-      }
-
-      function moveBy(direction) {
-        current = (current + direction + total) % total;
-        totalRotation -= direction * angleStep;
-        render();
-      }
-
-      function stopAutoplay() {
-        window.clearTimeout(autoplayTimer);
-        autoplayTimer = null;
-      }
-
-      function scheduleAutoplay() {
-        stopAutoplay();
-        if (total < 2 || reducedMotion.matches || document.hidden || carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
-
-        autoplayTimer = window.setTimeout(() => {
-          moveBy(1);
-          scheduleAutoplay();
-        }, autoplayDelay);
-      }
-
-      prevButton.addEventListener('click', () => {
-        moveBy(-1);
-        scheduleAutoplay();
-      });
-
-      nextButton.addEventListener('click', () => {
-        moveBy(1);
-        scheduleAutoplay();
-      });
-
-      carousel.addEventListener('mouseenter', stopAutoplay);
-      carousel.addEventListener('mouseleave', scheduleAutoplay);
-      carousel.addEventListener('focusin', stopAutoplay);
-      carousel.addEventListener('focusout', () => {
-        window.requestAnimationFrame(scheduleAutoplay);
-      });
-
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) stopAutoplay();
-        else scheduleAutoplay();
-      });
-
-      reducedMotion.addEventListener('change', scheduleAutoplay);
-
-      render();
-      scheduleAutoplay();
-    })();
-
-    // Mouse-following tooltip for making things
-    const tooltip = document.getElementById('makingTooltip');
-    const tooltipTag = document.getElementById('makingTooltipTag');
-    const tooltipDesc = document.getElementById('makingTooltipDesc');
-    document.body.appendChild(tooltip);
-
-    document.querySelectorAll('.making-item').forEach(item => {
-      const inner = item.querySelector('.making-item-inner');
-      item.addEventListener('mouseenter', () => {
-        tooltipTag.textContent = inner.dataset.tag;
-        tooltipDesc.textContent = inner.dataset.desc;
-        tooltip.classList.add('visible');
-      });
-      item.addEventListener('mouseleave', () => {
-        tooltip.classList.remove('visible');
-      });
-      item.addEventListener('mousemove', (e) => {
-        tooltip.style.left = (e.pageX + 14) + 'px';
-        tooltip.style.top = (e.pageY - 20) + 'px';
-      });
-    });
   </script>
 </body>
 

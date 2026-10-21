@@ -25,7 +25,6 @@
         <li><a href="index.html">home</a></li>
         <li><a href="resume.html" class="active">about</a></li>
         <li><a href="index.html#portfolio">research</a></li>
-        <li><a href="index.html#making">making things</a></li>
       </ul>
       <div class="nav-tools">
         <button class="theme-toggle" type="button" aria-label="Switch color theme">
@@ -41,7 +40,7 @@
   <main class="resume-main">
 
     <!-- BIO + PHOTO -->
-    <section class="content-section resume-hero">
+    <section id="about" class="content-section resume-hero" tabindex="-1">
       <div class="resume-bio">
         <p class="hero-glyph">𓆝 𓆟 𓆞</p>
         <h1 class="resume-title">About Me</h1>
@@ -74,8 +73,8 @@
     </section>
 
     <!-- EDUCATION -->
-    <section class="content-section">
-      <div class="section-label">education</div>
+    <section id="education" class="content-section" tabindex="-1">
+      <h2 class="section-label">education</h2>
       <div class="resume-block">
         <div class="resume-block-header">
           <span class="resume-block-title">Massachusetts Institute of Technology</span>
@@ -89,8 +88,8 @@
     </section>
 
     <!-- RESEARCH & WORK -->
-    <section class="content-section">
-      <div class="section-label">research &amp; work</div>
+    <section id="research" class="content-section" tabindex="-1">
+      <h2 class="section-label">research &amp; work</h2>
 
       <div class="resume-block">
         <details>
@@ -191,8 +190,8 @@
     </section>
 
     <!-- LEADERSHIP -->
-    <section class="content-section">
-      <div class="section-label">leadership</div>
+    <section id="leadership" class="content-section" tabindex="-1">
+      <h2 class="section-label">leadership</h2>
 
       <div class="resume-block">
         <details>
@@ -257,8 +256,8 @@
 
 
     <!-- AWARDS -->
-    <section class="content-section">
-      <div class="section-label">awards</div>
+    <section id="awards" class="content-section" tabindex="-1">
+      <h2 class="section-label">awards</h2>
       <div class="awards-list">
         <div class="award-item">
           <span class="award-place">1st</span>
@@ -289,7 +288,47 @@
       </div>
     </section>
 
+    <!-- MAKING THINGS -->
+    <section id="making" class="content-section" tabindex="-1">
+      <h2 class="section-label">Side Quests</h2>
+
+      <div class="making-list">
+        <article class="making-entry" aria-labelledby="making-comics-title">
+          <h3 id="making-comics-title" class="making-title">A Comic</h3>
+          <p class="making-description">Drawing, storyboarding, and creating a nonfiction comic about the creator of Wonder Woman.</p>
+          <a class="project-open" href="assets/img/Dominique_Dang_Comic.pdf" target="_blank" rel="noopener noreferrer">View comic <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="making-entry" aria-labelledby="making-pottery-title">
+          <h3 id="making-pottery-title" class="making-title">Pottery</h3>
+          <p class="making-description">Learning to center clay (and make taller vases).</p>
+          <a class="project-open" href="https://dddang.notion.site/pottery-006e74b482fd8302a98e0162a89746cb" target="_blank" rel="noopener noreferrer">View pottery <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="making-entry" aria-labelledby="making-wales-title">
+          <h3 id="making-wales-title" class="making-title">Wales</h3>
+          <p class="making-description">Jan 2026 MIT Global Teaching Lab Photos from Wales, where there are more sheep than people!</p>
+          <a class="project-open" href="wales.html" target="_blank" rel="noopener noreferrer">View photos <span aria-hidden="true">↗</span></a>
+        </article>
+
+        <article class="making-entry" aria-labelledby="making-sewing-title">
+          <h3 id="making-sewing-title" class="making-title">Sewing &amp; making</h3>
+          <p class="making-description">Designed and built a light-up hoop skirt with the MIT Edgerton Center, using Arduino boards and NeoPixels. Currently learning how to sew, work with glass and flames, and use a lasercutter.</p>
+          <button class="project-open" type="button" data-bs-toggle="modal" data-bs-target="#edgertonModal">View sewing project <span aria-hidden="true">↗</span></button>
+        </article>
+      </div>
+    </section>
+
   </main>
+
+  <nav class="section-nav" data-section-nav=".resume-main" aria-label="Resume sections">
+    <a href="#about" aria-label="About me" aria-current="location"><span aria-hidden="true">about me</span></a>
+    <a href="#education" aria-label="Education"><span aria-hidden="true">education</span></a>
+    <a href="#research" aria-label="Research and work"><span aria-hidden="true">research &amp; work</span></a>
+    <a href="#leadership" aria-label="Leadership"><span aria-hidden="true">leadership</span></a>
+    <a href="#awards" aria-label="Awards"><span aria-hidden="true">awards</span></a>
+    <a href="#making" aria-label="Making things"><span aria-hidden="true">making things</span></a>
+  </nav>
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -302,8 +341,57 @@
     </div>
   </footer>
 
+  <!-- Edgerton -->
+  <div class="modal fade" id="edgertonModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Project Cinderella</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body container-fluid">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div id="edgertonCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active"><img src="assets/img/project cinderella.png" class="d-block w-100"
+                      alt="Skirt at MIT"></div>
+                  <div class="carousel-item"><img src="assets/img/dress-mit.jpg" class="d-block w-100"
+                      alt="Skirt at MIT 2"></div>
+                  <div class="carousel-item"><img src="assets/img/dress group.jpg" class="d-block w-100"
+                      alt="Team Photo"></div>
+                  <div class="carousel-item"><img src="assets/img/dresses.jpg" class="d-block w-100"
+                      alt="Design Variants"></div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#edgertonCarousel"
+                  data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                <button class="carousel-control-next" type="button" data-bs-target="#edgertonCarousel"
+                  data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <h4>Light-Up Skirts</h4>
+              <p><strong>Engineering &amp; Design | June – August 2023</strong></p>
+              <p>Designed and built a light-up hoop skirt through the Interphase Edge Program in collaboration with the
+                MIT Edgerton Center. Using Arduino boards and NeoPixels, our team programmed colorful lighting
+                animations and
+                sewed the skirt using both hand and machine sewing.</p>
+              <h5 class="mt-4">What I Learned:</h5>
+              <ul>
+                <li>C++ and Arduino programming</li>
+                <li>Electrical prototyping with Neopixels</li>
+                <li>Sewing, iterative design, teamwork, and presentation skills</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/section-navigation.js" defer></script>
 </body>
 
 </html>
