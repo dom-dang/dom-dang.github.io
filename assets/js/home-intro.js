@@ -57,7 +57,7 @@
     autoplayTimer = window.setTimeout(() => {
       plop();
       schedulePlop();
-    }, 7000);
+    }, 4000);
   }
 
   button.addEventListener('click', () => {
