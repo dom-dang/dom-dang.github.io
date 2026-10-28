@@ -251,6 +251,12 @@ p:last-child {
   line-height: 1;
 }
 
+.theme-toggle-icon svg {
+  display: block;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
 /* ── Layout ──────────────────────────────────────────────── */
 main {
   max-width: var(--page-width);
@@ -643,8 +649,12 @@ main {
 
 .project-gallery .carousel-indicators {
   position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.1rem;
   margin: 0;
+  flex: 0 0 auto;
 }
 
 .project-gallery .carousel-indicators button {
@@ -1018,10 +1028,9 @@ main {
   margin: 0 auto;
   padding: 1.75rem 2rem 3rem;
   border-top: 1px solid var(--border);
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -1033,20 +1042,39 @@ main {
 
 .footer-links {
   display: flex;
+  justify-self: end;
   gap: 1.25rem;
 }
 
 .footer-links a {
   color: var(--muted);
   font-size: 1.25rem;
-  transition: color 0.2s, transform 0.2s;
+  background-image: none;
+  transition: color 0.2s;
   display: inline-block;
 }
 
 .footer-links a:hover {
   color: var(--charcoal);
-  transform: translateY(-2px);
 }
+
+.footer-links a:focus-visible,
+.footer-top:focus-visible {
+  outline: 2px solid var(--sage-dark);
+  outline-offset: 3px;
+}
+
+.footer-top {
+  grid-column: 2;
+  justify-self: center;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  background-image: none;
+}
+
+.footer-top:hover { color: var(--charcoal); }
 
 /* ── Modals ──────────────────────────────────────────────── */
 .modal-content {
@@ -1195,6 +1223,17 @@ main {
 
   .site-footer {
     padding: 1.5rem 1.25rem 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .footer-links {
+    margin-left: auto;
+  }
+
+  .footer-top {
+    margin-inline: auto;
   }
 
   .arts-grid {
@@ -1337,6 +1376,7 @@ main {
   color: var(--charcoal);
   line-height: 1.9;
   margin-bottom: 0.85rem;
+  text-align: justify;
 }
 
 .resume-body a {
