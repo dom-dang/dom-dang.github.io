@@ -308,6 +308,11 @@ main {
 .home-intro-greeting h1 {
   margin: 0;
   font: inherit;
+}
+
+.home-intro-greeting h1,
+.resume-title {
+  font-family: var(--font-mono);
   font-size: clamp(1.4rem, 3vw, 1.75rem);
   font-weight: 500;
   line-height: 1.3;
@@ -385,7 +390,7 @@ main {
 }
 
 .home-intro-copy {
-  max-width: 36rem;
+  max-width: 30rem;
   text-align: justify;
 }
 
@@ -533,7 +538,6 @@ main {
 }
 
 .project-poster img {
-  display: block;
   width: 100%;
   height: auto;
 }
@@ -575,6 +579,7 @@ main {
   margin-bottom: 1rem;
   font-size: calc(0.95rem - 1px);
   line-height: 1.75;
+  text-align: justify;
 }
 
 .project-detail-label {
@@ -619,7 +624,6 @@ main {
 }
 
 .project-gallery .carousel-item img {
-  display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
@@ -830,8 +834,8 @@ main {
   align-items: center;
 }
 
-.wales-page .action-btn {
-  margin-left: auto;
+.wales-page .action-btn,
+.wales-page #lightbox-close {
   padding: 0.3rem 0.85rem;
   border: 1px solid var(--border);
   border-radius: 100px;
@@ -844,9 +848,8 @@ main {
   transition: border-color 0.2s, color 0.2s;
 }
 
-.wales-page .action-btn:hover {
-  border-color: var(--charcoal);
-  color: var(--charcoal);
+.wales-page .action-btn {
+  margin-left: auto;
 }
 
 .wales-page .action-btn:focus-visible {
@@ -965,18 +968,9 @@ main {
   position: absolute;
   top: -40px;
   right: 0;
-  padding: 0.3rem 0.85rem;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  background: transparent;
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
 }
 
+.wales-page .action-btn:hover,
 .wales-page #lightbox-close:hover {
   border-color: var(--charcoal);
   color: var(--charcoal);
@@ -1185,6 +1179,9 @@ main {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem 0 0.5rem;
+    order: 3;
+    width: 100%;
+    margin-left: 0;
   }
 
   .nav-links.open {
@@ -1193,12 +1190,6 @@ main {
 
   .nav-inner {
     flex-wrap: wrap;
-  }
-
-  .nav-links {
-    order: 3;
-    width: 100%;
-    margin-left: 0;
   }
 
   .nav-tools {
@@ -1245,20 +1236,9 @@ main {
   }
 }
 
-@media (max-width: 480px) {
-  .arts-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ============================================================
    RESUME / ABOUT PAGE
    ============================================================ */
-
-.resume-main {
-  max-width: var(--page-width);
-  margin: 0 auto;
-}
 
 .resume-main > section {
   scroll-margin-top: 5.5rem;
@@ -1363,24 +1343,17 @@ main {
 }
 
 .resume-title {
-  font-family: var(--font-serif);
-  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-  font-weight: 400;
   margin-bottom: 1.25rem;
-  line-height: 1.2;
 }
 
 .resume-body {
+  max-width: 34rem;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   color: var(--charcoal);
-  line-height: 1.9;
+  line-height: 1.6;
   margin-bottom: 0.85rem;
   text-align: justify;
-}
-
-.resume-body a {
-  color: var(--sage-dark);
 }
 
 /* Profile photo */
@@ -1453,7 +1426,6 @@ main {
   background-repeat: no-repeat;
   transition: background-size 0.3s ease;
   padding: 0.08em 0.2em;
-  border-radius: 3px;
 }
 
 details[open] .resume-block-title,
@@ -1508,10 +1480,6 @@ details[open] .resume-block-title,
   margin-bottom: 0.3rem;
 }
 
-.resume-list a {
-  color: var(--sage-dark);
-}
-
 /* Awards */
 .awards-list {
   display: flex;
@@ -1564,30 +1532,7 @@ details[open] .resume-block-title,
 .resume-list a,
 .award-desc a {
   padding: 0.04em 0.15em;
-  border-radius: 3px;
-  background-image: linear-gradient(to right, var(--sage-light), var(--sage-light));
-  background-position: left center;
-  background-size: 0 100%;
-  background-repeat: no-repeat;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
   transition: background-size 0.25s ease;
-}
-
-.resume-body a:hover,
-.resume-body a:focus-visible,
-.resume-list a:hover,
-.resume-list a:focus-visible,
-.award-desc a:hover,
-.award-desc a:focus-visible {
-  background-size: 100% 100%;
-}
-
-.resume-body a:hover,
-.resume-body a:focus-visible,
-.resume-list a:hover,
-.resume-list a:focus-visible {
-  color: var(--sage-dark);
 }
 
 .award-desc a:hover,
